@@ -59,3 +59,18 @@ h1 {
   border: solid 1px;
   border-color: #cccccc;
 }
+
+.bottom-nav {
+  position: fixed;
+  /* 画面下に固定 */
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #eeeeee;
+  color: #000000;
+  display: flex;
+  /* 横並びにする */
+  justify-content: space-around;
+  /* 均等に配置 */
+  padding: 10px 0;
+}
