@@ -1,11 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
+
 body {
   font-family: 'DotGothic16', sans-serif;
   margin: 0;
+  padding: 0;
   font-size: 16px;
 }
 
 h1 {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
   margin: 0;
   padding: 0;
@@ -20,6 +23,32 @@ h1 {
   width: 100%;
   background: #aaaaaa;
   border: 1 solid;
+}
+
+.container {
+  padding: 34px 0px 80px 0px;
+  margin: 0;
+  display: grid;
+  gap: 4px;
+  /* 隙間 */
+  grid-template-columns: repeat(2, 1fr);
+  /* スマホでは2列 */
+}
+
+.box {
+  background: #f2f2f2;
+  /* フラットデザイン風の淡色 */
+  padding: 20px;
+  text-align: center;
+  border-radius: 4px;
+  /* 少し角丸にすると今風 */
+}
+
+/* PC（幅768px以上）のとき4列に切り替え */
+@media (min-width: 768px) {
+  .container {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 #box {
