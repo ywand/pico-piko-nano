@@ -1,62 +1,54 @@
-@import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap');
 
 body {
-  font-family: 'DotGothic16', sans-serif;
+  font-family: 'Mochiy Pop One', sans-serif;
   margin: 0;
   padding: 0;
   font-size: 16px;
+  color: black;
+  letter-spacing: 4px;
+  background: lightgray;
 }
 
-h1 {
+a {
+  color: green;
+}
+
+a:hover {
+  color: darkgreen;
+}
+
+h1,
+h2 {
   font-size: 18px;
-  font-weight: bold;
+  font-weight: Black;
   margin: 0;
   padding: 0;
   top: 0;
   left: 0;
 }
 
-.content {
-  padding: 24px 0px;
-  margin: 0;
-  height: 100vh;
-  width: 100%;
-  background: #aaaaaa;
-  border: 1 solid;
-}
-
 .container {
-  padding: 34px 0px 80px 0px;
+  padding: 34px 0px 70px 0px;
   margin: 0;
   display: grid;
-  gap: 4px;
-  /* 隙間 */
+  gap: 1px;
   grid-template-columns: repeat(2, 1fr);
-  /* スマホでは2列 */
 }
 
 .box {
-  background: #f2f2f2;
-  /* フラットデザイン風の淡色 */
+  background: whitesmoke;
   padding: 20px;
+  margin: 0;
   text-align: center;
   border-radius: 4px;
-  /* 少し角丸にすると今風 */
 }
 
-/* PC（幅768px以上）のとき4列に切り替え */
+/* PC（幅768px以上）のとき3列に切り替え */
 @media (min-width: 768px) {
   .container {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
-}
-
-#box {
-  margin: 10px 6px;
-  border: 1px solid;
-  background: #eeeeee;
-  color: #000000;
-  border-color: #cccccc;
 }
 
 .header {
@@ -64,29 +56,12 @@ h1 {
   top: 0;
   left: 0;
   width: 100%;
-  background: #eeeeee;
-  color: #000000;
+  background: lightgray;
   text-align: center;
-  padding: 2px 0;
+  padding: 1px 0;
   margin: 0;
   z-index: 1000;
-  border: solid 1px;
-  border-color: #cccccc;
-}
-
-.footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: #eeeeee;
-  color: #000000;
-  text-align: center;
-  padding: 16px 0;
-  margin: 0;
-  z-index: 1000;
-  border: solid 1px;
-  border-color: #cccccc;
+  border: none;
 }
 
 .bottom-nav {
@@ -95,11 +70,13 @@ h1 {
   bottom: 0;
   left: 0;
   width: 100%;
-  background: #eeeeee;
-  color: #000000;
+  background: lightgray;
   display: flex;
   /* 横並びにする */
   justify-content: space-around;
   /* 均等に配置 */
   padding: 10px 0;
+  white-space: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }

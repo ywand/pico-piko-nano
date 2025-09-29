@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" data-theme="light">
 <head>
   <meta charset="utf-8" />
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PicoPikoNano</title>
   <meta name="description" content="ミニゲームよりも小さな自作ゲーム集。様々なJavaScriptライブラリの勉強用に作成。">
@@ -25,14 +25,20 @@
     <div class="box">10</div>
     <div class="box">11</div>
     <div class="box">12</div>
+    <div class="box">13</div>
+    <div class="box">14</div>
+    <div class="box">15</div>
   </div>
-  <footer class="bottom-nav">
-    <a href="#">ホーム</a>
-    <a href="#">検索</a>
-    <a href="#">次へ</a>
-    <a href="#">戻る</a>
-    <a href="#">お気に入り</a>
-    <a href="#">設定</a>
+
+  <footer>
+    <div id="menu"></div>
+    <script>
+      fetch('menu.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('menu').innerHTML = data;
+        });
+    </script>
   </footer>
   </div>
 </body>
