@@ -11,11 +11,11 @@ body {
 }
 
 a {
-  color: green;
+  color: gray;
 }
 
 a:hover {
-  color: darkgreen;
+  color: darkgray;
 }
 
 h1,
@@ -41,7 +41,7 @@ h2 {
   padding: 20px;
   margin: 0;
   text-align: center;
-  border-radius: 4px;
+  border-radius: 5px;
 }
 
 /* PC（幅768px以上）のとき3列に切り替え */
@@ -76,7 +76,15 @@ h2 {
   justify-content: space-around;
   /* 均等に配置 */
   padding: 10px 0;
-  white-space: nowrap;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+}
+
+nav a {
+  background-color: whitesmoke;
+  border-color: none;
+  border: solid 1px;
+  font-size: 24px;
+  padding: 8px 14px;
+  border-radius: 5px;
+  transition: 0.3s;
+  text-decoration: none;
 }
