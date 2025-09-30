@@ -10,14 +10,6 @@ body {
   background: lightgray;
 }
 
-a {
-  color: gray;
-}
-
-a:hover {
-  color: darkgray;
-}
-
 h1,
 h2 {
   font-size: 18px;
@@ -80,7 +72,8 @@ h2 {
 
 nav a {
   background-color: whitesmoke;
-  border-color: none;
+  border-color: gray;
+  color: gray;
   border: solid 1px;
   font-size: 24px;
   padding: 16px 8px 8px 8px;
@@ -89,6 +82,12 @@ nav a {
   text-decoration: none;
   width: 100px;
   text-align: center;
+}
+
+nav a:hover,
+nav a:active {
+  color: whitesmoke;
+  background-color: gray;
 }
 
 nav rt {
