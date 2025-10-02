@@ -31,15 +31,19 @@
   </footer>
   <script>
     // ページ読み込み時に値を取得
-    let memo_date = localStorage.getItem("001_memo_date") || 0;
-    let memo_text = localStorage.getItem("001_memo_text") || 0;
+    let memo_date = localStorage.getItem("001_memo_date");
+    let memo_text = localStorage.getItem("001_memo_text");
+    const now = new Date();
     document.getElementById("001_memo").textContent = memo_text;
     document.getElementById("001_date").textContent = memo_date;
 
-    // ボタンクリックでカウント増加
     document.getElementById("001_memo").addEventListener("input", () => {
+      memo_date = now.toLocaleString("ja-JP");
+      memo_text = document.getElementById("001_memo").value;
+      localStorage.setItem("001_memo_date", memo_date);
       localStorage.setItem("001_memo_text", memo_text);
-      localStorage.setItem("001_memo_date", now.toLocaleString());
+      console.log(memo_date);
+      console.log(memo_text);
     });
   </script>
   </div>
