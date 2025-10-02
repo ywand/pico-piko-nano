@@ -10,6 +10,12 @@ body {
   background: lightgray;
 }
 
+#main {
+  padding: 34px 0px 70px 0px;
+  margin: 0;
+  width: 100%;
+}
+
 h1,
 h2 {
   font-size: 18px;
@@ -93,4 +99,13 @@ nav a:active {
 nav rt {
   letter-spacing: 0px;
   padding: 2px;
+}
+
+textarea {
+  width: 100%;
+  /* 親要素の幅いっぱいに広げる */
+  max-width: 600px;
+  /* 最大幅を制限する場合 */
+  height: 150px;
+  /* 高さを指定 */
 }
