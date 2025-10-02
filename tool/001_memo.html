@@ -15,6 +15,7 @@
     <h1>PicoPikoNano</h1>
   </div>
   <div id="main">
+    <div id="001_date">yyyy/mm/dd hh:mm:ss</div>
     <textarea id="001_memo" name="001_memo" rows="10000" cols="100" placeholder="めも" maxlength="10000"></textarea>
   </div>
   </input>
@@ -28,6 +29,18 @@
         });
     </script>
   </footer>
+  <script>
+    // ページ読み込み時に値を取得
+    let memo_date = localStorage.getItem("001_memo_date") || 0;
+    let memo_text = localStorage.getItem("001_memo_text") || 0;
+    document.getElementById("001_memo").textContent = memo_text;
+    document.getElementById("001_date").textContent = memo_date;
+
+    // ボタンクリックでカウント増加
+    document.getElementById("001_memo").addEventListener("input", () => {
+      localStorage.setItem("001_memo_text", memo_text);
+      localStorage.setItem("001_memo_date", now.toLocaleString());
+  </script>
   </div>
 </body>
 </html>
