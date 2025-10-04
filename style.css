@@ -11,6 +11,7 @@ body {
 }
 
 #main {
+  text-align: center;
   padding: 34px 0px 70px 0px;
   margin: 0;
   width: 99%;
@@ -102,10 +103,12 @@ nav rt {
 }
 
 textarea {
-  width: 100%;
+  margin: 0;
+  padding: 0;
+  width: 95%;
   /* 親要素の幅いっぱいに広げる */
   max-width: 600px;
   /* 最大幅を制限する場合 */
-  height: 150px;
+  height: 95%;
   /* 高さを指定 */
 }

@@ -15,8 +15,8 @@
     <h1>PicoPikoNano</h1>
   </div>
   <div id="main">
-    <div id="001_date">yyyy/mm/dd hh:mm:ss</div>
-    <textarea id="001_memo" name="001_memo" rows="10000" cols="100" placeholder="めも" maxlength="10000"></textarea>
+    <div id="001_date">保存日時：</div>
+    <textarea id="001_memo" name="001_memo" rows="50" cols="150" placeholder="めも" maxlength="10000"></textarea>
   </div>
   </input>
   <footer>
@@ -35,7 +35,7 @@
     let memo_text = localStorage.getItem("001_memo_text");
     const now = new Date();
     document.getElementById("001_memo").textContent = memo_text;
-    document.getElementById("001_date").textContent = memo_date;
+    document.getElementById("001_date").textContent = "保存日時：" + memo_date;
 
     document.getElementById("001_memo").addEventListener("input", () => {
       memo_date = now.toLocaleString("ja-JP");
