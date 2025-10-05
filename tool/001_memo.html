@@ -34,6 +34,8 @@
     </script>
   </footer>
   <script>
+
+
     // ページ読み込み時
     let memo_date = localStorage.getItem("001_memo_date");
     let memo_text = localStorage.getItem("001_memo_text");
@@ -62,11 +64,12 @@
     dlbtn.addEventListener("click", (e) => {
       e.preventDefault();
       memo_text = document.getElementById("001_memo").value;
-
+      console.log(memo_text);
       let bl = new Blob([memo_text], { type: 'text/plain' });
       let url = URL.createObjectURL(bl);
       let a = document.createElement("a");
-      let filedate = now.getFullYear + String(now.getMonth).padStart((2, "0")) + String(now.getDay).padStart((2, "0"));
+      let filedate = now.getFullYear() + String(now.getMonth() + 1).padStart(2, "0") + String(now.getDate()).padStart(2, "0");
+      console.log(filedate);
       a.download = filedate + "_memo.txt";
       a.href = url;
       a.click();
