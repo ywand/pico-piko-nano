@@ -15,8 +15,12 @@
     <h1>PicoPikoNano</h1>
   </div>
   <div id="main">
-    <div id="001_date">保存日時：</div>
-    <textarea id="001_memo" name="001_memo" rows="50" cols="150" placeholder="めも" maxlength="10000"></textarea>
+    <form name="myform">
+      <input type="file" name="fileinput" />
+      <button id="download">ダウンロード</button>
+      <div id="001_date" class="font-small">保存日時：</div>
+      <textarea id="001_memo" name="textVew" rows="50" cols="150" placeholder="めも" maxlength="100000"></textarea>
+    </form>
   </div>
   </input>
   <footer>
@@ -30,7 +34,7 @@
     </script>
   </footer>
   <script>
-    // ページ読み込み時に値を取得
+    // ページ読み込み時
     let memo_date = localStorage.getItem("001_memo_date");
     let memo_text = localStorage.getItem("001_memo_text");
     const now = new Date();
@@ -42,8 +46,32 @@
       memo_text = document.getElementById("001_memo").value;
       localStorage.setItem("001_memo_date", memo_date);
       localStorage.setItem("001_memo_text", memo_text);
-      console.log(memo_date);
-      console.log(memo_text);
+    });
+
+    let form = document.forms.myform;
+    form.fileinput.addEventListener("change", (e) => {
+      let res = e.target.files[0];
+      let reader = new FileReader();
+      reader.readAsText(res);
+      reader.addEventListener("load", () => {
+        form.textVew.textContent = reader.result
+      });
+    });
+
+    let dlbtn = document.getElementById("download");
+    dlbtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      memo_text = document.getElementById("001_memo").value;
+
+      let bl = new Blob([memo_text], { type: 'text/plain' });
+      let url = URL.createObjectURL(bl);
+      let a = document.createElement("a");
+      let filedate = now.getFullYear + String(now.getMonth).padStart((2, "0")) + String(now.getDay).padStart((2, "0"));
+      a.download = filedate + "_memo.txt";
+      a.href = url;
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
     });
   </script>
   </div>
