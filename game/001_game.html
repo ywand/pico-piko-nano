@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <link rel="stylesheet" href="../style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PicoPikoNano</title>
+  <title>カブーンでジャンプ │ PicoPikoNano</title>
   <meta name="description" content="ミニゲームよりも小さな自作ゲーム集。様々なJavaScriptライブラリの勉強用に作成。">
   <meta name="robots" content="index, follow">
   <script src="https://kit.fontawesome.com/231789a504.js" crossorigin="anonymous"></script>
@@ -15,6 +15,134 @@
     <h1>カブーンでジャンプ │ PicoPikoNano</h1>
   </div>
   <div id="main">
+    <script type="module">
+      import kaboom from "https://unpkg.com/kaboom@3000.0.1/dist/kaboom.mjs";
+
+      // 親要素のサイズを取得
+      const container = document.getElementById("main");
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      const cv = document.createElement("canvas");
+      container.appendChild(cv);
+      kaboom({
+        width: w,
+        height: h,
+        canvas: cv,  // 親要素にキャンバスを埋め込む
+        background: [240, 240, 240], // 空色
+        gravity: 1200, // ← ここで設定
+
+      });
+
+      loadSprite("bean", "https://kaboomjs.com/sprites/bean.png");
+
+      // 文字を追加
+      add([
+        text("height:" + height().toFixed(1) + "\nwidth:" + width().toFixed(1), {
+          size: 14,       // 文字サイズ
+          font: "sinko",  // フォント名
+          width: 200,     // 幅（折り返し用）
+          align: "center" // 中央揃え
+        }),
+        pos(0, 60),      // 画面座標
+        color(10, 10, 10), // 文字色
+      ]);
+
+      add([
+        rect(width(), 48),
+        pos(0, height() - 140),
+        area(),
+        body({ isStatic: true }),
+        color(127, 200, 80),
+      ]);
+
+      const player = add([
+        sprite("bean"),
+        pos(0, 440),
+        area(),
+        body(),
+        scale(1),  // ← ここでscaleを初期化
+      ]);
+
+      const speed = 300;
+
+      //キー入力
+      onKeyDown("right", () => {
+        player.move(speed, 0);
+        player.scale.x = Math.abs(player.scale.x);  // 右向き
+      });
+
+      onKeyDown("left", () => {
+        player.move(-speed, 0);
+        player.scale.x = -Math.abs(player.scale.x); // 左向き（反転）
+      });
+
+
+      onKeyDown("up", () => {
+        player.move(0, -speed);
+
+      });
+
+      onKeyDown("down", () => {
+        player.move(0, speed);
+
+      });
+
+      // ジャンプ
+      onKeyPress("space", () => {
+        if (player.isGrounded()) {
+          player.jump(speed * 2);
+        }
+      });
+
+      // タッチ開始
+      onTouchStart((pos, t) => {
+        // touch.pos で座標
+        console.log("tx:" + pos.x, "ty:" + pos.y);
+        if (pos.x < width() / 2) {
+          player.move(-speed, 0);
+        } else if (pos.x > width() / 2) {
+          player.move(speed, 0);
+        }
+        if (pos.y < height() / 2) {
+          player.move(0, -speed);
+        } else if (pos.y > height() / 2) {
+          player.move(0, speed);
+        }
+      });
+      player.onUpdate(() => {
+        if (player.pos.y > height()) {
+          player.pos.y = height();
+        }
+        if (player.pos.x < 10) {
+          player.pos.x = 10;
+        }
+        if (player.pos.x > width() - 5) {
+          player.pos.x = width() - 5;
+        }
+      })
+
+
+      // 文字を追加
+      const ppos = add([
+        text("pX" + player.pos.x + " / pY:" + player.pos.y, {
+          size: 12,       // 文字サイズ
+          font: "sinko",  // フォント名
+          width: 100,     // 幅（折り返し用）
+          align: "center" // 中央揃え
+        }),
+        pos(player.pos.x, player.pos.y - 20),      // 画面座標
+        color(10, 10, 10), // 文字色
+      ]);
+      ppos.onUpdate(() => {
+        // pos はオブジェクトなので代入で更新
+        ppos.pos.x = player.pos.x;
+        ppos.pos.y = player.pos.y - 20;
+
+        // 文字列も更新したい場合
+        ppos.text = "pX: " + Math.floor(player.pos.x) + " / pY: " + Math.floor(player.pos.y);
+      });
+
+    </script>
   </div>
 
   <footer>

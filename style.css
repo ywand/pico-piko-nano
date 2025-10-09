@@ -16,6 +16,7 @@ body {
   padding: 30px 0px 80px 0px;
   margin: 0;
   width: 99%;
+  height: 60dvh;
 }
 
 h1,
@@ -119,12 +120,12 @@ textarea {
   /* 親要素の幅いっぱいに広げる */
   max-width: 600px;
   /* 最大幅を制限する場合 */
-  max-height: 600px;
+  height: 85vh;
   /* 高さを指定 */
 }
 
 @media (min-width: 768px) {
   textarea {
-    max-height: 260px;
+    height: 70vh;
   }
 }
