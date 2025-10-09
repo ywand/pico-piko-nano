@@ -33,7 +33,10 @@
     <div class="box"></div>
     <div class="box"></div>
   </div>
-
+  <p class="font-small">最終更新日：<span id="last-updated"></span></p>
+  <script>
+    document.getElementById('last-updated').textContent = document.lastModified;
+  </script>
   <footer>
     <div id="menu"></div>
     <script>
