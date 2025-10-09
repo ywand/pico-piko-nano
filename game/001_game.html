@@ -135,11 +135,45 @@
         }
       });
 
-      // タッチ開始
+      // タッチから来た最後の時刻（ms）
+      let lastTouchTime = 0;
+
+      // タッチ処理
       onTouchStart((pos, t) => {
+        lastTouchTime = Date.now();
+        // touch.pos は kaboom のスクリーン座標（ゲーム内座標）を返します
         // touch.pos で座標
         tx = pos.x.toFixed(1);
         ty = pos.y.toFixed(1);
+        if (pos.x < width() / 2) {
+          player.move(-speed, 0);
+        } else if (pos.x > width() / 2) {
+          player.move(speed, 0);
+        }
+        if (pos.y < height() / 2) {
+          player.move(0, -speed);
+        } else if (pos.y > height() / 2) {
+          player.move(0, speed);
+        }
+        if (player.isGrounded()) {
+          player.jump(speed * 2);
+          jumpcount = 1;
+        } else if (jumpcount < 2) {
+          player.jump(speed * 1.5);
+          jumpcount = 2;
+        }
+      });
+
+      // マウスクリック処理
+      onMouseDown((pos) => {
+        // 直近にタッチがあれば（疑似クリックの可能性）、無視する
+        if (Date.now() - lastTouchTime < 100) {
+          return;
+        }
+        // pos はクリック位置（kaboom のゲーム座標）
+        // touch.pos で座標
+        //tx = pos.x.toFixed(1);
+        //ty = pos.y.toFixed(1);
         if (pos.x < width() / 2) {
           player.move(-speed, 0);
         } else if (pos.x > width() / 2) {
@@ -167,6 +201,9 @@
         }
         if (player.pos.x > width() - 5) {
           player.pos.x = width() - 5;
+        }
+        if (player.isGrounded()) {
+          jumpcount = 0;
         }
       })
 
