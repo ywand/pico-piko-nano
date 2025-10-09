@@ -29,51 +29,86 @@
         height: h,
         canvas: cv,  // 親要素にキャンバスを埋め込む
         background: [240, 240, 240], // 空色
-        gravity: 1200, // ← ここで設定
+        gravity: 1000, // ← ここで設定
 
       });
+      setGravity(1000);
 
       loadSprite("bean", "https://kaboomjs.com/sprites/bean.png");
 
       // 文字を追加
-      add([
-        text("height:" + height().toFixed(1) + "\nwidth:" + width().toFixed(1), {
-          size: 14,       // 文字サイズ
-          font: "sinko",  // フォント名
-          width: 200,     // 幅（折り返し用）
-          align: "center" // 中央揃え
-        }),
-        pos(0, 60),      // 画面座標
+      let tx = 0;
+      let ty = 0;
+      const game_info = add([
+        text("height:" + height().toFixed(1)
+          + "\nwidth:" + width().toFixed(1)
+          + "\ntx:" + tx
+          + "\nty:" + ty
+          , {
+            size: 12,       // 文字サイズ
+            font: "sinko",  // フォント名
+            width: 100,     // 幅（折り返し用）
+            align: "left" // 中央揃え
+          }),
+        pos(0, 0),      // 画面座標
         color(10, 10, 10), // 文字色
       ]);
+      game_info.onUpdate(() => {
+        game_info.text = "height:" + height().toFixed(1)
+          + "\nwidth:" + width().toFixed(1)
+          + "\ntx:" + tx
+          + "\nty:" + ty
+      });
 
       add([
-        rect(width(), 50),
-        pos(0, height() - 50),
+        rect(width() * 3, 20),
+        pos(-width() * 1.5, height() - 20),
         area(),
         body({ isStatic: true }),
         color(127, 200, 80),
       ]);
+      for (let i = 1; i < 20; i++) {
+        add([
+          rect(width() * 0.2, height() * 0.05),
+          pos(width() * Math.random(), height() * Math.random()),
+          area(),
+          body({ isStatic: true }),
+          color(25 * i, 10 * i, 25 * i),
+        ]);
+      }
 
       const player = add([
         sprite("bean"),
-        pos(0, 440),
+        pos(0, height() / 2),
         area(),
         body(),
-        scale(1),  // ← ここでscaleを初期化
+        scale(0.5),  // ← ここでscaleを初期化
       ]);
+      player.origin = "center";
 
-      const speed = 300;
+      const speed = 200;
 
       //キー入力
       onKeyDown("right", () => {
         player.move(speed, 0);
-        player.scale.x = Math.abs(player.scale.x);  // 右向き
+        player.origin = "center";
+        //player.scale.x = Math.abs(player.scale.x);  // 右向き
+      });
+      onKeyDown("d", () => {
+        player.move(speed, 0);
+        player.origin = "center";
+        //player.scale.x = Math.abs(player.scale.x);  // 右向き
       });
 
       onKeyDown("left", () => {
         player.move(-speed, 0);
-        player.scale.x = -Math.abs(player.scale.x); // 左向き（反転）
+        player.origin = "center";
+        //player.scale.x = -Math.abs(player.scale.x); // 左向き（反転）
+      });
+      onKeyDown("a", () => {
+        player.move(-speed, 0);
+        player.origin = "center";
+        //player.scale.x = -Math.abs(player.scale.x); // 左向き（反転）
       });
 
 
@@ -88,16 +123,22 @@
       });
 
       // ジャンプ
+      let jumpcount = 0;
       onKeyPress("space", () => {
         if (player.isGrounded()) {
           player.jump(speed * 2);
+          jumpcount = 1;
+        } else if (jumpcount < 2) {
+          player.jump(speed * 1.5);
+          jumpcount = 2;
         }
       });
 
       // タッチ開始
       onTouchStart((pos, t) => {
         // touch.pos で座標
-        console.log("tx:" + pos.x, "ty:" + pos.y);
+        tx = pos.x.toFixed(1);
+        ty = pos.y.toFixed(1);
         if (pos.x < width() / 2) {
           player.move(-speed, 0);
         } else if (pos.x > width() / 2) {
@@ -107,6 +148,13 @@
           player.move(0, -speed);
         } else if (pos.y > height() / 2) {
           player.move(0, speed);
+        }
+        if (player.isGrounded()) {
+          player.jump(speed * 2);
+          jumpcount = 1;
+        } else if (jumpcount < 2) {
+          player.jump(speed * 1.5);
+          jumpcount = 2;
         }
       });
       player.onUpdate(() => {
@@ -128,7 +176,7 @@
           size: 12,       // 文字サイズ
           font: "sinko",  // フォント名
           width: 100,     // 幅（折り返し用）
-          align: "center" // 中央揃え
+          align: "left" // 中央揃え
         }),
         pos(player.pos.x, player.pos.y - 20),      // 画面座標
         color(10, 10, 10), // 文字色
