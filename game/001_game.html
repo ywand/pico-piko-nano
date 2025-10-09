@@ -54,6 +54,7 @@
         color(10, 10, 10), // 文字色
       ]);
       game_info.onUpdate(() => {
+        console.log("onUp:" + tx + "/" + ty);
         game_info.text = "height:" + height().toFixed(1)
           + "\nwidth:" + width().toFixed(1)
           + "\ntx:" + tx
@@ -86,7 +87,7 @@
       ]);
       player.origin = "center";
 
-      const speed = 200;
+      const speed = 300;
 
       //キー入力
       onKeyDown("right", () => {
@@ -126,10 +127,10 @@
       let jumpcount = 0;
       onKeyPress("space", () => {
         if (player.isGrounded()) {
-          player.jump(speed * 2);
+          player.jump(speed * 3);
           jumpcount = 1;
         } else if (jumpcount < 2) {
-          player.jump(speed * 1.5);
+          player.jump(speed * 2);
           jumpcount = 2;
         }
       });
