@@ -12,41 +12,28 @@
   <base href="/">
 </head>
 <body>
-  <div class="header">
-    <h1>PicoPikoNano</h1>
+  <div class="wrapper">
+    <div class="header">
+      <h1>PicoPikoNano</h1>
+    </div>
+    <div id="main">
+      <dl>
+        <dd><a href="./tool/001_memo.html">Tool001：メモ帳</a></dd>
+        <dt></dt>
+        <dd></dd><a href="./game/001_game.html">Game001：カブーンでジャンプ</a></dd>
+      </dl>
+    </div>
+    <footer>
+      <div id="menu"></div>
+      <script>
+        fetch('menu.html')
+          .then(response => response.text())
+          .then(data => {
+            document.getElementById('menu').innerHTML = data;
+          });
+      </script>
+    </footer>
   </div>
-  <div class="container">
-    <div class="box"><a href="./tool/001_memo.html">Tool001：メモ帳</a></div>
-    <div class="box"><a href="./game/001_game.html">game001：カブーンでジャンプ</a></div>
-    <div class="box"></div>
-    <div class="box"></div>
-    <div class="box"></div>
-    <div class="box"></div>
-    <div class="box"></div>
-    <div class="box"></div>
-    <div class="box"></div>
-    <div class="box"></div>
-    <div class="box"></div>
-    <div class="box"></div>
-    <div class="box"></div>
-    <div class="box"></div>
-    <div class="box"></div>
-    <div class="box"></div>
-  </div>
-  <p class="font-small">最終更新日：<span id="last-updated"></span></p>
-  <script>
-    document.getElementById('last-updated').textContent = document.lastModified;
-  </script>
-  <footer>
-    <div id="menu"></div>
-    <script>
-      fetch('menu.html')
-        .then(response => response.text())
-        .then(data => {
-          document.getElementById('menu').innerHTML = data;
-        });
-    </script>
-  </footer>
   </div>
 </body>
 </html>

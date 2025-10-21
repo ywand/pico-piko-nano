@@ -8,16 +8,37 @@ body {
   color: black;
   letter-spacing: 4px;
   background: lightgray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* 9:16 の比率を固定した縦長レイアウト */
+.wrapper {
+  aspect-ratio: 9 / 16;
+  /* 比率指定 */
+  width: min(90vw, 390px);
+  /* 画面幅が狭いときは幅90%、広いときは390px固定 */
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 #main {
   text-align: center;
   justify-content: center;
-  padding: 30px 0px 80px 0px;
+  padding: 0dvh 0dvw 0dvh 0dvw;
   margin: 0;
-  width: 99%;
-  height: 60dvh;
+  width: 100%;
+  height: 80dvh;
 }
+
 
 h1,
 h2 {
@@ -92,7 +113,7 @@ h2 {
   /* 横並びにする */
   justify-content: space-around;
   /* 均等に配置 */
-  padding: 10px 0;
+  padding: 5px 0;
 }
 
 nav a {
@@ -105,7 +126,7 @@ nav a {
   border-radius: 5px;
   transition: 0.3s;
   text-decoration: none;
-  width: 100px;
+  width: 20dvh;
   text-align: center;
 }
 
@@ -134,5 +155,34 @@ textarea {
 @media (min-width: 768px) {
   textarea {
     height: 70vh;
+  }
+}
+
+dt {
+  font-weight: 700;
+  color: #222;
+  margin-top: 1rem;
+  text-align: left;
+  margin-left: 1.2rem;
+  /* 左揃え */
+}
+
+dd {
+  margin: 0.3rem 0 0.8rem 1rem;
+  /* 左にインデント */
+  color: #555;
+  font-size: 0.95rem;
+  margin-left: 1.2rem;
+  /* 説明は少し小さめ */
+}
+
+/* スマホ・PC両対応（必要なら） */
+@media (min-width: 768px) {
+  .item-list {
+    font-size: 1rem;
+  }
+
+  .item-list dd {
+    margin-left: 1.2rem;
   }
 }
