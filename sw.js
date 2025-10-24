@@ -1,7 +1,11 @@
 const CACHE_NAME = 'my-cache-v1';
 const urlsToCache = [
-  '/',           // index.html
-  '/index.html', // 明示的に追加
+  '/',
+  '/index.html',          
+  '/menu.html', 
+  '/style.css', 
+  '/tool/001_memo.html', 
+  '/game/001_game.html', 
 ];
 
 // インストール時（最初の登録時など）
