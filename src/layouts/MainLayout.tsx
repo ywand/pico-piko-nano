@@ -16,9 +16,9 @@ function MainLayout({ title, children }: Props) {
 
   return (
     <div>
-      <header>{title}</header>
+      <header>{SITE_CONFIG.title}</header>
       <main>{children}</main>
-      <footer>Footer</footer>
+      <footer>コンテンツ作成中・・・。</footer>
     </div>
   );
 }
