@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="./style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>カブーンでジャンプ │ PicoPikoNano</title>
+  <meta name="description" content="ミニゲームよりも小さな自作ゲーム集。様々なJavaScriptライブラリの勉強用に作成。">
+  <meta name="robots" content="index, follow">
+  <script src="https://kit.fontawesome.com/231789a504.js" crossorigin="anonymous"></script>
+  <link rel="icon" type="image/png" href="./assets/favicon.png">
+</head>
+<body>
+  <div class="wrapper">
+    <div class="header">
+      <h1 class="font-normal ">カブーンでジャンプ │ PicoPikoNano</h1>
+    </div>
+    <div id="main">
+      <script type="module">
+        import kaboom from "https://unpkg.com/kaboom@3000.0.1/dist/kaboom.mjs";
+
+        // 親要素のサイズを取得
+        const container = document.getElementById("main");
+        const w = container.clientWidth;
+        const h = container.clientHeight;
+        const cv = document.createElement("canvas");
+        container.appendChild(cv);
+        kaboom({
+          width: w,
+          height: h,
+          canvas: cv,  // 親要素にキャンバスを埋め込む
+          background: [240, 240, 240], // 空色
+          gravity: 1000, // ← ここで設定
+
+        });
+        setGravity(1000);
+
+        loadSprite("bean", "./assets/bean.png");
+
+        // 文字を追加
+        let tx = 0;
+        let ty = 0;
+        const game_info = add([
+          text("height:" + height().toFixed(1)
+            + "\nwidth:" + width().toFixed(1)
+            + "\ntx:" + tx
+            + "\nty:" + ty
+            , {
+              size: 12,       // 文字サイズ
+              font: "sinko",  // フォント名
+              width: 100,     // 幅（折り返し用）
+              align: "left" // 中央揃え
+            }),
+          pos(0, 0),      // 画面座標
+          color(10, 10, 10), // 文字色
+        ]);
+        game_info.onUpdate(() => {
+          console.log("onUp:" + tx + "/" + ty);
+          game_info.text = "height:" + height().toFixed(1)
+            + "\nwidth:" + width().toFixed(1)
+            + "\ntx:" + tx
+            + "\nty:" + ty
+        });
+
+        add([
+          rect(width() * 3, 20),
+          pos(-width() * 1.5, height() - 20),
+          area(),
+          body({ isStatic: true }),
+          color(127, 200, 80),
+        ]);
+        for (let i = 1; i < 20; i++) {
+          add([
+            rect(width() * 0.2, height() * 0.05),
+            pos(width() * Math.random(), height() * Math.random()),
+            area(),
+            body({ isStatic: true }),
+            color(25 * i, 10 * i, 25 * i),
+          ]);
+        }
+
+        const player = add([
+          sprite("bean"),
+          pos(0, height() / 2),
+          area(),
+          body(),
+          scale(0.5),  // ← ここでscaleを初期化
+        ]);
+        player.origin = "center";
+
+        const speed = 300;
+
+        //キー入力
+        onKeyDown("right", () => {
+          player.move(speed, 0);
+          player.origin = "center";
+          //player.scale.x = Math.abs(player.scale.x);  // 右向き
+        });
+        onKeyDown("d", () => {
+          player.move(speed, 0);
+          player.origin = "center";
+          //player.scale.x = Math.abs(player.scale.x);  // 右向き
+        });
+
+        onKeyDown("left", () => {
+          player.move(-speed, 0);
+          player.origin = "center";
+          //player.scale.x = -Math.abs(player.scale.x); // 左向き（反転）
+        });
+        onKeyDown("a", () => {
+          player.move(-speed, 0);
+          player.origin = "center";
+          //player.scale.x = -Math.abs(player.scale.x); // 左向き（反転）
+        });
+
+
+        onKeyDown("up", () => {
+          player.move(0, -speed);
+
+        });
+
+        onKeyDown("down", () => {
+          player.move(0, speed);
+
+        });
+
+        // ジャンプ
+        let jumpcount = 0;
+        onKeyPress("space", () => {
+          if (player.isGrounded()) {
+            player.jump(speed * 3);
+            jumpcount = 1;
+          } else if (jumpcount < 2) {
+            player.jump(speed * 2);
+            jumpcount = 2;
+          }
+        });
+
+        // タッチから来た最後の時刻（ms）
+        let lastTouchTime = 0;
+
+        // タッチ処理
+        onTouchStart((pos, t) => {
+          lastTouchTime = Date.now();
+          // touch.pos は kaboom のスクリーン座標（ゲーム内座標）を返します
+          // touch.pos で座標
+          tx = pos.x.toFixed(1);
+          ty = pos.y.toFixed(1);
+          if (pos.x < width() / 2) {
+            player.move(-speed, 0);
+          } else if (pos.x > width() / 2) {
+            player.move(speed, 0);
+          }
+          if (pos.y < height() / 2) {
+            player.move(0, -speed);
+          } else if (pos.y > height() / 2) {
+            player.move(0, speed);
+          }
+          if (player.isGrounded()) {
+            player.jump(speed * 2);
+            jumpcount = 1;
+          } else if (jumpcount < 2) {
+            player.jump(speed * 1.5);
+            jumpcount = 2;
+          }
+        });
+
+        // マウスクリック処理
+        onMouseDown((pos) => {
+          // 直近にタッチがあれば（疑似クリックの可能性）、無視する
+          if (Date.now() - lastTouchTime < 100) {
+            return;
+          }
+          tx = pos.x;
+          ty = pos.y;
+          if (pos.x < width() / 2) {
+            player.move(-speed, 0);
+          } else if (pos.x > width() / 2) {
+            player.move(speed, 0);
+          }
+          if (pos.y < height() / 2) {
+            player.move(0, -speed);
+          } else if (pos.y > height() / 2) {
+            player.move(0, speed);
+          }
+          if (player.isGrounded()) {
+            player.jump(speed * 2);
+            jumpcount = 1;
+          } else if (jumpcount < 2) {
+            player.jump(speed * 1.5);
+            jumpcount = 2;
+          }
+        });
+        player.onUpdate(() => {
+          if (player.pos.y > height()) {
+            player.pos.y = height();
+          }
+          if (player.pos.x < -player.width / 2) {
+            player.pos.x = -player.width / 2;
+          }
+          if (player.pos.x > width()) {
+            player.pos.x = width();
+          }
+          if (player.isGrounded()) {
+            jumpcount = 0;
+          }
+        })
+
+
+        // 文字を追加
+        const ppos = add([
+          text("pX" + player.pos.x + " / pY:" + player.pos.y, {
+            size: 12,       // 文字サイズ
+            font: "sinko",  // フォント名
+            width: 100,     // 幅（折り返し用）
+            align: "left" // 中央揃え
+          }),
+          pos(player.pos.x - player.width, player.pos.y - 20),      // 画面座標
+          color(10, 10, 10), // 文字色
+        ]);
+        ppos.onUpdate(() => {
+          // pos はオブジェクトなので代入で更新
+          ppos.pos.x = player.pos.x - player.width / 2;
+          ppos.pos.y = player.pos.y - player.height / 2;
+
+          // 文字列も更新したい場合
+          ppos.text = "pX: " + Math.floor(player.pos.x) + " / pY: " + Math.floor(player.pos.y);
+        });
+
+      </script>
+
+    </div>
+
+    <footer>
+      <div id="menu"></div>
+      <script>
+        fetch('../menu.html')
+          .then(response => response.text())
+          .then(data => {
+            document.getElementById('menu').innerHTML = data;
+          });
+      </script>
+    </footer>
+  </div>
+  </div>
+</body>
+</html>
