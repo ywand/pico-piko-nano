@@ -16,7 +16,7 @@ function MainLayout({ title, children }: Props) {
 
   return (
     <div>
-      <header>Header</header>
+      <header>{title}</header>
       <main>{children}</main>
       <footer>Footer</footer>
     </div>
