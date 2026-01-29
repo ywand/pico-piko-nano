@@ -11,7 +11,7 @@ export default defineConfig({
     registerType: "autoUpdate",
     manifest: {
       name: "Pico-Piko-Nano",
-      short_name: "PPNano",
+      short_name: "Pico-Piko-Nano",
       start_url: "/",
       display: "standalone",
       background_color: "#FAFAFA",
