@@ -1,13 +1,17 @@
 import type { ReactNode } from "react";
 import { useEffect } from "react";
 import { SITE_CONFIG } from "../config/site"
+import { lightTheme, darkTheme } from "../styles/theme.css";
+import { root } from "../styles/root.css"
 
 type Props = {
   title?: string;
+  isDark: boolean;
+  onToggleTheme: () => void;
   children: ReactNode;
 };
 
-function MainLayout({ title, children }: Props) {
+function MainLayout({ title, isDark, onToggleTheme, children }: Props) {
   useEffect(() => {
     document.title = title
       ? `${title} | ${SITE_CONFIG.title}`
@@ -15,8 +19,13 @@ function MainLayout({ title, children }: Props) {
   }, [title]);
 
   return (
-    <div>
-      <header>{SITE_CONFIG.title}</header>
+    <div className={`${isDark ? darkTheme : lightTheme} ${root}`}>
+      <header>
+        <h1>{SITE_CONFIG.title}</h1>
+        <button onClick={onToggleTheme}>
+          {isDark ? "🌞" : "🌛"}
+        </button>
+      </header>
       <main>{children}</main>
       <footer>コンテンツ作成中・・・。</footer>
     </div>

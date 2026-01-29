@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja" class="uk-height-viewport">
+
+<head>
+  <title>TestSpeech</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="../lib/uikit/css/uikit.min.css" />
+  <script type="text/javascript">
+    const speach = function (text, volume, rate, pitch) {
+      const ssu = new SpeechSynthesisUtterance();
+      ssu.text = text;
+      ssu.volume = volume;
+      ssu.rate = rate;
+      ssu.pitch = pitch;
+      ssu.lang = 'ja-JP';
+      speechSynthesis.speak(ssu);
+    }
+    const main = function () {
+      speach(document.getElementById('id_text').value,
+        document.getElementById('id_volume').value,
+        document.getElementById('id_rate').value,
+        document.getElementById('id_pitch').value,
+      );
+    }
+  </script>
+</head>
+
+<body class="uk-height-viewport">
+  <div class="uk-background-muted"><a href="/">p5.Games::</a>TestSpeech</div>
+  <div>
+    <div class="uk-background-muted uk-section uk-height-viewport">
+      <div class=" uk-container">
+        <div>
+          <form>
+            音量<input type="range" id="id_volume" value="0.5" min="0" max="1" step="0.1"><br />
+            速度<input type="range" id="id_rate" value="1" min="0" max="10" step="1"><br />
+            高低<input type="range" id="id_pitch" value="1" min="0" max="2" step="0.1"><br />
+            <input type="button" value="音声を聞く" id="id_main" onclick="main()"><br />
+            <textarea id="id_text" rows="10" cols="100">ここに読ませたい文章を入力してください。</textarea>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
