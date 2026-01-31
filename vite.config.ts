@@ -35,7 +35,7 @@ export default defineConfig({
       ]
     },
     workbox: {
-      globPatterns: ["**/*.{js,css,png,svg,ico}"],
+      globPatterns: ["**/*.{js,css}"],
       navigateFallback: "/index.html",
       runtimeCaching: [
         {
@@ -44,6 +44,18 @@ export default defineConfig({
           handler: "NetworkFirst",
           options: {
             cacheName: "html-cache",
+          },
+        },
+        // PNG / SVG / JPG などの画像
+        {
+          urlPattern: ({ request }) => request.destination === "image",
+          handler: "CacheFirst",
+          options: {
+            cacheName: "image-cache",
+            expiration: {
+              maxEntries: 100,
+              maxAgeSeconds: 60 * 60 * 24 * 30, // 30日
+            },
           },
         },
       ],
