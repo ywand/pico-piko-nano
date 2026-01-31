@@ -35,8 +35,20 @@ export default defineConfig({
       ]
     },
     workbox: {
-      globPatterns: ["**/*.{html,js,css,png,svg,ico}"],
+      globPatterns: ["**/*.{js,css,png,svg,ico}"],
       navigateFallback: "/index.html",
+      runtimeCaching: [
+        {
+          // HTMLは必ず NetworkFirst
+          urlPattern: ({ request }) => request.destination === "document",
+          handler: "NetworkFirst",
+          options: {
+            cacheName: "html-cache",
+          },
+        },
+      ],
+      skipWaiting: true,
+      clientsClaim: true,
     },
   }),
   ]
