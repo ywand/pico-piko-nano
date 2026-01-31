@@ -9,6 +9,9 @@ export default defineConfig({
   vanillaExtractPlugin(), // ← これ必須
   VitePWA({
     registerType: "autoUpdate",
+    includeAssets: [
+      "favicon.ico",
+    ],
     manifest: {
       name: "Pico-Piko-Nano",
       short_name: "Pico-Piko-Nano",
@@ -32,7 +35,8 @@ export default defineConfig({
       ]
     },
     workbox: {
-      globPatterns: ["**/*.{html,js,css,png,svg,ico}"]
+      globPatterns: ["**/*.{html,js,css,png,svg,ico}"],
+      navigateFallback: "/index.html",
     },
   }),
   ]
