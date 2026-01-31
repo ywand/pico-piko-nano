@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { useEffect } from "react";
 import { SITE_CONFIG } from "../config/site"
 import { lightTheme, darkTheme } from "../styles/theme.css";
-import { root } from "../styles/root.css"
+import { container } from "../styles/container.css";
 
 type Props = {
   title?: string;
@@ -19,7 +19,7 @@ function MainLayout({ title, isDark, onToggleTheme, children }: Props) {
   }, [title]);
 
   return (
-    <div className={`${isDark ? darkTheme : lightTheme} ${root}`}>
+    <div className={`${isDark ? darkTheme : lightTheme} ${container}`}>
       <header>
         <h1>{SITE_CONFIG.title}</h1>
         <button onClick={onToggleTheme}>

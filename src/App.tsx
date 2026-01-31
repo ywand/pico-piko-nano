@@ -1,17 +1,19 @@
 import { useState } from "react";
+import { lightTheme, darkTheme } from "./styles/theme.css";
 import Home from "./pages/Home";
 
 function App() {
   const [isDark, setIsDark] = useState(false);
 
   return (
-    <Home
-      isDark={isDark}
-      onToggleTheme={() => {
-        console.log("bf", isDark)
-        setIsDark(v => !v)
-      }}
-    />
+    <div className={isDark ? darkTheme : lightTheme}>
+      <Home
+        isDark={isDark}
+        onToggleTheme={() => {
+          setIsDark(vars => !vars)
+        }}
+      />
+    </div>
   );
 }
 
