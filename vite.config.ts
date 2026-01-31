@@ -36,7 +36,7 @@ export default defineConfig({
     },
     workbox: {
       globPatterns: ["**/*.{js,css}"],
-      navigateFallback: "/index.html",
+      //navigateFallback: "/index.html",
       runtimeCaching: [
         {
           // HTMLは必ず NetworkFirst
