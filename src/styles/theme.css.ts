@@ -8,6 +8,9 @@ export const vars = createThemeContract({
     textSub: null,
     border: null,
     primary: null,
+    link: null,
+    linkHover: null,
+    linkVisited: null,
   },
 });
 
@@ -19,7 +22,9 @@ export const lightTheme = createTheme(vars, {
     textSub: "#6B7280",
     border: "#E5E7EB",
     primary: "#2563EB",
-
+    link: "#2563EB",
+    linkHover: "#1D4ED8",
+    linkVisited: "#7C3AED",
   },
 });
 
@@ -31,5 +36,8 @@ export const darkTheme = createTheme(vars, {
     textSub: "#9CA3AF",
     border: "#1E293B",
     primary: "#60A5FA",
+    link: "#60A5FA",
+    linkHover: "#93C5FD",
+    linkVisited: "#A78BFA",
   },
 });

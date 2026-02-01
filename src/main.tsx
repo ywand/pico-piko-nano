@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from "react-router-dom";
 import { lightTheme, darkTheme } from './styles/theme.css.ts';
 import App from './App.tsx'
+import "./styles/global.css.ts";
 
 //テーマの取得
 const saved = localStorage.getItem("theme");
