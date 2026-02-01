@@ -10,7 +10,12 @@ function App() {
       <Home
         isDark={isDark}
         onToggleTheme={() => {
-          setIsDark(vars => !vars)
+          setIsDark(vars => !vars);
+          if (isDark) {
+            localStorage.setItem("theme", "dark");
+          } else {
+            localStorage.setItem("theme", "light");
+          }
         }}
       />
     </div>
