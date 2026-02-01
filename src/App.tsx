@@ -16,6 +16,7 @@ function App() {
           } else {
             localStorage.setItem("theme", "light");
           }
+          console.log("theme", localStorage.getItem("theme"));
         }}
       />
     </div>
