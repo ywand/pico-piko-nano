@@ -37,6 +37,7 @@ export default defineConfig({
     workbox: {
       globPatterns: ["**/*.{html,js,css}"],
       navigateFallback: "/index.html",
+      maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5MB
       runtimeCaching: [
         {
           // HTMLは必ず NetworkFirst
