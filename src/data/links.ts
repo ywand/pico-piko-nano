@@ -34,6 +34,18 @@ export const links: LinkItem[] = [
     target: "_self",
   },
   {
+    category: "game",
+    label: "ブロック崩し",
+    url: "/G0002_blockBreaking.html",
+    target: "_self",
+  },
+  {
+    category: "game",
+    label: "ランダムお絵かき",
+    url: "/G0003_randomDraw.html",
+    target: "_self",
+  },
+  {
     category: "tool",
     label: "メモ帳",
     url: "/T0001_memo.html",
