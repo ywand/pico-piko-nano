@@ -30,6 +30,7 @@
     let blocklist = []
     let blocks
     let clearCount = 0
+    let remCount = 0
     const SPEED = 8
     const DEBUG = false
     const SIZE = 10
@@ -141,6 +142,7 @@
           bl.overlap(ball, () => {
             //bl.shapeColor = color(255)
             bl.remove()
+            remCount = +1
 
             //ブロックが無くなったら初期化
             if (blocks.length == 0) {
@@ -178,7 +180,7 @@
       const TSIZE = max(16, width / 50)
       textSize(TSIZE)
       fill(255)
-      let gameinfo = "残：" + blocks.length + "／クリア回数：" + clearCount
+      let gameinfo = "残：" + blocks.length + "／崩：" + remCount + "／クリア：" + clearCount
 
       text(gameinfo, 10, height - TSIZE);
     }
