@@ -13,7 +13,7 @@
 <body>
   <div class="wrapper">
     <div class="header">
-      <h1 class="font-normal ">カブーンでジャンプ │ PicoPikoNano</h1>
+      <h1 class="font-normal ">カブーンでジャンプ │ <a href="/">Pico-Piko-Nano</a></h1>
     </div>
     <div id="main">
       <script type="module">
@@ -232,14 +232,6 @@
     </div>
 
     <footer>
-      <div id="menu"></div>
-      <script>
-        fetch('./menu.html')
-          .then(response => response.text())
-          .then(data => {
-            document.getElementById('menu').innerHTML = data;
-          });
-      </script>
     </footer>
   </div>
   </div>

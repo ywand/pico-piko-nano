@@ -13,7 +13,7 @@
 <body>
   <div class="wrapper">
     <div class="header">
-      <h1>メモ帳 │ Pico-Piko-Nano</h1>
+      <h1>メモ帳 │ <a href="/">Pico-Piko-Nano</a></h1>
     </div>
     <div id="main">
       <form name="myform">
@@ -25,18 +25,8 @@
     </div>
     </input>
     <footer>
-      <div id="menu"></div>
-      <script>
-        fetch('./menu.html')
-          .then(response => response.text())
-          .then(data => {
-            document.getElementById('menu').innerHTML = data;
-          });
-      </script>
     </footer>
     <script>
-
-
       // ページ読み込み時
       let memo_date = localStorage.getItem("001_memo_date");
       let memo_text = localStorage.getItem("001_memo_text");
