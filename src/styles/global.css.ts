@@ -9,16 +9,17 @@ globalStyle("html, body", {
   height: "100%",
   fontSize: "clamp(1rem, 1vw, 1rem)",
   fontFamily: `
-    "Meiryo",
-    "Hiragino Kaku Gothic ProN",
-    "Hiragino Sans",
-    "Noto Sans JP",
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif
-  `,
+  system-ui,
+  -apple-system,
+  BlinkMacSystemFont,
+  "Hiragino Sans",
+  "Hiragino Kaku Gothic ProN",
+  "Noto Sans JP",
+  "Segoe UI",
+  "Meiryo",
+  sans-serif
+`,
+  fontWeight: "normal",
   lineHeight: 1.6,
   letterSpacing: "0",
 });

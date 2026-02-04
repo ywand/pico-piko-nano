@@ -1,5 +1,5 @@
-import MainLayout from "../layouts/MainLayout";
-import { LinkList } from "../components/LinkList";
+import MainLayout from "../components/layout/MainLayout";
+import { LinkList } from "../components/ui/LinkList";
 
 type Props = {
   isDark: boolean;

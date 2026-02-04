@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 import { useEffect } from "react";
-import { SITE_CONFIG } from "../config/site"
-import { lightTheme, darkTheme } from "../styles/theme.css";
-import { container } from "../styles/container.css";
+import { SITE_CONFIG } from "@/data/siteConfig"
+import { lightTheme, darkTheme } from "@/styles/theme.css";
+import { container } from "@/styles/container.css";
 
 type Props = {
   title?: string;

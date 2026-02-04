@@ -1,5 +1,5 @@
-import { links, categorys } from "../data/links";
-import type { LinkItem } from "../data/links";
+import { links, categorys } from "@/data/links";
+import type { LinkItem } from "@/data/links";
 
 
 export function LinkList() {
