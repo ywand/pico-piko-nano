@@ -2,12 +2,20 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
 import { VitePWA } from "vite-plugin-pwa";
+import sitemap from "vite-plugin-sitemap";
 import path from "path";
+
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
+    sitemap({
+      hostname: "https://pico-piko-nano.netlify.app",
+      exclude: [
+        "/google",
+      ],
+    }),
     vanillaExtractPlugin(), // ← これ必須
     VitePWA({
       registerType: "autoUpdate",

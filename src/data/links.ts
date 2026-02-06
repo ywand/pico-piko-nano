@@ -25,7 +25,7 @@ export const links: LinkItem[] = [
     category: "main",
     label: "検索",
     url: "https://www.google.com/search?q=site:pico-piko-nano.netlify.app",
-    target: "_self",
+    target: "_blank",
   },
   {
     category: "game",
