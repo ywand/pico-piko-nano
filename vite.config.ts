@@ -13,7 +13,7 @@ export default defineConfig({
     sitemap({
       hostname: "https://pico-piko-nano.netlify.app",
       exclude: [
-        "/google",
+        "/google*",
       ],
     }),
     vanillaExtractPlugin(), // ← これ必須
