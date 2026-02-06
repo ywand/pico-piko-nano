@@ -1,5 +1,5 @@
 export type LinkItem = {
-  category: "main" | "doc" | "game" | "tool" | "ref" | "other";
+  category: "main" | "doc" | "game" | "tool" | "dev" | "lib" | "ref" | "other";
   label: string;
   url: string;
   target?: "_self" | "_blank" | "_inline";
@@ -10,7 +10,9 @@ export const categorys = {
   doc: "読み物",
   game: "Games(自作ゲーム達)",
   tool: "Tools(自作ツール達)",
-  ref: "参考リンク",
+  dev: "開発環境",
+  lib: "使用ライブラリ",
+  ref: "参考サイト",
   other: "その他",
 }
 
@@ -30,47 +32,53 @@ export const links: LinkItem[] = [
   {
     category: "game",
     label: "豆ジャンプ",
-    url: "/G0001_kaboom_jump.html",
+    url: "/game/G0001_kaboom_jump.html",
     target: "_self",
   },
   {
     category: "game",
     label: "ブロック崩し",
-    url: "/G0002_blockBreaking.html",
+    url: "/game/G0002_blockBreaking.html",
     target: "_self",
   },
   {
     category: "game",
     label: "ランダムお絵かき",
-    url: "/G0003_randomDraw.html",
+    url: "/game/G0003_randomDraw.html",
     target: "_self",
   },
   {
     category: "tool",
     label: "メモ帳",
-    url: "/T0001_memo.html",
+    url: "/tool/T0001_memo.html",
     target: "_self",
   },
   {
     category: "tool",
     label: "文章読み上げ",
-    url: "/T0002_Speech.html",
+    url: "/tool/T0002_Speech.html",
     target: "_self",
   },
   {
-    category: "ref",
+    category: "tool",
+    label: "MarkDownEditor",
+    url: "/tool/T0003_MarkDownEditor.html",
+    target: "_self",
+  },
+  {
+    category: "dev",
     label: "React",
     url: "https://react.dev",
     target: "_blank",
   },
   {
-    category: "ref",
+    category: "dev",
     label: "netlify",
     url: "https://www.netlify.com/",
     target: "_blank",
   },
   {
-    category: "ref",
+    category: "dev",
     label: "github",
     url: "https://github.com/",
     target: "_blank",
