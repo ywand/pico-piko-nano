@@ -14,6 +14,7 @@ export const vars = createThemeContract({
   },
 });
 
+//ライトモード
 export const lightTheme = createTheme(vars, {
   color: {
     background: "#FAFAFA",
@@ -28,6 +29,7 @@ export const lightTheme = createTheme(vars, {
   },
 });
 
+//ダークモード
 export const darkTheme = createTheme(vars, {
   color: {
     background: "#0B1220",

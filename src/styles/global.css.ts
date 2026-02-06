@@ -1,13 +1,36 @@
 import { globalStyle } from "@vanilla-extract/css";
 import { vars } from "./theme.css";
 
+export const space = {
+  xs: "4px",
+  sm: "8px",
+  md: "16px",
+  lg: "24px",
+  xl: "32px",
+}
+
+export const fontSize = {
+  xs: "12px",
+  sm: "14px",
+  md: "16px",
+  lg: "18px",
+  xl: "20px",
+}
+
 
 globalStyle("html, body", {
   margin: 0,
   padding: 0,
   width: "100%",
   height: "100%",
-  fontSize: "clamp(1rem, 1vw, 1rem)",
+});
+
+globalStyle("html", {
+  backgroundColor: vars.color.background,
+  fontSize: fontSize.md,
+});
+
+globalStyle("body", {
   fontFamily: `
   system-ui,
   -apple-system,
@@ -22,6 +45,7 @@ globalStyle("html, body", {
   fontWeight: "normal",
   lineHeight: 1.6,
   letterSpacing: "0",
+
 });
 
 globalStyle("#root", {
@@ -35,15 +59,22 @@ globalStyle("header", {
   padding: 0,
 });
 
+
+globalStyle("main", {
+  margin: space.sm,
+  padding: 0,
+});
+
 globalStyle("h1, h2, h3, h4, h5, h6", {
   margin: 0,
   padding: 0,
-  fontSize: "clamp(1rem, 1vw, 1rem)"
+  fontSize: fontSize.lg,
+  fontWeight: "bolder",
 });
 
 globalStyle("ul", {
-  margin: "0 clamp(1.5em, 1.5vw, 1.5rem)",
-  padding: "0 0 clamp(0.5em, 0.5vw, 0.5rem) 0",
+  margin: `0 ${space.lg}`,
+  padding: `0 0 ${space.md} 0`,
 });
 
 
