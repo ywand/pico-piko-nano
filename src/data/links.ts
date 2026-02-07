@@ -3,6 +3,7 @@ export type LinkItem = {
   label: string;
   url: string;
   target?: "_self" | "_blank" | "_inline";
+  tags?: string;
 }
 
 export const categorys = {
@@ -22,6 +23,7 @@ export const links: LinkItem[] = [
     label: "Home",
     url: "/",
     target: "_self",
+    tags: "index,home,ホーム,トップページ"
   },
   {
     category: "main",
@@ -34,18 +36,21 @@ export const links: LinkItem[] = [
     label: "豆ジャンプ",
     url: "/game/G0001_kaboom_jump.html",
     target: "_self",
+    tags: "game,ゲーム,kaboom,ジャンプアクション",
   },
   {
     category: "game",
     label: "ブロック崩し",
     url: "/game/G0002_blockBreaking.html",
     target: "_self",
+    tags: "game,ゲーム,ブロック崩し,p5.js",
   },
   {
     category: "game",
     label: "ランダムお絵かき",
     url: "/game/G0003_randomDraw.html",
     target: "_self",
+    tags: "お絵かき,ドロー,ランダム,p5.js",
   },
   {
     category: "tool",
@@ -64,6 +69,7 @@ export const links: LinkItem[] = [
     label: "MarkDownEditor",
     url: "/tool/T0003_MarkDownEditor.html",
     target: "_self",
+    tags: "マークダウン,md,MarkDown,エディタ",
   },
   {
     category: "dev",
@@ -79,8 +85,14 @@ export const links: LinkItem[] = [
   },
   {
     category: "dev",
-    label: "github",
+    label: "GitHub",
     url: "https://github.com/",
+    target: "_blank",
+  },
+  {
+    category: "dev",
+    label: "Visual Studio Code",
+    url: "https://code.visualstudio.com/",
     target: "_blank",
   },
   {

@@ -17,12 +17,13 @@
         body {
             margin: 0;
             padding: 0;
+            font-size: 16px;
         }
 
         .box {
             float: left;
             width: 30vw;
-            height: 95vh;
+            height: 90vh;
             margin: 5px;
         }
 
@@ -35,7 +36,7 @@
         textarea {
             font-size: 16px;
             width: 100%;
-            height: 100%;
+            height: 95vh;
         }
 
         #pa {
@@ -60,7 +61,15 @@
         }
 
         #sample {
-            font-size: 8px;
+            font-size: 16px;
+            font-weight: normal;
+            color: #5555FF;
+        }
+
+        #clear {
+            font-size: 16px;
+            font-weight: normal;
+            color: #009900;
         }
     </style>
 </head>
@@ -69,7 +78,11 @@
     <header>MarkDownEditor │ <a href="/">Pico-Piko-Nano</a></header>
     <div class="boxContainer">
         <div class="box" id='editor'>
-            <h2>Editor　<span id="sample">→sample</span> </h2>
+            <h2>
+                Editor　
+                <span id="sample">[sample]</span>
+                <span id="clear">[clear]</span>
+            </h2>
             <textarea class='ta' onkeypress="sync()"></textarea>
         </div>
         <div class="box" id='html'>
@@ -92,9 +105,11 @@
     const el_html = document.querySelector('#html .ta');
     const el_preview = document.querySelector('#pa');
     const el_sample = document.querySelector('#sample');
+    const el_clear = document.querySelector('#clear');
 
-    // 改行時に更新
+    //入力状態の確定
     const sync = function (init) {
+        // 改行時に更新
         if (init != true && event.keyCode != 13) {
             return;
         }
@@ -104,15 +119,14 @@
 
         const value = el_editor.value;   // テキストエリアから値を取得
         const md = marked(value);       // マークダウンに変換
-        console.log(md);                // コンソールに出力
+        //console.log(md);                // コンソールに出力
 
         el_html.value = md;  // htmlタグの表示
         el_preview.innerHTML = md;       //　プレビュー表示
     }
 
     window.onload = function () {
-
-        if (access_count() == 1) {
+        if (access_count() == 1 || el_editor.value.length == 0) {
             el_editor.value = sample_text;
         }
 
@@ -127,6 +141,14 @@
     el_sample.onclick = function () {
         console.log("sample click");
         el_editor.value = sample_text;
+        sync(true);
+    };
+
+    // クリアテキストのクリック
+    el_clear.onclick = function () {
+        console.log("clear click");
+        el_editor.value = "";
+        sync(false);
     };
 
     // アクセス回数カウント
@@ -139,9 +161,8 @@
     }
 
     // 以下はヒアドキュメント形式のサンプル文字列
-    const sample_text = `
-# MarkDown Editor
-## 改行するとブラウザに保存されます
+    const sample_text = `# MarkDown Editor
+## 改行するとプレビュー更新＋ブラウザ保存されます
 ### 見出し
 #### サンプル
 
