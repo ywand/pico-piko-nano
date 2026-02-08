@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { lightTheme, darkTheme } from "./styles/theme.css";
 import { Routes, Route } from "react-router-dom";
 import Home from "@/pages/Home";
 import Timer from "@/pages/Timer";
