@@ -72,6 +72,13 @@ export const links: LinkItem[] = [
     tags: "マークダウン,md,MarkDown,エディタ",
   },
   {
+    category: "tool",
+    label: "時計",
+    url: "/Timer",
+    target: "_self",
+    tags: "時計,タイマー",
+  },
+  {
     category: "dev",
     label: "React",
     url: "https://react.dev",

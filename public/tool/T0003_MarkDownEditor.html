@@ -114,8 +114,12 @@
             return;
         }
 
-        // ブラウザのローカルストレージに保存
-        localStorage.setItem('md', el_editor.value);
+        if (el_editor.value !== sample_text &&
+            el_editor.value.length > 0
+        ) {
+            // ブラウザのローカルストレージに保存
+            localStorage.setItem('md', el_editor.value);
+        }
 
         const value = el_editor.value;   // テキストエリアから値を取得
         const md = marked(value);       // マークダウンに変換

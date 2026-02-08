@@ -14,7 +14,7 @@ function Header({ title }: HeaderProps) {
 
   return (
     <header>
-      <h1>{SITE_CONFIG.title}</h1>
+      <h1>{title} | <a href="/">{SITE_CONFIG.title}</a></h1>
     </header>
   );
 }

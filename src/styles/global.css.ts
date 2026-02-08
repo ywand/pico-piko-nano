@@ -54,6 +54,11 @@ globalStyle("#root", {
   padding: 0,
 });
 
+globalStyle(".bigFont", {
+  fontSize: "50px",
+  fontWeight: "bold",
+});
+
 globalStyle("header", {
   margin: 0,
   padding: 0,
