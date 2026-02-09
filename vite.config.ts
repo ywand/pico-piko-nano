@@ -31,13 +31,7 @@ export default defineConfig({
         theme_color: "#FAFAFA",
         icons: [
           {
-            src: "/assets/favicon-128.png",
-            sizes: "128x128",
-            type: "image/png",
-            purpose: "any maskable"
-          },
-          {
-            src: "/assets/favicon.png",
+            src: "/assets/favicon-512.png",
             sizes: "512x512",
             type: "image/png",
             purpose: "any maskable"
