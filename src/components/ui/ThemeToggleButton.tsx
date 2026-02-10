@@ -19,9 +19,11 @@ function ThemeToggleButton({ isDark, onToggleTheme }: Props) {
         fontSize: fontSize.xl,
         backgroundColor: "transparent",
       }}
-      aria-label="Toggle theme">
-      {isDark ? "🌞" : "🌛"}
-    </button>
+      aria-label="Toggle theme"
+      title={isDark ? "ライトモードへ切り替え" : "ダークモードへ切り替え"}
+    >
+      {isDark ? "🌛" : "🌞"}
+    </button >
   );
 }
 

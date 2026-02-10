@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "@/pages/Home";
 import Timer from "@/pages/Timer";
+import Calendar from "./pages/Calender";
 
 function App() {
   const [isDark, setIsDark] = useState(() => {
@@ -26,8 +27,12 @@ function App() {
         element={<Home isDark={isDark} onToggleTheme={toggleTheme} />}
       />
       <Route
-        path="/timer"
+        path="/Timer"
         element={<Timer isDark={isDark} onToggleTheme={toggleTheme} />}
+      />
+      <Route
+        path="/Calender"
+        element={<Calendar isDark={isDark} onToggleTheme={toggleTheme} />}
       />
     </Routes>
   );

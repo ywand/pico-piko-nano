@@ -23,6 +23,7 @@ export function LinkList() {
                   href={item.url}
                   target={item.target ?? "_self"}
                   rel={item.target === "_blank" ? "noopener noreferrer" : undefined}
+                  title={item.description}
                 >
                   {item.label}
                 </a>

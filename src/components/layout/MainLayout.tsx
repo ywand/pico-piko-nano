@@ -4,7 +4,6 @@ import { container } from "@/styles/container.css";
 import Header from "../ui/Header";
 import ThemeToggleButton from "../ui/ThemeToggleButton"
 
-
 type Props = {
   title: string;
   isDark: boolean;
