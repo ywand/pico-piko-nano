@@ -120,7 +120,18 @@ function anime() {
   setColor();
   clickPos(x, y);
   move(x, y);
-  text("devR:" + dev.alpha + "/" + dev.beta + "/" + dev.gamma, 8, 8);
+  text("devR:" + format1Space(dev.alpha, 6) + "/"
+    + format1Space(dev.beta, 6) + "/"
+    + format1Space(dev.gamma, 6), 8, 8
+  );
+}
+
+function format1Space(value, width = 5) {
+  const n = Number(value) || 0;
+  const sign = n >= 0 ? "+" : "-";
+  const abs = Math.abs(n).toFixed(1);
+
+  return sign + abs.padStart(width - 1, "0");
 }
 
 function checkPos(val, size, min, max) {
