@@ -13,7 +13,7 @@ var n = 0;
 
 class Stat {
   constructor() {
-    this.num = R(300, 500);
+    this.num = R(500, 500);
     this.size = R(1, 5);
     this.speed = 5;
     this.time = 0.5;
@@ -85,6 +85,7 @@ function setup() {
     y[i] = R(0, windowHeight);
   }
 
+  setupDevice();
 }
 
 
@@ -299,4 +300,35 @@ function rbool(bool) {
     return false;
   }
   return true;
+}
+
+function getDeviceR(){
+  window.addEventListener("deviceorientation", event => {
+    const { alpha, beta, gamma } = event;
+    console.log({ alpha, beta, gamma });
+  });
+}
+
+function setupDevice() {
+  if (
+    typeof DeviceOrientationEvent !== "undefined" &&
+    typeof DeviceOrientationEvent.requestPermission === "function"
+  ) {
+    // iOS Safari
+    DeviceOrientationEvent.requestPermission()
+      .then(state => {
+        if (state === "granted") {
+          window.addEventListener("deviceorientation", onOrientation);
+        }
+      })
+      .catch(console.error);
+  } else {
+    // Android / PC
+    window.addEventListener("deviceorientation", onOrientation);
+  }
+}
+
+function onOrientation(event) {
+  const { alpha, beta, gamma } = event;
+  console.log(alpha, beta, gamma);
 }
