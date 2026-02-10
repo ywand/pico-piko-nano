@@ -120,6 +120,7 @@ function anime() {
   setColor();
   clickPos(x, y);
   move(x, y);
+  text("devR:" + dev.alpha + "/" + dev.beta + "/" + dev.gamma, 8, 8);
 }
 
 function checkPos(val, size, min, max) {
@@ -140,14 +141,14 @@ function setColor() {
 
 function setRandomColor() {
   let r;
-  if (stat.count%100==0){
-    stat.r=Math.max(0, Math.min(255, stat.r + R(-10,10)));
+  if (stat.count % 100 == 0) {
+    stat.r = Math.max(0, Math.min(255, stat.r + R(-10, 10)));
   }
-  if (stat.count%100==0){
-    stat.g=Math.max(0, Math.min(255, stat.g + R(-10,10)));
+  if (stat.count % 100 == 0) {
+    stat.g = Math.max(0, Math.min(255, stat.g + R(-10, 10)));
   }
-  if (stat.count%100==0){
-    stat.b=Math.max(0, Math.min(255, stat.b + R(-10,10)));
+  if (stat.count % 100 == 0) {
+    stat.b = Math.max(0, Math.min(255, stat.b + R(-10, 10)));
   }
 }
 
@@ -233,8 +234,8 @@ function move(lsx, lsy) {
   for (let i = 0; i < stat.num; i++) {
     lsx[i] += R(-stat.speed, stat.speed);
     lsy[i] += R(-stat.speed, stat.speed);
-    if (stat.gravitySwitch==true && 0 < stat.gravity) {
-        lsy[i] += stat.gravity;
+    if (stat.gravitySwitch == true && 0 < stat.gravity) {
+      lsy[i] += stat.gravity;
     }
     lsx[i] = checkPos(lsx[i], stat.size, 0, windowWidth);
     lsy[i] = checkPos(lsy[i], stat.size, 0, windowHeight);
@@ -302,13 +303,6 @@ function rbool(bool) {
   return true;
 }
 
-function getDeviceR(){
-  window.addEventListener("deviceorientation", event => {
-    const { alpha, beta, gamma } = event;
-    console.log({ alpha, beta, gamma });
-  });
-}
-
 function setupDevice() {
   if (
     typeof DeviceOrientationEvent !== "undefined" &&
@@ -326,9 +320,21 @@ function setupDevice() {
     // Android / PC
     window.addEventListener("deviceorientation", onOrientation);
   }
+  dev = new DeviceData();
+}
+
+class DeviceData {
+  constructor() {
+    this.alpha = 0;
+    this.beta = 0;
+    this.gamma = 0;
+  }
 }
 
 function onOrientation(event) {
   const { alpha, beta, gamma } = event;
-  console.log(alpha, beta, gamma);
+  dev.alpha = alpha;
+  dev.beta = beta;
+  dev.gamma = gamma;
+  console.log(dev);
 }
