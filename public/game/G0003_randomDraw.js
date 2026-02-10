@@ -245,7 +245,7 @@ function move(lsx, lsy) {
   let gx = 0;
   let gy = stat.gravity;
   if (dev.gamma != 0) {
-    gx = stat.gravity * clampAngle90(dev.gamma) / 90;
+    gx = -stat.gravity * clampAngle90(dev.gamma) / 90;
   }
   if (dev.beta != 0) {
     gy = gy * clampAngle90(dev.beta) / 90;
