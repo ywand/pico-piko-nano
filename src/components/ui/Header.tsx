@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { SITE_CONFIG } from "@/data/siteConfig";
-import { headerStyle } from "@/styles/header.css";
+import { headerStyle } from "@/styles/headerStyle"
 
 type HeaderProps = {
   title: string;
