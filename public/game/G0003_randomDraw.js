@@ -29,7 +29,7 @@ class Stat {
     this.clear = false;
     this.stop = false;
     this.reset = false;
-    this.gravity = R(0, 5);
+    this.gravity = R(0, 10);
     this.RandomColSwitch = true;
     this.gravitySwitch = true;
     this.dbg = 0;
@@ -242,17 +242,42 @@ function keyPressed() {
 }
 
 function move(lsx, lsy) {
+  let gx = 0;
+  let gy = stat.gravity;
+  if (dev.gamma != 0) {
+    gx = stat.gravity * clampAngle90(dev.gamma) / 90;
+  }
+  if (dev.beta != 0) {
+    gy = gy * clampAngle90(dev.beta) / 90;
+  }
+
   for (let i = 0; i < stat.num; i++) {
     lsx[i] += R(-stat.speed, stat.speed);
     lsy[i] += R(-stat.speed, stat.speed);
-    if (stat.gravitySwitch == true && 0 < stat.gravity) {
-      lsy[i] += stat.gravity;
+    if (stat.gravitySwitch == true) {
+      lsx[i] += gx;
+      lsy[i] += gy;
     }
     lsx[i] = checkPos(lsx[i], stat.size, 0, windowWidth);
     lsy[i] = checkPos(lsy[i], stat.size, 0, windowHeight);
     dShape(stat.shape, lsx[i], lsy[i], stat.size, stat.size);
   }
 }
+
+function clampAngle90(angle) {
+  let a = angle;
+
+  // 正規化（保険）
+  if (a > 180) a -= 360;
+  if (a < -180) a += 360;
+
+  // ±90°で折り返す
+  if (a > 90) a = 180 - a;
+  if (a < -90) a = -180 - a;
+
+  return a;
+}
+
 
 function dShape(n, x, y, w, h) {
   stat.d = parseInt(stat.count / 100) % 5;
