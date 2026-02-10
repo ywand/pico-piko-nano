@@ -338,9 +338,9 @@ function onOrientation(event) {
     dev.beta = 0.0;
     dev.gamma = 0.0;
   } else {
-    dev.alpha = Math.floo(alpha * 10);
-    dev.beta = Math.floo(beta);
-    dev.gamma = Math.floo(gamma);
+    dev.alpha = Math.floor(alpha * 10) / 10;
+    dev.beta = Math.floor(beta * 10) / 10;
+    dev.gamma = Math.floor(gamma * 10) / 10;
   }
   console.log(dev);
 }
