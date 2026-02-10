@@ -1,0 +1,8 @@
+import { style } from "@vanilla-extract/css";
+import { space } from "./global.css";
+
+export const headerStyle = style({
+  margin: `0 ${space.xs}`,
+  padding: `0 ${space.xs}`,
+  borderBottom: "1px solid #ccc",
+});

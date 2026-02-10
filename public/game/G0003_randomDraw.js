@@ -3,24 +3,24 @@ console.log("start");
 
 var gui;
 var stat;
-const NUM = 500;
+const NUM = 2000;
 const FF = 255;
 const MAX_COUNT = 10000;
-const MAX_SIZE = 500;
+const MAX_SIZE = 50;
 var x = [NUM];
 var y = [NUM];
 var n = 0;
 
 class Stat {
   constructor() {
-    this.num = R(50, 50);
-    this.size = R(10, 10);
+    this.num = R(300, 500);
+    this.size = R(1, 5);
     this.speed = 5;
     this.time = 0.5;
     this.wait = 0;
     this.r = R(0, FF);
     this.g = R(0, FF);
-    this.b = R(200, FF);
+    this.b = R(0, FF);
     this.bw = 0;
     this.shape = R(1, 1);
     this.line = R(0, 0);
@@ -29,7 +29,9 @@ class Stat {
     this.clear = false;
     this.stop = false;
     this.reset = false;
-    this.gravity = R(5, 5);
+    this.gravity = R(0, 5);
+    this.RandomColSwitch = true;
+    this.gravitySwitch = true;
     this.dbg = 0;
   }
 }
@@ -59,7 +61,7 @@ function setup() {
   gui.add(stat, 'num', 1, NUM).listen();
   gui.add(stat, 'size', 1, MAX_SIZE).listen();
   gui.add(stat, 'speed', 0, 30).listen();
-  gui.add(stat, 'gravity', 0, 100).step(0.1).listen();
+  gui.add(stat, 'gravity', 0, 10).step(0.1).listen();
   gui.add(stat, 'time', 0.1, 10).listen();
   gui.add(stat, 'wait', 0, 10).listen();
   gui.add(stat, 'r', 0, FF).listen();
@@ -70,6 +72,8 @@ function setup() {
   gui.add(stat, 'line', 0, 10).listen();
   gui.add(stat, 'col', 0, FF).listen();
   gui.add(stat, 'count', 0, MAX_COUNT).listen();
+  gui.add(stat, 'RandomColSwitch').listen();
+  gui.add(stat, 'gravitySwitch').listen();
   gui.add(stat, 'clear').listen();
   gui.add(stat, 'stop').listen();
   //gui.add(stat, 'reset').listen();
@@ -111,6 +115,7 @@ function draw() {
 }
 
 function anime() {
+  setRandomColor();
   setColor();
   clickPos(x, y);
   move(x, y);
@@ -130,6 +135,19 @@ function setColor() {
   strokeWeight(stat.line);
   stroke(stat.bw * stat.r, stat.bw * stat.g, stat.bw * stat.b);
   fill(stat.r + stat.col + FF * stat.bw, stat.g + stat.col + FF * stat.bw, stat.b + stat.col + FF * stat.bw);
+}
+
+function setRandomColor() {
+  let r;
+  if (stat.count%100==0){
+    stat.r=Math.max(0, Math.min(255, stat.r + R(-10,10)));
+  }
+  if (stat.count%100==0){
+    stat.g=Math.max(0, Math.min(255, stat.g + R(-10,10)));
+  }
+  if (stat.count%100==0){
+    stat.b=Math.max(0, Math.min(255, stat.b + R(-10,10)));
+  }
 }
 
 
@@ -214,8 +232,8 @@ function move(lsx, lsy) {
   for (let i = 0; i < stat.num; i++) {
     lsx[i] += R(-stat.speed, stat.speed);
     lsy[i] += R(-stat.speed, stat.speed);
-    if (0 < stat.gravity) {
-      lsy[i] += stat.gravity;
+    if (stat.gravitySwitch==true && 0 < stat.gravity) {
+        lsy[i] += stat.gravity;
     }
     lsx[i] = checkPos(lsx[i], stat.size, 0, windowWidth);
     lsy[i] = checkPos(lsy[i], stat.size, 0, windowHeight);

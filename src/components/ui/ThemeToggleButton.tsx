@@ -12,8 +12,8 @@ function ThemeToggleButton({ isDark, onToggleTheme }: Props) {
     <button onClick={onToggleTheme}
       style={{
         position: "fixed",
-        top: space.md,
-        right: space.md,
+        top: space.xs,
+        right: space.xs,
         zIndex: 1000,
         border: 0,
         fontSize: fontSize.xl,

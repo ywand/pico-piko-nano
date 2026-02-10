@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { SITE_CONFIG } from "@/data/siteConfig"
+import { SITE_CONFIG } from "@/data/siteConfig";
+import { headerStyle } from "@/styles/header.css";
 
 type HeaderProps = {
   title: string;
@@ -14,7 +15,9 @@ function Header({ title }: HeaderProps) {
 
   return (
     <header>
-      <h1>{title} | <a href="/">{SITE_CONFIG.title}</a></h1>
+      <div className={headerStyle}>
+        <h1>{title} | <a href="/">{SITE_CONFIG.title}</a></h1>
+      </div>
     </header>
   );
 }
