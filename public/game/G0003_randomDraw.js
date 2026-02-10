@@ -333,8 +333,14 @@ class DeviceData {
 
 function onOrientation(event) {
   const { alpha, beta, gamma } = event;
-  dev.alpha = alpha;
-  dev.beta = beta;
-  dev.gamma = gamma;
+  if (alpha == null || beta == null || gamma == null) {
+    dev.alpha = 0.0;
+    dev.beta = 0.0;
+    dev.gamma = 0.0;
+  } else {
+    dev.alpha = Math.floo(alpha * 10);
+    dev.beta = Math.floo(beta);
+    dev.gamma = Math.floo(gamma);
+  }
   console.log(dev);
 }
