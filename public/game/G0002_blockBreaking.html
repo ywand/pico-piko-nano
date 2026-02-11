@@ -33,15 +33,23 @@
 <body>
   <div class="uk-background-muted">blockBreaking | <a href="/">Pico-Piko-Nano</a></div>
   <script type="text/javascript">
-    let bar, ball
     let balls
-    let blocklist = []
     let blocks
-    let clearCount = 0
+    let stage = 1
     let remCount = 0
+    let remPoint = 0
+    let stageBonus = 0
+    let frameCount = 0
+    let highScore_flag = false
+    const ADD_BLOCK_NUM = 2
     const SPEED = 8
     const DEBUG = false
     const SIZE = 10
+    const MAX_STAGE = 5
+    const TEXT_SIZE = 14
+    const TEXT_SIZE_BIG = 24
+    const REM_BLOCK_POINT = 2
+    const MISS_BALL_POINT = 2
 
     const initCanvas = () => {
       const WH = windowHeight * 1.00 - 40
@@ -55,9 +63,16 @@
     const initSpr = () => {
       bar = createSprite(width / 2, height * 0.9, SIZE * 10, SIZE)
       bar.shapeColor = color(255)
+      bar.setCollider(
+        "rectangle",
+        0, 0,
+        bar.width + 4,
+        bar.height + 4
+      )
       bar.debug = DEBUG
     }
     const initBall = () => {
+      let ball
       if (!balls) balls = new Group()
       ball = createSprite(bar.position.x, height * 0.6, SIZE, SIZE)
       ball.shapeColor = color(255)
@@ -68,34 +83,76 @@
       //ball.immovable = true
     }
     const initBlock = () => {
-      let COL = 5 + clearCount * 5
-      let ROW = 5 + clearCount * 5
+      let COL = 1 + stage * ADD_BLOCK_NUM
+      let ROW = 1 + stage * ADD_BLOCK_NUM
       const BW = width / COL
       const BH = height / 2 / ROW
-      blocklist = []
       blocks = new Group()
       for (i = 0; i < COL; i++) {
         for (j = 0; j < ROW; j++) {
           const block = createSprite(BW * i + BW / 2, BH * j + BH / 2, BW, BH)
+          block._dead = false
+          block.visible = true
+          block.setCollider(
+            "rectangle",
+            0, 0,
+            block.width + 4,
+            block.height + 4
+          )
           block.debug = DEBUG
           blocks.add(block)
-          blocklist.push(block)
         }
       }
     }
 
     //p5.js 初期化関数
     var setup = () => {
-      console.log('setup')
+      console.log('setup start')
       initCanvas()
       initSpr()
+      getHightScore()
       initBall()
       initBlock()
+      console.log('setup end')
     }
 
+    let highScore = {
+      point: 0,
+      date: "",
+    }
+
+    //ハイスコア取得
+    const getHightScore = () => {
+      highScore.point = localStorage.getItem("blockBreaking_HightScore_point")
+      highScore.date = localStorage.getItem("blockBreaking_HightScore_date")
+      if (highScore.point == null) {
+        //初回ゲーム起動時にハイスコアの設定がない場合に初期値設定
+        setHightScore(0, "")
+      }
+    }
+    //ハイスコア設定
+    const setHightScore = (point, date) => {
+      localStorage.setItem("blockBreaking_HightScore_point", point)
+      localStorage.setItem("blockBreaking_HightScore_date", date)
+    }
+
+    //更新処理
     const update = () => {
+      frameCount++
       mousePos()
       areaCheck()
+      ballsReset()
+      blockCollision()
+      hitBar()
+      stageClear()
+    }
+
+    //ボールの判定初期化
+    const ballsReset = () => {
+      balls.forEach(ball => {
+        ball._hitBar = false
+        ball._hitBlock = 0
+      })
     }
 
     //ボールの位置判定
@@ -112,6 +169,11 @@
         if (ball.position.y >= height) {
           ball.position.y = height
           ball.velocity.y *= -1
+
+          //ボールが地面についたときミスとしてポイントをマイナス
+          if (blocks.length > 0) {
+            remPoint -= MISS_BALL_POINT
+          }
         }
         else if (ball.position.y <= 0) {
           ball.position.y = 0
@@ -129,38 +191,97 @@
       })
     }
 
-    const ballsPos = () => {
+    const hitBar = () => {
+      //バーとの衝突判定
       balls.forEach(ball => {
         if (ball.overlap(bar)) {
+          if (ball._hitBar == true) return
           if (ball.position.x < bar.position.x) {
             swing(ball, bar)
+            ball._hitBar = true
           }
           else if (ball.position.x > bar.position.x) {
             swing(ball, bar)
+            ball._hitBar = true
           }
           else {
             ball.velocity.x = 0
           }
           ball.velocity.y *= -1
         }
-        if (ball.position.y > height / 2) {
-          //return
-        }
-        blocklist.forEach((bl, index) => {
-          bl.overlap(ball, () => {
-            //bl.shapeColor = color(255)
-            bl.remove()
-            remCount += 1
-
-            //ブロックが無くなったら初期化
-            if (blocks.length == 0) {
-              clearCount += 1
-              initBlock()
-              initBall()
-            }
-          })
-        })
       })
+    }
+
+    const blockCollision = () => {
+      const BLOCK_CHECK_Y = height * 0.6
+      for (let i = 0; i < balls.length; i++) {
+        let ball = balls[i]
+        if (ball.position.y > BLOCK_CHECK_Y) {
+          continue
+        }
+
+        //ブロックとの衝突判定
+        ball.overlap(blocks, (ball, block) => {
+          //if (ball._hitBlock > 10) return
+          if (ball._hitBar) return
+
+          ball._hitBlock++
+          if (ball._hitBlock == 1) {
+            ball.velocity.y *= -1
+          }
+          block.visible = false
+          block._dead = true
+          remCount++
+          remPoint += 2 + stageBonus
+        })
+      }
+      //ブロック削除
+      for (let i = blocks.length - 1; i >= 0; i--) {
+        const block = blocks[i]
+        if (block._dead) {
+          block.remove()
+        }
+      }
+    }
+
+    const stageClear = () => {
+      //ブロックが無くなったら初期化
+      if (blocks.length == 0) {
+        if (stage < MAX_STAGE) {
+          stage++
+          initBlock()
+          initBall()
+          stageBonus = Math.round(stage / 5)
+        } else {
+          gameClear()
+        }
+      }
+    }
+
+
+    const gameClear = () => {
+      if (stage >= MAX_STAGE) {
+        fill(255)
+        textSize(TEXT_SIZE_BIG)
+        text("ゲームクリア！", 0, height / 2)
+        text("もう一度遊ぶ場合はリロード", 0, height / 2 + TEXT_SIZE_BIG)
+
+        //ハイスコア判定
+        if (highScore.point < remPoint) {
+          const now = new Date()
+          const strYMD =
+            now.getFullYear() + "/" +
+            (now.getMonth() + 1).toString().padStart(2, "0") + "/" +
+            now.getDate().toString().padStart(2, "0")
+          setHightScore(remPoint, strYMD)
+          highScore_flag = true
+          getHightScore()
+          console.log("最高得点更新:", remPoint, strYMD)
+        }
+        if (highScore_flag) {
+          text("最高得点を更新しました！！", 0, height / 2 - TEXT_SIZE_BIG)
+        }
+      }
     }
 
     // マウス位置でバーを移動
@@ -180,17 +301,17 @@
     var draw = () => {
       background(0)
       update()
-      mousePos()
-      ballsPos()
       drawSprites()
 
       //background(0);
-      const TSIZE = max(16, width / 50)
-      textSize(TSIZE)
+      textSize(TEXT_SIZE)
       fill(255)
-      let gameinfo = "残：" + blocks.length + "／崩：" + remCount + "／クリア：" + clearCount
 
-      text(gameinfo, 10, height - TSIZE);
+      let gameinfo = "残箱：" + blocks.length + "／崩箱：" + remCount + "／点：" + remPoint + "／面：" + stage
+      text(gameinfo, 10, height - TEXT_SIZE)
+      text("最高得点：" + highScore.point + "／記録日：" + highScore.date, 10, height)
+      text(Math.round(frameCount / 30), 0, TEXT_SIZE)
+
     }
   </script>
   <footer></footer>
