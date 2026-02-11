@@ -41,6 +41,7 @@
     let stageBonus = 0
     let frameCount = 0
     let highScore_flag = false
+    let game_clear_flag = false
     const ADD_BLOCK_NUM = 2
     const SPEED = 8
     const DEBUG = false
@@ -50,6 +51,7 @@
     const TEXT_SIZE_BIG = 24
     const REM_BLOCK_POINT = 2
     const MISS_BALL_POINT = 2
+    const FRAME_MAX = 30
 
     const initCanvas = () => {
       const WH = windowHeight * 1.00 - 40
@@ -57,7 +59,7 @@
       //const WH = min(windowWidth * 0.98, windowHeight * 0.98)
       //const WW = min(windowWidth * 0.98, windowHeight * 0.98)
       createCanvas(WW, WH)
-      frameRate(30)
+      frameRate(FRAME_MAX)
     }
 
     const initSpr = () => {
@@ -119,26 +121,34 @@
     let highScore = {
       point: 0,
       date: "",
+      sec: 0,
     }
 
     //ハイスコア取得
     const getHightScore = () => {
       highScore.point = localStorage.getItem("blockBreaking_HightScore_point")
       highScore.date = localStorage.getItem("blockBreaking_HightScore_date")
-      if (highScore.point == null) {
+      highScore.sec = localStorage.getItem("blockBreaking_HightScore_sec")
+      if (highScore.point == null || highScore == undefined) {
         //初回ゲーム起動時にハイスコアの設定がない場合に初期値設定
-        setHightScore(0, "")
+        highScore.point = 0
+        highScore.date = "0000-00-00"
+        highScore.sec = 0
+        setHightScore(highScore.point, highScore.date, highScore.sec)
       }
     }
     //ハイスコア設定
-    const setHightScore = (point, date) => {
+    const setHightScore = (point, date, sec) => {
       localStorage.setItem("blockBreaking_HightScore_point", point)
       localStorage.setItem("blockBreaking_HightScore_date", date)
+      localStorage.setItem("blockBreaking_HightScore_sec", sec)
     }
 
     //更新処理
     const update = () => {
-      frameCount++
+      if (game_clear_flag == false) {
+        frameCount++
+      }
       mousePos()
       areaCheck()
       ballsReset()
@@ -171,7 +181,7 @@
           ball.velocity.y *= -1
 
           //ボールが地面についたときミスとしてポイントをマイナス
-          if (blocks.length > 0) {
+          if (game_clear_flag == false) {
             remPoint -= MISS_BALL_POINT
           }
         }
@@ -251,7 +261,9 @@
           stage++
           initBlock()
           initBall()
-          stageBonus = Math.round(stage / 5)
+
+          //点数をステージクリア数で加算
+          stageBonus = Math.round(stage / 2)
         } else {
           gameClear()
         }
@@ -261,6 +273,7 @@
 
     const gameClear = () => {
       if (stage >= MAX_STAGE) {
+        game_clear_flag = true
         fill(255)
         textSize(TEXT_SIZE_BIG)
         text("ゲームクリア！", 0, height / 2)
@@ -270,10 +283,10 @@
         if (highScore.point < remPoint) {
           const now = new Date()
           const strYMD =
-            now.getFullYear() + "/" +
-            (now.getMonth() + 1).toString().padStart(2, "0") + "/" +
+            now.getFullYear() + "-" +
+            (now.getMonth() + 1).toString().padStart(2, "0") + "-" +
             now.getDate().toString().padStart(2, "0")
-          setHightScore(remPoint, strYMD)
+          setHightScore(remPoint, strYMD, Math.round(frameCount / FRAME_MAX))
           highScore_flag = true
           getHightScore()
           console.log("最高得点更新:", remPoint, strYMD)
@@ -307,10 +320,10 @@
       textSize(TEXT_SIZE)
       fill(255)
 
-      let gameinfo = "残箱：" + blocks.length + "／崩箱：" + remCount + "／点：" + remPoint + "／面：" + stage
+      let gameinfo = "残箱：" + blocks.length + "／崩箱：" + remCount + "／得点：" + remPoint + "／面：" + stage
       text(gameinfo, 10, height - TEXT_SIZE)
-      text("最高得点：" + highScore.point + "／記録日：" + highScore.date, 10, height)
-      text(Math.round(frameCount / 30), 0, TEXT_SIZE)
+      text("最高得点：" + highScore.point + "／記録日：" + highScore.date + "／攻略秒数：" + highScore.sec, 10, height)
+      text(Math.round(frameCount / 30) + "秒", 0, TEXT_SIZE)
 
     }
   </script>
