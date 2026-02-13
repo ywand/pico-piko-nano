@@ -30,9 +30,13 @@
       <script type="module">
         import kaboom from "https://unpkg.com/kaboom@3000.0.1/dist/kaboom.mjs";
 
-        let touchLeft = false;
-        let touchRight = false;
         const DEBUG = false;
+        const fontSize = {
+          sm: 12,
+          md: 16,
+          lg: 32,
+        }
+        let stageClearFlag = false;
 
         // 親要素のサイズを取得
         const container = document.getElementById("main");
@@ -40,7 +44,7 @@
         const ch = container.clientHeight;
         const cv = document.createElement("canvas");
         container.appendChild(cv);
-        kaboom({
+        const kab = kaboom({
           width: cw,
           height: ch,
           canvas: cv,
@@ -48,6 +52,7 @@
           gravity: 1000,
           fps: 30, // フレームレート固定
         });
+
         cv.tabIndex = 0;
         cv.focus();
         setGravity(1000);
@@ -55,13 +60,14 @@
         ).then(() => {
           console.log("全てのリソース読み込み完了");
         });
+        // UI用のレイヤーを先に作成
 
         const TILE_SIZE = 32;
         const tileDef = {
           "■": { solid: true, color: rgb(80, 80, 80) },   // 壁
           "宝": { solid: false, color: rgb(255, 200, 50) },
           "始": { start: true },
-          "終": { solid: true, color: rgb(255, 80, 80) },
+          "終": { solid: false, color: rgb(255, 80, 80) },
           "□": null,
         };
         const strMap = [
@@ -70,9 +76,9 @@
           "■■□□□□□□□□□□□□□□□■■",
           "■■□□□□□□□□□□□□□□□■■",
           "■■終■□□■□□■□■□□□□□■■",
-          "■■■□□□□□□□□■■□■□□■■",
-          "■■□□□□□□□□□□□□□□□■■",
-          "■■□□□■□□■□□□□□□□■■■",
+          "■■■□□■□□□□□■■□■□□■■",
+          "■■□□□■□□□□□□□□□□□■■",
+          "■■□□□■□■■□□□□□□□■■■",
           "■■■□□□□□□□□□□□□□□■■",
           "■■□□□□□□□□□■□□■□□■■",
           "■■□□□□□□■□□□□□□□□■■",
@@ -154,7 +160,7 @@
             + "\ntx:" + tx
             + "\nty:" + ty
             , {
-              size: 14,       // 文字サイズ
+              size: fontSize.sm,       // 文字サイズ
               font: "sinko",  // フォント名
               width: 100,     // 幅（折り返し用）
               align: "left" // 中央揃え
@@ -333,14 +339,61 @@
         })
 
         function PlayerCollideCheck() {
+          //宝との接触
           player.onCollide("treasure", (t) => {
             if (t.collected) return;
             t.collected = true;
             speed += 30;            // スピード上昇
             destroy(t);             // 宝を消す
-            debug.log("speed up: " + speed);
+            console.log("スピードアップ！: " + speed);
+          });
+          //ゴールエリアとの接触
+          player.onCollide("goal", (t) => {
+            if (t.collected) return;
+            t.collected = true;
+            destroy(t);             // ゴールを消す
+            console.log("ステージクリア！: ");
+            stageClearFlag = true;
+            const strStageClear = createTextArea("ステージクリア！", cw / 5, ch / 2, fontSize.lg, RED);
+
           });
         }
+
+        // テキストを作成する関数
+        function createTextArea(str, x = 0, y = 0, tsize = 16, col = BLACK) {
+          const textBox = add([
+            text(str, {
+              size: tsize,
+              font: "sinko",
+              width: cw,    // 必要に応じて折り返し幅を調整
+              align: "left",
+            }),
+            pos(x, y),        // 画面上の固定座標
+            color(col),
+            fixed(), // 画面スクロールに追従させる
+            z(100),  // 数値を大きくして手前に持ってくる
+          ]);
+
+          return textBox;
+        }
+
+        // 使用例：画面左上に固定表示
+        const strTime = createTextArea("【TIME】00:00", 2, 2, fontSize.md);
+        strTime.onUpdate(() => {
+          if (stageClearFlag) return
+
+          const elapsed = time(); // 起動時からの経過秒数
+          const mins = Math.floor(elapsed / 60).toString().padStart(2, "0");
+          const secs = Math.floor(elapsed % 60).toString().padStart(2, "0");
+          strTime.text = "【TIME】" + mins + ":" + secs;
+        });
+        const strSpeed = createTextArea("【SPEED】" + speed, 2, 2 + fontSize.md, fontSize.md);
+        strSpeed.onUpdate(() => {
+          const elapsed = time(); // 起動時からの経過秒数
+          const mins = Math.floor(elapsed / 60).toString().padStart(2, "0");
+          const secs = Math.floor(elapsed % 60).toString().padStart(2, "0");
+          strSpeed.text = "【SPEED】" + speed;
+        });
 
 
         function createDebugPlayerPos() {
