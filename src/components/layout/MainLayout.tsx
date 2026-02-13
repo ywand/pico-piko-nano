@@ -2,8 +2,8 @@ import type { ReactNode } from "react";
 import { lightTheme, darkTheme } from "@/styles/theme.css";
 import { container } from "@/styles/container.css";
 import MainHeader from "../ui/MainHeader";
+import MainFooter from "../ui/MainFooter";
 import ThemeToggleButton from "../ui/ThemeToggleButton";
-import MainFooter from "../ui/Mainfooter ";
 
 type Props = {
   title: string;
