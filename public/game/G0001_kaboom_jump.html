@@ -16,38 +16,44 @@
   <meta name="description" content="ミニゲームよりも小さな自作ゲーム集。">
   <meta name="robots" content="index, follow">
   <script src="https://kit.fontawesome.com/231789a504.js" crossorigin="anonymous"></script>
-  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" href="/favicon-512.png">
 </head>
 <body>
   <div class="wrapper">
-    <div class="header">
-      <h1 class="font-normal ">カブーンでジャンプ │ <a href="/">Pico-Piko-Nano</a></h1>
-    </div>
+    <header>
+      <div class="header">
+        <h1 class="font-normal ">カブーンでジャンプ │ <a href="/">Pico-Piko-Nano</a></h1>
+      </div>
+    </header>
     <div id="main">
       <script type="module">
         import kaboom from "https://unpkg.com/kaboom@3000.0.1/dist/kaboom.mjs";
 
+        let touchLeft = false;
+        let touchRight = false;
+        const DEBUG = true;
+
         // 親要素のサイズを取得
         const container = document.getElementById("main");
-        const w = container.clientWidth;
-        const h = container.clientHeight;
+        const cw = container.clientWidth;
+        const ch = container.clientHeight;
         const cv = document.createElement("canvas");
         container.appendChild(cv);
         kaboom({
-          width: w,
-          height: h,
+          width: cw,
+          height: ch,
           canvas: cv,  // 親要素にキャンバスを埋め込む
           background: [240, 240, 240], // 空色
           gravity: 1000, // ← ここで設定
-
         });
+        cv.tabIndex = 0;
+        cv.focus();
         setGravity(1000);
-
         loadSprite("bean", "../assets/bean.png");
 
 
         const TILE_SIZE = 32;
-
         const tileDef = {
           "■": { solid: true, color: rgb(80, 80, 80) },   // 壁
           "宝": { solid: false, color: rgb(255, 200, 50) },
@@ -55,8 +61,8 @@
           "終": { goal: true },
           "□": null,
         };
-
         const strMap = [
+          "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■",
           "■□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□■□□■□□□□□□□□□□□□□□■",
           "■□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□■□□■終□□□□□□□□□□□□□■",
           "■宝□□□□□□□□□□□□□□□□□□□□□□□□□□□□□■□□■■■□□□□□□□□□□□□■",
@@ -122,7 +128,6 @@
             });
           });
           return startPos;
-
         }
 
         // 文字を追加
@@ -144,7 +149,7 @@
         ]);
 
         game_info.onUpdate(() => {
-          console.log("onUp:" + tx + "/" + ty);
+          //console.log("onUp:" + tx + "/" + ty);
           game_info.text = "height:" + height().toFixed(1)
             + "\nwidth:" + width().toFixed(1)
             + "\ntx:" + tx
@@ -164,139 +169,149 @@
         ]);
         player.origin = "center";
 
-        const speed = 300;
+        const speed = 200;
+
+        const input = {
+          left: false,
+          right: false,
+          jump: false,
+          down: false,
+        }
+        let oldinput = {
+          left: false,
+          right: false,
+          jump: false,
+          down: false,
+        }
+
+        function inputLog() {
+          if (DEBUG) {
+            if (
+              input.left !== oldinput.left ||
+              input.right !== oldinput.right ||
+              input.jump !== oldinput.jump ||
+              input.down !== oldinput.down
+            ) {
+              console.log(input);
+              oldinput = { ...input };
+            }
+          }
+        }
+
+        function updatePlayerControl() {
+          inputLog();
+          if (input.left) {
+            player.move(-speed, 0);
+          }
+          if (input.right) {
+            player.move(speed, 0);
+          }
+          if (input.down) {
+            //降下はタッチやマウスで表現出来ないため無効化
+            player.move(0, speed / 2);
+          }
+          if (input.jump) {
+            if (player.isGrounded()) {
+              player.jump(speed * 2);
+            }
+            input.jump = false;
+          }
+        }
+
+        function keyBind(keys, prop) {
+          keys.forEach(k => {
+            onKeyDown(k, () => input[prop] = true);
+            onKeyRelease(k, () => input[prop] = false);
+          });
+        }
 
         //キー入力
-        onKeyDown("right", () => {
-          player.move(speed, 0);
-          player.origin = "center";
-          //player.scale.x = Math.abs(player.scale.x);  // 右向き
-        });
-        onKeyDown("d", () => {
-          player.move(speed, 0);
-          player.origin = "center";
-          //player.scale.x = Math.abs(player.scale.x);  // 右向き
-        });
-
-        onKeyDown("left", () => {
-          player.move(-speed, 0);
-          player.origin = "center";
-          //player.scale.x = -Math.abs(player.scale.x); // 左向き（反転）
-        });
-        onKeyDown("a", () => {
-          player.move(-speed, 0);
-          player.origin = "center";
-          //player.scale.x = -Math.abs(player.scale.x); // 左向き（反転）
-        });
-
-        onKeyDown("up", () => {
-          player.move(0, -speed);
-
-        });
-
-        onKeyDown("down", () => {
-          player.move(0, speed);
-
-        });
-
-        // ジャンプ
-        let jumpcount = 0;
-        onKeyPress("space", () => {
-          if (player.isGrounded()) {
-            player.jump(speed * 2);
-            jumpcount = 1;
-          } else if (jumpcount < 2) {
-            player.jump(speed * 2);
-            jumpcount = 2;
-          }
-        });
+        keyBind(["right", "d", "6"], "right");
+        keyBind(["left", "a", "4"], "left");
+        keyBind(["up", "w", "8", "space"], "jump");
+        keyBind(["down", "s", "2"], "down");
 
         // タッチから来た最後の時刻（ms）
         let lastTouchTime = 0;
 
         // タッチ処理
-        onTouchStart((pos, t) => {
-          lastTouchTime = Date.now();
-          // touch.pos は kaboom のスクリーン座標（ゲーム内座標）を返します
-          // touch.pos で座標
-          tx = pos.x.toFixed(1);
-          ty = pos.y.toFixed(1);
-          if (pos.x < width() / 2) {
-            player.move(-speed, 0);
-          } else if (pos.x > width() / 2) {
-            player.move(speed, 0);
+        onTouchStart(() => {
+          const tpos = touchPos();
+          if (tpos.x > cw * 0.7) {
+            input.right = true;
           }
-          if (pos.y < height() / 2) {
-            player.move(0, -speed);
-          } else if (pos.y > height() / 2) {
-            player.move(0, speed);
+          else if (tpos.x < cw * 0.3) {
+            input.left = true;
           }
-          if (player.isGrounded()) {
-            player.jump(speed * 2);
-            jumpcount = 1;
-          } else if (jumpcount < 2) {
-            player.jump(speed * 1.5);
-            jumpcount = 2;
+          if (tpos.y < ch * 0.49) {
+            input.jump = true;
+          } else if (tpos.y > ch * 0.6) {
+            input.down = true;
           }
+        });
+
+        onTouchEnd(() => {
+          input.right = false;
+          input.left = false;
+          input.jump = false;
+          input.down = false;
         });
 
         // マウスクリック処理
-        onMouseDown((pos) => {
-          // 直近にタッチがあれば（疑似クリックの可能性）、無視する
-          if (Date.now() - lastTouchTime < 100) {
-            return;
+        onMouseDown(() => {
+          const mpos = mousePos();
+          if (mpos.x > cw * 0.7) {
+            input.right = true;
           }
-          tx = pos.x;
-          ty = pos.y;
-          if (pos.x < width() / 2) {
-            player.move(-speed, 0);
-          } else if (pos.x > width() / 2) {
-            player.move(speed, 0);
+          else if (mpos.x < cw * 0.3) {
+            input.left = true;
           }
-          if (pos.y < height() / 2) {
-            player.move(0, -speed);
-          } else if (pos.y > height() / 2) {
-            player.move(0, speed);
-          }
-          if (player.isGrounded()) {
-            player.jump(speed * 2);
-            jumpcount = 1;
-          } else if (jumpcount < 2) {
-            player.jump(speed * 1.5);
-            jumpcount = 2;
+          if (mpos.y < ch * 0.49) {
+            input.jump = true;
+          } else if (mpos.y > ch * 0.6) {
+            input.down = true;
           }
         });
+
+        onMouseRelease(() => {
+          input.right = false;
+          input.left = false;
+          input.jump = false;
+          input.down = false;
+        });
+
+        //プレイヤー状態の更新
         player.onUpdate(() => {
           camPos(player.pos)
-
-          if (player.isGrounded()) {
-            jumpcount = 0;
-          }
+          updatePlayerControl()
         })
 
+        function createDebugPlayerPos() {
+          if (DEBUG == false) return
+          // 文字を追加
+          let strPpos = "pX: " + Math.floor(player.pos.x) + " / pY: " + Math.floor(player.pos.y);
 
-        // 文字を追加
-        const ppos = add([
-          text("pX" + player.pos.x + " / pY:" + player.pos.y, {
-            size: 12,       // 文字サイズ
-            font: "sinko",  // フォント名
-            width: 100,     // 幅（折り返し用）
-            align: "left" // 中央揃え
-          }),
-          pos(player.pos.x - player.width, player.pos.y - 20),      // 画面座標
-          color(10, 10, 10), // 文字色
-        ]);
+          const ppos = add([
+            text(strPpos, {
+              size: 12,       // 文字サイズ
+              font: "sinko",  // フォント名
+              width: 100,     // 幅（折り返し用）
+              align: "left" // 中央揃え
+            }),
+            pos(player.pos.x - player.width / 2, player.pos.y - player.height / 2),      // 画面座標
+            color(10, 10, 10), // 文字色
+          ]);
+          ppos.onUpdate(() => {
+            // pos はオブジェクトなので代入で更新
+            ppos.pos.x = player.pos.x - player.width / 2;
+            ppos.pos.y = player.pos.y - player.height / 2;
 
-        ppos.onUpdate(() => {
-          // pos はオブジェクトなので代入で更新
-          ppos.pos.x = player.pos.x - player.width / 2;
-          ppos.pos.y = player.pos.y - player.height / 2;
-
-          // 文字列も更新したい場合
-          ppos.text = "pX: " + Math.floor(player.pos.x) + " / pY: " + Math.floor(player.pos.y);
-        });
-
-
+            // 文字列も更新したい場合
+            strPpos = "pX: " + Math.floor(player.pos.x) + " / pY: " + Math.floor(player.pos.y);
+            ppos.text = strPpos;
+          });
+        }
+        createDebugPlayerPos();
 
       </script>
 
