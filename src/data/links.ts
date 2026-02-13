@@ -56,7 +56,7 @@ export const links: LinkItem[] = [
     url: "/game/G0003_randomDraw.html",
     target: "_self",
     tags: "お絵かき,ドロー,ランダム,p5.js",
-    description: "p5.jsをランダム描画",
+    description: "p5.jsを使用したランダム描画",
   },
   {
     category: "tool",
@@ -123,6 +123,20 @@ export const links: LinkItem[] = [
     url: "https://code.visualstudio.com/",
     target: "_blank",
     description: "外部サイト：コードエディタ",
+  },
+  {
+    category: "lib",
+    label: "Kaboom.js",
+    url: "https://kaboomjs.com/",
+    target: "_blank",
+    description: "外部サイト：Javascript用2Dゲームライブラリ",
+  },
+  {
+    category: "lib",
+    label: "p5.js",
+    url: "https://p5js.org/",
+    target: "_blank",
+    description: "外部サイト：Javascript用ビジュアルアートライブラリ",
   },
   {
     category: "ref",

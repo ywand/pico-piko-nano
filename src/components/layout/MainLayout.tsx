@@ -1,8 +1,9 @@
 import type { ReactNode } from "react";
 import { lightTheme, darkTheme } from "@/styles/theme.css";
 import { container } from "@/styles/container.css";
-import Header from "../ui/Header";
-import ThemeToggleButton from "../ui/ThemeToggleButton"
+import MainHeader from "../ui/MainHeader";
+import ThemeToggleButton from "../ui/ThemeToggleButton";
+import MainFooter from "../ui/Mainfooter ";
 
 type Props = {
   title: string;
@@ -14,7 +15,7 @@ type Props = {
 function MainLayout({ title, isDark, onToggleTheme, children }: Props) {
   return (
     <div className={`${isDark ? darkTheme : lightTheme} ${container}`}>
-      <Header
+      <MainHeader
         title={title}
       />
       <main>
@@ -24,7 +25,7 @@ function MainLayout({ title, isDark, onToggleTheme, children }: Props) {
         isDark={isDark}
         onToggleTheme={onToggleTheme}
       />
-      <footer></footer>
+      <MainFooter />
     </div>
   );
 }

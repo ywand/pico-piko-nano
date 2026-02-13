@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { SITE_CONFIG } from "@/data/siteConfig";
-import { headerStyle } from "@/styles/headerStyle.css"
+import * as styles from "@/styles/MainHeader.css";
 
 type HeaderProps = {
   title: string;
 };
 
-function Header({ title }: HeaderProps) {
+function MainHeader({ title }: HeaderProps) {
   useEffect(() => {
     document.title = title
       ? `${title} | ${SITE_CONFIG.title}`
@@ -15,11 +15,11 @@ function Header({ title }: HeaderProps) {
 
   return (
     <header>
-      <div className={headerStyle}>
+      <div className={styles.wrapper}>
         <h1>{title} | <a href="/">{SITE_CONFIG.title}</a></h1>
       </div>
     </header>
   );
 }
 
-export default Header;
+export default MainHeader;
