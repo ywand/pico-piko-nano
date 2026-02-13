@@ -235,17 +235,20 @@
         let lastTouchTime = 0;
 
         // タッチ処理
-        onTouchStart(() => {
-          const tpos = touchPos();
-          if (tpos.x > cw * 0.7) {
+        onTouchStart((pos) => {
+          const cam = camPos();
+          const tposX = pos.x - cam.x + width() / 2;
+          const tposY = pos.y - cam.y + height() / 2;
+
+          if (tposX > cw * 0.7) {
             input.right = true;
           }
-          else if (tpos.x < cw * 0.3) {
+          else if (tposX < cw * 0.3) {
             input.left = true;
           }
-          if (tpos.y < ch * 0.49) {
+          if (tposY < ch * 0.49) {
             input.jump = true;
-          } else if (tpos.y > ch * 0.6) {
+          } else if (tposY > ch * 0.6) {
             input.down = true;
           }
         });
