@@ -112,6 +112,7 @@
                   body({ isStatic: true }),
                   color(def.color),
                 ]);
+                def.isStatic = true;
               }
 
               // 宝
@@ -312,10 +313,13 @@
           } else {
             groundedY = null
           }
+
+          const target = player.pos;
+          const smooth = 6; // 小さいほどゆっくり（2〜6が目安）
           camPos(
-            Math.round(player.pos.x),
-            Math.round(player.pos.y),
-          )
+            camPos().lerp(target, smooth * dt())
+          );
+
           updatePlayerControl();
           PlayerCollideCheck();
         })
