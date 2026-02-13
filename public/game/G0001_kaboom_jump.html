@@ -261,8 +261,10 @@
 
         function handleTouch(pos) {
           const cam = camPos();
-          const tposX = pos.x - cam.x + cw / 2;
-          const tposY = pos.y - cam.y + ch / 2;
+          //const tposX = pos.x - cam.x + cw / 2;
+          //const tposY = pos.y - cam.y + ch / 2;
+          const tposX = pos.x - cw / 2;
+          const tposY = pos.y - ch / 2;
 
           if (tposX > cw * 0.7) {
             input.right = true;
