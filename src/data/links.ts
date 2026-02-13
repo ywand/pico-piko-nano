@@ -119,7 +119,7 @@ export const links: LinkItem[] = [
   },
   {
     category: "dev",
-    label: "Visual Studio Code",
+    label: "VisualStudioCode",
     url: "https://code.visualstudio.com/",
     target: "_blank",
     description: "外部サイト：コードエディタ",
