@@ -11,12 +11,13 @@ const container = document.getElementById("main");
 const cw = container.clientWidth;
 const ch = container.clientHeight;
 const cv = document.createElement("canvas");
-console.log(cw, ch, cv);
+console.log("canvas info:", cw, ch, cv);
 container.appendChild(cv);
 const GRAVITY_VAL = 1000;
 const DEF_SPEED = 150;
 const DEF_POINT = 100;
 const MAX_GAME_STAGE = 3;
+const START_STAGE = 1;
 kaboom({
   width: cw,
   height: ch,
@@ -32,7 +33,7 @@ Promise.all([loadSprite("bean", "../assets/bean.png")]
 ).then(() => {
   console.log("全てのリソース読み込み完了");
   getHightScore();
-  go("game", { stageNum: 1 });
+  go("game", { stageNum: START_STAGE });
 });
 
 //ゲームシーンの作成
@@ -77,8 +78,6 @@ function handleWarp(num) {
   if (currentGate != null) return; // ワープ情報を持っていたら無視
   if (isWarping) return; // ワープ中なら何もしない
 
-  console.log("001:", player.pos, groundedY);
-
   const target = warpPairs[num];
   const posData = gates[target][0];
   currentGate = num;  // 今いるゲートを記録
@@ -90,14 +89,11 @@ function handleWarp(num) {
   player.area.enabled = false;
   player.pos = vec2(posData.px + TILE_SIZE / 2, posData.py + TILE_SIZE / 2);
   groundedY = player.pos.y;
-  console.log(currentGate, isWarping, player.pos, player.area.enabled);
   // 0.5秒後にフラグを解除（この間は戻らない）
   wait(0.5, () => {
     isWarping = false;
     player.area.enabled = true;
   });
-
-  console.log("002:", player.pos, groundedY);
 }
 const gates = {
   "1": [],
@@ -344,6 +340,7 @@ function PlayerCollideCheck(startPos, stageNum) {
           (now.getMonth() + 1).toString().padStart(2, "0") + "-" +
           now.getDate().toString().padStart(2, "0")
         setHightScore(point, strYMD);
+        getHightScore();
         strGameClear.text = "ゲームクリア！\nハイスコア更新！";
       }
     }
@@ -460,25 +457,26 @@ function createTextArea(str, x = 0, y = 0, tsize = 16, col = rgb(0, 0, 0)) {
   return textBox;
 }
 
+function strNowTime() {
+  const elapsed = time(); // 起動時からの経過秒数
+  const mins = Math.floor(elapsed / 60).toString().padStart(2, "0");
+  const secs = Math.floor(elapsed % 60).toString().padStart(2, "0");
+  return mins + ":" + secs
+}
+
 function setupUI() {
   // 使用例：画面左上に固定表示
-  const strTime = createTextArea("【TIME】00:00", 2, 2, fontSize.md);
-  strTime.onUpdate(() => {
+  const strNowInfo = "時間" + "00:00" + "/点数" + String(point).padStart(3, "0") + "/速さ" + speed;
+  const nowInfo = createTextArea(strNowInfo, 0, 0, fontSize.md);
+  nowInfo.onUpdate(() => {
     if (stageClearFlag) return
-
-    const elapsed = time(); // 起動時からの経過秒数
-    const mins = Math.floor(elapsed / 60).toString().padStart(2, "0");
-    const secs = Math.floor(elapsed % 60).toString().padStart(2, "0");
-    strTime.text = "【TIME】" + mins + ":" + secs;
-  });
-  const strPoint = createTextArea("【POINT】" + point, 2, 2 + fontSize.md, fontSize.md);
-  strPoint.onUpdate(() => {
     updatePoint();
-    strPoint.text = "【POINT】" + point;
+    nowInfo.text = "時間" + strNowTime() + "/点数" + String(point).padStart(3, "0") + "/速さ" + speed;
   });
-  const strSpeed = createTextArea("【SPEED】" + speed, 2, 2 + fontSize.md * 2, fontSize.md);
-  strSpeed.onUpdate(() => {
-    strSpeed.text = "【SPEED】" + speed;
+  const strHightScoreInfo = "最高点" + String(highScore.point).padStart(3, "0") + "/記録日" + highScore.date;
+  const HightScoreInfo = createTextArea(strHightScoreInfo, 0, 20, fontSize.md);
+  HightScoreInfo.onUpdate(() => {
+    HightScoreInfo.text = "最高点" + String(highScore.point).padStart(3, "0") + "/記録日" + highScore.date;
   });
 }
 
