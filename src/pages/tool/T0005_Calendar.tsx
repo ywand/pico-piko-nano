@@ -19,7 +19,7 @@ const days = [
 ];
 
 function T0005_Calendar({ isDark, onToggleTheme }: Props) {
-  const [now, setNow] = useState(new Date());
+  const now = new Date();
   const [holidays, setHolidays] = useState<Holidays>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
