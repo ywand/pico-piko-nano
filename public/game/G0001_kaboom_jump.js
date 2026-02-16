@@ -15,6 +15,8 @@ console.log(cw, ch, cv);
 container.appendChild(cv);
 const GRAVITY_VAL = 1000;
 const DEF_SPEED = 150;
+const DEF_POINT = 100;
+const MAX_GAME_STAGE = 3;
 kaboom({
   width: cw,
   height: ch,
@@ -29,11 +31,13 @@ setGravity(GRAVITY_VAL);
 Promise.all([loadSprite("bean", "../assets/bean.png")]
 ).then(() => {
   console.log("全てのリソース読み込み完了");
+  getHightScore();
   go("game", { stageNum: 1 });
 });
 
 //ゲームシーンの作成
 let stageClearFlag = false;
+let point = 0;
 scene("game", ({ stageNum = 1 }) => {
   const stageName = "stage" + stageNum;
   console.log("scene", stageNum, stageName);
@@ -41,6 +45,7 @@ scene("game", ({ stageNum = 1 }) => {
   stageClearFlag = false;
   createPlayer(startPos, stageNum);
   setupInput();
+  point += DEF_POINT;
   setupUI();
 });
 
@@ -225,7 +230,7 @@ function createPlayer(startPos, stageNum) {
   //プレイヤー追加
   player = add([
     sprite("bean"),
-    area(TILE_SIZE / 2, TILE_SIZE / 2),
+    area(TILE_SIZE / 3, TILE_SIZE / 3),
     pos(startPos.x, startPos.y),
     body({ weight: 1 }),
     scale(0.5),  // ← ここでscaleを初期化
@@ -321,12 +326,27 @@ function PlayerCollideCheck(startPos, stageNum) {
     destroy(t);             // ゴールを消す
     console.log("ステージ" + stageNum + " クリア！");
     stageClearFlag = true;
-    const strStageClear = createTextArea("ステージ" + stageNum + " クリア！", cw / 2 - fontSize.lg * 4, ch / 2, fontSize.lg, rgb(255, 0, 0));
+    const strStageClear = createTextArea("ステージ" + stageNum + " クリア！", cw / 2 - fontSize.lg * 4, ch / 2 - fontSize.lg * 1, fontSize.lg, rgb(255, 0, 0));
 
-    const nextStage = stageNum >= 3 ? 1 : stageNum + 1;
-    wait(5, () => {
-      go("game", { stageNum: nextStage });
-    });
+    const nextStage = stageNum + 1;
+
+    if (nextStage <= MAX_GAME_STAGE) {
+      wait(3, () => {
+        go("game", { stageNum: nextStage });
+      });
+    } else {
+      const strGameClear = createTextArea("ゲームクリア！", cw / 2 - fontSize.lg * 4, ch / 2, fontSize.lg, rgb(255, 0, 0));
+      if (highScore.point < point) {
+
+        const now = new Date()
+        const strYMD =
+          now.getFullYear() + "-" +
+          (now.getMonth() + 1).toString().padStart(2, "0") + "-" +
+          now.getDate().toString().padStart(2, "0")
+        setHightScore(point, strYMD);
+        strGameClear.text = "ゲームクリア！\nハイスコア更新！";
+      }
+    }
   });
 }
 
@@ -451,8 +471,46 @@ function setupUI() {
     const secs = Math.floor(elapsed % 60).toString().padStart(2, "0");
     strTime.text = "【TIME】" + mins + ":" + secs;
   });
-  const strSpeed = createTextArea("【SPEED】" + speed, 2, 2 + fontSize.md, fontSize.md);
+  const strPoint = createTextArea("【POINT】" + point, 2, 2 + fontSize.md, fontSize.md);
+  strPoint.onUpdate(() => {
+    updatePoint();
+    strPoint.text = "【POINT】" + point;
+  });
+  const strSpeed = createTextArea("【SPEED】" + speed, 2, 2 + fontSize.md * 2, fontSize.md);
   strSpeed.onUpdate(() => {
     strSpeed.text = "【SPEED】" + speed;
   });
+}
+
+let diffSec = 0;
+let oldTime = 0;
+function updatePoint() {
+  if (stageClearFlag) return
+  let t = Math.floor(time());
+  if (oldTime < t) {
+    diffSec = t - oldTime;
+    oldTime = t;
+    point -= diffSec;
+  }
+}
+
+//ハイスコア取得
+let highScore = {
+  point: 0,
+  date: "",
+}
+function getHightScore() {
+  highScore.point = localStorage.getItem("G0001_HightScore_point")
+  highScore.date = localStorage.getItem("G0001_HightScore_date")
+  if (highScore.point == null || highScore == undefined) {
+    //初回ゲーム起動時にハイスコアの設定がない場合に初期値設定
+    highScore.point = 0
+    highScore.date = "0000-00-00"
+    setHightScore(highScore.point, highScore.date, highScore.timer)
+  }
+}
+//ハイスコア設定
+function setHightScore(point, date, timer) {
+  localStorage.setItem("G0001_HightScore_point", point)
+  localStorage.setItem("G0001_HightScore_date", date)
 }

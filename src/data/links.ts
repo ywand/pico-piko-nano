@@ -91,7 +91,7 @@ export const links: LinkItem[] = [
   {
     category: "tool",
     label: "カレンダー",
-    url: "/tool/T0005_Calender",
+    url: "/tool/T0005_Calendar",
     target: "_self",
     tags: "カレンダー",
     description: "カレンダー（祝日表示あり）",

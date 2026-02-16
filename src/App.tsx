@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "@/pages/Home";
 import T0004_Timer from "@/pages/tool/T0004_Timer.tsx";
-import T0005_Calendar from "./pages/tool/T0005_Calender.tsx";
+import T0005_Calendar from "./pages/tool/T0005_Calendar.tsx";
+import NotFoound from "./pages/NotFound.tsx";
 
 function App() {
   const [isDark, setIsDark] = useState(() => {
@@ -33,6 +34,10 @@ function App() {
       <Route
         path="/tool/T0005_Calendar"
         element={<T0005_Calendar isDark={isDark} onToggleTheme={toggleTheme} />}
+      />
+      <Route
+        path="*"
+        element={<NotFoound isDark={isDark} onToggleTheme={toggleTheme} />}
       />
     </Routes>
   );

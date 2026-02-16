@@ -32,12 +32,6 @@ function T0005_Calendar({ isDark, onToggleTheme }: Props) {
   }, []);
 
   console.log(holidays);
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setNow(new Date());
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -54,20 +48,21 @@ function T0005_Calendar({ isDark, onToggleTheme }: Props) {
       isDark={isDark}
       onToggleTheme={onToggleTheme}
     >
-      <div>現在日付：{strYMD}</div>
-
-      <ul>
-        {Object.entries(holidays)
-          .filter(([day]) =>
-            day.startsWith(String(now.getFullYear()))
-          )
-          .map(([day, name]) => (
-            <li key={day}>
-              {day} : {name}
-            </li>
-          ))}
-      </ul>
-
+      <div><h2>現在日付：{strYMD}</h2></div>
+      <div>
+        <h2>祝日一覧</h2>
+        <ul>
+          {Object.entries(holidays)
+            .filter(([day]) =>
+              day.startsWith(String(now.getFullYear()))
+            )
+            .map(([day, name]) => (
+              <li key={day}>
+                {day} : {name}
+              </li>
+            ))}
+        </ul>
+      </div>
     </MainLayout >
   )
 }
