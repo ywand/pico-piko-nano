@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "@/pages/Home";
-import Timer from "@/pages/Timer";
-import Calendar from "./pages/Calender";
+import T0004_Timer from "@/pages/tool/T0004_Timer.tsx";
+import T0005_Calendar from "./pages/tool/T0005_Calender.tsx";
 
 function App() {
   const [isDark, setIsDark] = useState(() => {
@@ -27,12 +27,12 @@ function App() {
         element={<Home isDark={isDark} onToggleTheme={toggleTheme} />}
       />
       <Route
-        path="/Timer"
-        element={<Timer isDark={isDark} onToggleTheme={toggleTheme} />}
+        path="/tool/T0004_Timer"
+        element={<T0004_Timer isDark={isDark} onToggleTheme={toggleTheme} />}
       />
       <Route
-        path="/Calender"
-        element={<Calendar isDark={isDark} onToggleTheme={toggleTheme} />}
+        path="/tool/T0005_Calendar"
+        element={<T0005_Calendar isDark={isDark} onToggleTheme={toggleTheme} />}
       />
     </Routes>
   );

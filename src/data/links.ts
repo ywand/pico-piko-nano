@@ -83,7 +83,7 @@ export const links: LinkItem[] = [
   {
     category: "tool",
     label: "時計",
-    url: "/Timer",
+    url: "/tool/T0004_Timer",
     target: "_self",
     tags: "時計,タイマー",
     description: "現在時刻の表示",
@@ -91,7 +91,7 @@ export const links: LinkItem[] = [
   {
     category: "tool",
     label: "カレンダー",
-    url: "/Calender",
+    url: "/tool/T0005_Calender",
     target: "_self",
     tags: "カレンダー",
     description: "カレンダー（祝日表示あり）",
