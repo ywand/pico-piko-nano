@@ -100,6 +100,7 @@ const gates = {
   "3": [],
   "4": [],
 };
+let map_y_limit = 0;
 function createMap(stageName) {
   let startPos = vec2(0, 0);
   gates["1"] = [];
@@ -119,6 +120,7 @@ function createMap(stageName) {
       if (!def) return;
       const px = x * TILE_SIZE;
       const py = y * TILE_SIZE;
+      map_y_limit = Math.max(py + TILE_SIZE, map_y_limit);
 
       // 壁などの地形
       if (def.solid) {
@@ -272,6 +274,10 @@ function createPlayer(startPos, stageNum) {
     );
 
     updatePlayerControl();
+    if (player.pos.y > map_y_limit) {
+      player.pos.x = startPos.x;
+      player.pos.y = startPos.y;
+    }
   })
 }
 
@@ -352,7 +358,6 @@ function setupInput() {
   onTouchMove((pos) => {
     handleTouch(pos);
   });
-
 
   // マウスクリック処理
   onMouseDown(() => {
