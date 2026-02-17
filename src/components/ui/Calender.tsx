@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import * as styles from "@/styles/ui/Calender.css";
 
 type CalenderCell = {
