@@ -34,8 +34,6 @@ export const color = {
 globalStyle("html, body", {
   margin: 0,
   padding: 0,
-  width: "100%",
-  height: "100%",
 });
 
 globalStyle("html", {
@@ -72,12 +70,6 @@ globalStyle(".bigFont", {
   fontWeight: "bold",
 });
 
-globalStyle("header", {
-  margin: 0,
-  padding: 0,
-});
-
-
 globalStyle("main", {
   margin: `${space.sm} auto`,
   padding: `0 ${space.sm}`,
@@ -86,10 +78,9 @@ globalStyle("main", {
 });
 
 globalStyle("header, footer", {
-  width: "100%",
   maxWidth: "960px",
   margin: "0 auto",
-  padding: `0 ${space.md}`,
+  padding: `0 ${space.sm}`,
 });
 
 
@@ -127,4 +118,8 @@ globalStyle("a:focus-visible", {
   outline: `2px solid ${vars.color.primary}`,
   outlineOffset: "2px",
   borderRadius: "4px",
+});
+
+globalStyle("*, *::before, *::after", {
+  boxSizing: "border-box",
 });
