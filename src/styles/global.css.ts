@@ -79,9 +79,19 @@ globalStyle("header", {
 
 
 globalStyle("main", {
-  margin: space.sm,
-  padding: 0,
+  margin: `${space.sm} auto`,
+  padding: `0 ${space.sm}`,
+  width: "100%",
+  maxWidth: "960px",
 });
+
+globalStyle("header, footer", {
+  width: "100%",
+  maxWidth: "960px",
+  margin: "0 auto",
+  padding: `0 ${space.md}`,
+});
+
 
 globalStyle("h1, h2, h3, h4, h5, h6", {
   margin: 0,
