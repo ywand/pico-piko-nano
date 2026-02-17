@@ -2,23 +2,16 @@ import MainLayout from "@/components/layout/MainLayout";
 import { useState, useEffect } from "react";
 import { fetchHolidays } from "@/data/fetchHolidays";
 import type { Holidays } from "@/data/fetchHolidays";
+import { Calendar } from "@/components/ui/Calender";
 
 type Props = {
   isDark: boolean;
   onToggleTheme: () => void;
 };
 
-const days = [
-  "日",
-  "月",
-  "火",
-  "水",
-  "木",
-  "金",
-  "土",
-];
+const WEEK_DAYS = ["日", "月", "火", "水", "木", "金", "土",];
 
-function T0005_Calendar({ isDark, onToggleTheme }: Props) {
+function T0005_CalendarPage({ isDark, onToggleTheme }: Props) {
   const now = new Date();
   const [holidays, setHolidays] = useState<Holidays>({});
   const [loading, setLoading] = useState(true);
@@ -30,7 +23,6 @@ function T0005_Calendar({ isDark, onToggleTheme }: Props) {
       .catch(err => setError(err.message))
       .finally(() => setLoading(false));
   }, []);
-
   console.log(holidays);
 
   if (loading) return <p>Loading...</p>;
@@ -40,7 +32,7 @@ function T0005_Calendar({ isDark, onToggleTheme }: Props) {
     now.getFullYear() + "/" +
     (now.getMonth() + 1).toString().padStart(2, "0") + "/" +
     now.getDate().toString().padStart(2, "0") +
-    "(" + days[now.getDay()] + ")";
+    "(" + WEEK_DAYS[now.getDay()] + ")";
 
   return (
     <MainLayout
@@ -48,7 +40,14 @@ function T0005_Calendar({ isDark, onToggleTheme }: Props) {
       isDark={isDark}
       onToggleTheme={onToggleTheme}
     >
-      <div><h2>現在日付：{strYMD}</h2></div>
+      <div>
+        <h2>現在日付：{strYMD}</h2>
+      </div>
+      <hr />
+      <div>
+        <Calendar />
+      </div>
+      <hr />
       <div>
         <h2>祝日一覧</h2>
         <ul>
@@ -67,4 +66,4 @@ function T0005_Calendar({ isDark, onToggleTheme }: Props) {
   )
 }
 
-export default T0005_Calendar;
+export default T0005_CalendarPage;

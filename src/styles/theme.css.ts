@@ -19,27 +19,41 @@ export const lightTheme = createTheme(vars, {
   color: {
     background: "#FAFAFA",
     surface: "#FFFFFF",
-    text: "#111827",
+    text: "#111111",
     textSub: "#6B7280",
     border: "#E5E7EB",
-    primary: "#2563EB",
-    link: "#2563EB",
-    linkHover: "#1D4ED8",
-    linkVisited: "#7C3AED",
+    primary: "#60A5FA",
+    link: "#1D4ED8",
+    linkHover: "#60A5FA",
+    linkVisited: "#1D4ED8",
   },
 });
 
 //ダークモード
 export const darkTheme = createTheme(vars, {
   color: {
-    background: "#0B1220",
-    surface: "#020617",
-    text: "#E5E7EB",
-    textSub: "#9CA3AF",
-    border: "#1E293B",
+    background: "#111111",
+    surface: "#1A1A1A",
+    text: "#F5F5F5",
+    textSub: "#6B7280",
+    border: "#BDBDBD",
     primary: "#60A5FA",
     link: "#60A5FA",
-    linkHover: "#93C5FD",
-    linkVisited: "#A78BFA",
+    linkHover: "#1D4ED8",
+    linkVisited: "#60A5FA",
+  },
+});
+
+export const grayTheme = createTheme(vars, {
+  color: {
+    background: "#F5F5F5",  // 全体背景
+    surface: "#BDBDBD",     // カード・テーブル
+    text: "#111111",        // メイン文字
+    textSub: "#666666",     // 補助文字
+    border: "#BDBDBD",      // 枠線
+    primary: "#111111",     // 通常ボタンなど（黒）
+    link: "#666666",
+    linkHover: "#FEE2E2",
+    linkVisited: "#666666",
   },
 });

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "@/pages/Home";
 import T0004_Timer from "@/pages/tool/T0004_Timer.tsx";
-import T0005_Calendar from "./pages/tool/T0005_Calendar.tsx";
+import T0005_CalendarPage from "./pages/tool/T0005_CalendarPage.tsx";
 import NotFoound from "./pages/NotFound.tsx";
 
 function App() {
@@ -32,8 +32,8 @@ function App() {
         element={<T0004_Timer isDark={isDark} onToggleTheme={toggleTheme} />}
       />
       <Route
-        path="/tool/T0005_Calendar"
-        element={<T0005_Calendar isDark={isDark} onToggleTheme={toggleTheme} />}
+        path="/tool/T0005_CalendarPage"
+        element={<T0005_CalendarPage isDark={isDark} onToggleTheme={toggleTheme} />}
       />
       <Route
         path="*"

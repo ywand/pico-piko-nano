@@ -17,6 +17,19 @@ export const fontSize = {
   xl: "20px",
 }
 
+export const color = {
+  black: "#111111",
+  darkgray: "#1A1A1A",
+  gray: "#6B7280",
+  white: "#F5F5F5",
+  darkwhite: "#BDBDBD",
+  lightBlue: "#93C5FD",
+  blue: "#3B82F6",
+  darkBlue: "#1E40AF",
+  red: "#DC2626",
+  lightyellow: "#FEF3C7",
+}
+
 
 globalStyle("html, body", {
   margin: 0,

@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { space } from "./global.css";
+import { space } from "@/styles/global.css";
 
 export const wrapper = style({
   margin: `0 ${space.xs}`,
