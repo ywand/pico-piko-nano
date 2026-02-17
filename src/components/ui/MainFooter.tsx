@@ -1,4 +1,4 @@
-import { space, fontSize } from "@/styles/global.css";
+import { fontSize } from "@/styles/global.css";
 
 
 function MainFooter() {
