@@ -41,7 +41,7 @@ export default defineConfig({
       workbox: {
         globPatterns: ["**/*.{html,js,css}"],
         navigateFallback: "/index.html",
-        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5MB
+        maximumFileSizeToCacheInBytes: 7 * 1024 * 1024, // 5MB
         runtimeCaching: [
           {
             // HTMLは必ず NetworkFirst
@@ -72,6 +72,16 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
+    },
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          babylon: ["@babylonjs/core"],
+          react: ["react", "react-dom"]
+        }
+      },
     },
   },
 })
