@@ -275,7 +275,9 @@ function createPlayer(startPos, stageNum) {
     );
 
     updatePlayerControl();
+    //落下した場合リスタート
     if (player.pos.y > map_y_limit) {
+      point -= 10;
       player.pos.x = startPos.x;
       player.pos.y = startPos.y;
     }
@@ -289,11 +291,13 @@ function PlayerCollideCheck(startPos, stageNum) {
     if (t.collected) return;
     t.collected = true;
     speed += 30;            // スピード上昇
+    point += 10;
     destroy(t);             // 宝を消す
     console.log("スピードアップ！: " + speed);
   });
   player.onCollide("back", (t) => {
     player.pos = vec2(startPos.x, startPos.y);
+    point -= 10;
     console.log("リスタート: " + startPos);
   });
 

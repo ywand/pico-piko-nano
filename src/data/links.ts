@@ -59,6 +59,14 @@ export const links: LinkItem[] = [
     description: "p5.jsを使用したランダム描画",
   },
   {
+    category: "game",
+    label: "3Dボール",
+    url: "/game/G0004_3DBallsGame",
+    target: "_self",
+    tags: "3D,ボール,Babylon.js",
+    description: "Babylon.jsを使用した3Dボールゲーム",
+  },
+  {
     category: "tool",
     label: "メモ帳",
     url: "/tool/T0001_memo.html",
@@ -137,6 +145,13 @@ export const links: LinkItem[] = [
     url: "https://p5js.org/",
     target: "_blank",
     description: "外部サイト：Javascript用ビジュアルアートライブラリ",
+  },
+  {
+    category: "ref",
+    label: "Babylon.js",
+    url: "https://www.babylonjs.com/",
+    target: "_blank",
+    description: "外部サイト：3Dゲームライブラリ",
   },
   {
     category: "ref",
