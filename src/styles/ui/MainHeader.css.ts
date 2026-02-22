@@ -4,4 +4,5 @@ import { space } from "@/styles/global.css";
 export const wrapper = style({
   padding: `0 ${space.xs}`,
   borderBottom: "1px solid #ccc",
+  width: "100%",
 });

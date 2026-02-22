@@ -82,7 +82,7 @@ export const links: LinkItem[] = [
   },
   {
     category: "tool",
-    label: "MarkDownEditor",
+    label: "Mark Down Editor",
     url: "/tool/T0003_MarkDownEditor.html",
     target: "_self",
     tags: "マークダウン,md,MarkDown,エディタ",
@@ -127,7 +127,7 @@ export const links: LinkItem[] = [
   },
   {
     category: "dev",
-    label: "VisualStudioCode",
+    label: "Visual Studio Code",
     url: "https://code.visualstudio.com/",
     target: "_blank",
     description: "外部サイト：コードエディタ",
@@ -147,7 +147,7 @@ export const links: LinkItem[] = [
     description: "外部サイト：Javascript用ビジュアルアートライブラリ",
   },
   {
-    category: "ref",
+    category: "lib",
     label: "Babylon.js",
     url: "https://www.babylonjs.com/",
     target: "_blank",

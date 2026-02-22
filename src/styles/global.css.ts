@@ -94,6 +94,7 @@ globalStyle("h1, h2, h3, h4, h5, h6", {
 globalStyle("ul", {
   margin: `0 ${space.lg}`,
   padding: `0 0 ${space.md} 0`,
+  listStyleType: "square",
 });
 
 

@@ -11,7 +11,7 @@ function G0004_3DBallsGame({ isDark }: Props) {
     <GameLayout
       title="3D Balls Game"
       isDark={isDark}
-    ><div>Babylon.jsの動作テスト中</div>
+    >
       <BabylonCanvas />
     </GameLayout >
   )
