@@ -11,8 +11,10 @@ import {
   PhysicsShapeBox,
   PhysicsShapeSphere,
   PhysicsMotionType,
-
   HavokPlugin,
+  PBRMaterial,
+  Color3,
+  CubeTexture,
 } from "@babylonjs/core"
 import HavokPhysics from "@babylonjs/havok"
 
@@ -25,16 +27,22 @@ export function BabylonCanvas() {
     const engine = new Engine(canvasRef.current, true)
     const scene = new Scene(engine)
 
+    scene.environmentTexture = CubeTexture.CreateFromPrefilteredData(
+      "https://assets.babylonjs.com/environments/environmentSpecular.env",
+      scene
+    );
+
     // カメラ
     const camera = new ArcRotateCamera(
       "camera",
       Math.PI / 2,
       Math.PI / 3,
-      10,
+      50,
       Vector3.Zero(),
       scene
     )
     camera.attachControl(canvasRef.current, true)
+    camera.wheelPrecision = 100;
 
     // ライト
     new HemisphericLight("light", new Vector3(0, 1, 0), scene)
@@ -75,6 +83,21 @@ export function BabylonCanvas() {
 
       const numSpheres = 100;
       const sphereDiameter = 1;
+
+      // 1. ガラス用のマテリアルを作成
+      const glassMaterial = new PBRMaterial("glassMat", scene);
+      glassMaterial.transparencyMode = PBRMaterial.PBRMATERIAL_ALPHABLEND;
+      // 青色を設定
+      glassMaterial.albedoColor = new Color3(0.1, 0.3, 1.0);
+      // ガラスの質感を設定
+      glassMaterial.metallic = 0.0;           // 金属ではない
+      glassMaterial.roughness = 0.05;         // 表面は非常に滑らか
+      // 透明度と屈折の設定
+      glassMaterial.alpha = 0.1;              // 透明度（0が完全透明）
+      glassMaterial.indexOfRefraction = 1.5;  // ガラスの屈折率（一般的に1.5前後）
+      glassMaterial.linkRefractionWithTransparency = true; // 透明度と屈折を連動させる
+      glassMaterial.refractionTexture = scene.environmentTexture;
+
       for (let i = 0; i < numSpheres; i++) {
         // 球体
         const sphere = MeshBuilder.CreateSphere(
@@ -84,7 +107,7 @@ export function BabylonCanvas() {
         )
         // ランダムな位置を設定
         const randomX = (Math.random() - 0.5) * 8; // -4 to 4
-        const randomY = 5 + Math.random() * 50;    // 5 to 15
+        const randomY = 5 + Math.random() * 100;    // 5 to 15
         const randomZ = (Math.random() - 0.5) * 8; // -4 to 4
         sphere.position.set(randomX, randomY, randomZ);
 
@@ -99,6 +122,8 @@ export function BabylonCanvas() {
           sphereDiameter / 2, // 直径1なら半径0.5
           scene
         )
+        // 作成したマテリアルを割り当て
+        sphere.material = glassMaterial;
 
         //摩擦設定
         sphereBody.shape = sphereShape
@@ -114,10 +139,12 @@ export function BabylonCanvas() {
       }
     }
 
-    initPhysics()
+    initPhysics(); // ここで全ての初期化（マテリアル作成含む）を待つ
 
     engine.runRenderLoop(() => {
-      scene.render()
+      if (scene.activeCamera) { // カメラが存在することを確認
+        scene.render();
+      }
     })
 
     const resize = () => engine.resize()
