@@ -60,7 +60,7 @@ export const links: LinkItem[] = [
   },
   {
     category: "game",
-    label: "3Dボール",
+    label: "3Dボールテスト",
     url: "/game/G0004_3DBallsGame",
     target: "_self",
     tags: "3D,ボール,Babylon.js",
