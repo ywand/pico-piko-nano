@@ -65,12 +65,12 @@ export function BabylonCanvas() {
       )
       // Ground は薄い箱として扱う
       const groundShape = new PhysicsShapeBox(
-        new Vector3(0, -GROUND_THICKNESS / 2, 0),     // center
+        new Vector3(0, 0, 0),     // center
         Quaternion.Identity(),    // rotation
         new Vector3(GROUND_WIDTH / 2, GROUND_THICKNESS / 2, GROUND_HEIGHT / 2),   // extents (半サイズ)
         scene
       )
-
+      ground.position.y = -GROUND_THICKNESS / 2;
       groundBody.shape = groundShape
 
       const numSpheres = 100;
