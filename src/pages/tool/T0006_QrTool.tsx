@@ -29,6 +29,8 @@ function T0006_QrTool({ isDark, onToggleTheme }: Props) {
             padding: "0px",
             width: "100%",
           }}
+          maxLength={4296} //QRコード化英数字の最大文字数
+          rows={6}
         />
       </div>
       <QrGenerator text={text} />
