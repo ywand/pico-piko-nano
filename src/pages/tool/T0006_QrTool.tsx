@@ -14,7 +14,7 @@ function T0006_QrTool({ isDark, onToggleTheme }: Props) {
 
   return (
     <MainLayout
-      title="QR Generator"
+      title="QRコードツール"
       isDark={isDark}
       onToggleTheme={onToggleTheme}
     >
