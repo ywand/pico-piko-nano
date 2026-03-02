@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "@/pages/Home";
 import T0004_Timer from "@/pages/tool/T0004_Timer.tsx";
 import T0005_CalendarPage from "./pages/tool/T0005_CalendarPage.tsx";
+import T0006_QrTool from "./pages/tool/T0006_QrTool.tsx";
 import G0004_3DBallsGame from "./pages/game/G0004_3DBallsGame.tsx";
 import NotFoound from "./pages/NotFound.tsx";
 
@@ -35,6 +36,10 @@ function App() {
       <Route
         path="/tool/T0005_CalendarPage"
         element={<T0005_CalendarPage isDark={isDark} onToggleTheme={toggleTheme} />}
+      />
+      <Route
+        path="/tool/T0006_QrTool"
+        element={<T0006_QrTool isDark={isDark} onToggleTheme={toggleTheme} />}
       />
       <Route
         path="/game/G0004_3DBallsGame"

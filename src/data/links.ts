@@ -105,6 +105,14 @@ export const links: LinkItem[] = [
     description: "カレンダー（祝日表示あり）",
   },
   {
+    category: "tool",
+    label: "QRコードツール",
+    url: "/tool/T0006_QrTool",
+    target: "_self",
+    tags: "QRコード,ジェネレータ,リーダ",
+    description: "カメラで読み取り、またはテキストをQRコードに変換するツール",
+  },
+  {
     category: "dev",
     label: "React",
     url: "https://react.dev",
