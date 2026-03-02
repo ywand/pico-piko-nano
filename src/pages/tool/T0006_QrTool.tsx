@@ -20,7 +20,7 @@ function T0006_QrTool({ isDark, onToggleTheme }: Props) {
     >
       <div style={{ padding: 8 }}>
         QR化テキスト：
-        <input type="text"
+        <textarea
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="テキストを入力してください"
