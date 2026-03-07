@@ -10,8 +10,8 @@ export type LinkItem = {
 export const categorys = {
   main: "サイトメニュー",
   doc: "読み物",
-  game: "Games(自作ゲーム達)",
-  tool: "Tools(自作ツール達)",
+  game: "Games(自作ゲーム集)",
+  tool: "Tools(自作ツール集)",
   dev: "開発環境",
   lib: "使用ライブラリ",
   ref: "参考サイト",
@@ -111,6 +111,13 @@ export const links: LinkItem[] = [
     target: "_self",
     tags: "QRコード,ジェネレータ,リーダ",
     description: "カメラで読み取り、またはテキストをQRコードに変換するツール",
+  },
+  {
+    category: "dev",
+    label: "Node.js",
+    url: "https://nodejs.org/ja",
+    target: "_blank",
+    description: "外部サイト：JavaScript実行環境",
   },
   {
     category: "dev",

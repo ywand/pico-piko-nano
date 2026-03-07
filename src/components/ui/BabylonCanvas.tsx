@@ -14,7 +14,6 @@ import {
   HavokPlugin,
   PBRMaterial,
   Color3,
-  CubeTexture,
 } from "@babylonjs/core"
 import HavokPhysics from "@babylonjs/havok"
 
@@ -26,11 +25,6 @@ export function BabylonCanvas() {
 
     const engine = new Engine(canvasRef.current, true)
     const scene = new Scene(engine)
-
-    scene.environmentTexture = CubeTexture.CreateFromPrefilteredData(
-      "https://assets.babylonjs.com/environments/environmentSpecular.env",
-      scene
-    );
 
     // カメラ
     const camera = new ArcRotateCamera(
@@ -106,9 +100,9 @@ export function BabylonCanvas() {
           scene
         )
         // ランダムな位置を設定
-        const randomX = (Math.random() - 0.5) * 8; // -4 to 4
-        const randomY = 5 + Math.random() * 100;    // 5 to 15
-        const randomZ = (Math.random() - 0.5) * 8; // -4 to 4
+        const randomX = (Math.random() - 0.5) * 3; // -4 to 4
+        const randomY = 5 + Math.random() * 500;    // 5 to 15
+        const randomZ = (Math.random() - 0.5) * 3; // -4 to 4
         sphere.position.set(randomX, randomY, randomZ);
 
         const sphereBody = new PhysicsBody(

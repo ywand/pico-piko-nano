@@ -10,6 +10,7 @@ const MAX_SIZE = 50;
 var x = [NUM];
 var y = [NUM];
 var n = 0;
+const DEBUG = false;
 
 class Stat {
   constructor() {
@@ -32,6 +33,7 @@ class Stat {
     this.gravity = R(0, 10);
     this.RandomColSwitch = true;
     this.gravitySwitch = true;
+    this.CircularSwitch = false;
     this.dbg = 0;
   }
 }
@@ -57,7 +59,7 @@ function setup() {
 
   stat = new Stat();
   gui = new dat.GUI();
-  gui.width = windowWidth / 3;
+  gui.width = windowWidth / 2;
   gui.add(stat, 'num', 1, NUM).listen();
   gui.add(stat, 'size', 1, MAX_SIZE).listen();
   gui.add(stat, 'speed', 0, 30).listen();
@@ -74,6 +76,7 @@ function setup() {
   gui.add(stat, 'count', 0, MAX_COUNT).listen();
   gui.add(stat, 'RandomColSwitch').listen();
   gui.add(stat, 'gravitySwitch').listen();
+  gui.add(stat, 'CircularSwitch').listen();
   gui.add(stat, 'clear').listen();
   gui.add(stat, 'stop').listen();
   //gui.add(stat, 'reset').listen();
@@ -120,10 +123,12 @@ function anime() {
   setColor();
   clickPos(x, y);
   move(x, y);
-  text("devR:" + format1Space(dev.alpha, 6) + "/"
-    + format1Space(dev.beta, 6) + "/"
-    + format1Space(dev.gamma, 6), 8, 8
-  );
+  if (DEBUG) {
+    text("devR:" + format1Space(dev.alpha, 6) + "/"
+      + format1Space(dev.beta, 6) + "/"
+      + format1Space(dev.gamma, 6), 8, 8
+    );
+  }
 }
 
 function format1Space(value, width = 5) {
@@ -153,13 +158,13 @@ function setColor() {
 function setRandomColor() {
   let r;
   if (stat.count % 100 == 0) {
-    stat.r = Math.max(0, Math.min(255, stat.r + R(-10, 10)));
+    stat.r = Math.max(50, Math.min(200, stat.r + R(-10, 10)));
   }
   if (stat.count % 100 == 0) {
-    stat.g = Math.max(0, Math.min(255, stat.g + R(-10, 10)));
+    stat.g = Math.max(50, Math.min(200, stat.g + R(-10, 10)));
   }
   if (stat.count % 100 == 0) {
-    stat.b = Math.max(0, Math.min(255, stat.b + R(-10, 10)));
+    stat.b = Math.max(50, Math.min(200, stat.b + R(-10, 10)));
   }
 }
 
@@ -252,8 +257,13 @@ function move(lsx, lsy) {
   }
 
   for (let i = 0; i < stat.num; i++) {
-    lsx[i] += R(-stat.speed, stat.speed);
-    lsy[i] += R(-stat.speed, stat.speed);
+    if (stat.CircularSwitch == false) {
+      lsx[i] += R(-stat.speed, stat.speed);
+      lsy[i] += R(-stat.speed, stat.speed);
+    } else {
+      lsx[i] += R(stat.speed / 2, stat.speed * 2) * Math.cos(stat.count / 10);
+      lsy[i] += R(stat.speed / 2, stat.speed * 2) * Math.sin(stat.count / 10);
+    }
     if (stat.gravitySwitch == true) {
       lsx[i] += gx;
       lsy[i] += gy;
