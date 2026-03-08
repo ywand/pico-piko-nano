@@ -60,6 +60,15 @@ async function build() {
     }
   }
 
+  //サイト順並び替え
+  const siteOrder = new Map(rssSources.map((s, i) => [s.name, i]));
+  for (const category of Object.keys(grouped)) {
+    const sortedSites = Object.entries(grouped[category]).sort(
+      ([a], [b]) => (siteOrder.get(a) ?? 999) - (siteOrder.get(b) ?? 999)
+    );
+    grouped[category] = Object.fromEntries(sortedSites);
+  }
+
   //カテゴリごとにJSON出力
   for (const category of Object.keys(grouped)) {
     const file = `public/antenna-${category}.json`;
