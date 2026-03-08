@@ -1,5 +1,5 @@
-import MainLayout from "../components/layout/MainLayout";
-import { LinkList } from "../components/ui/LinkList";
+import MainLayout from '../components/layout/MainLayout';
+import { LinkList } from '../components/ui/LinkList';
 
 type Props = {
   isDark: boolean;
@@ -7,18 +7,13 @@ type Props = {
 };
 
 function Home({ isDark, onToggleTheme }: Props) {
-
   return (
-    <MainLayout
-      title="Home"
-      isDark={isDark}
-      onToggleTheme={onToggleTheme}
-    >
+    <MainLayout title="Home" isDark={isDark} onToggleTheme={onToggleTheme}>
       <nav>
         <LinkList />
       </nav>
-    </MainLayout >
-  )
+    </MainLayout>
+  );
 }
 
 export default Home;

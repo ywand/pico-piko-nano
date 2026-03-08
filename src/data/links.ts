@@ -1,5 +1,5 @@
 export type LinkItem = {
-  category: "main" | "doc" | "game" | "tool" | "dev" | "lib" | "ref" | "other";
+  category: "main" | "doc" | "game" | "tool" | "antenna" | "dev" | "lib" | "ref" | "other";
   label: string;
   url: string;
   target?: "_self" | "_blank" | "_inline";
@@ -12,6 +12,7 @@ export const categorys = {
   doc: "読み物",
   game: "Games(自作ゲーム集)",
   tool: "Tools(自作ツール集)",
+  antenna: "アンテナ",
   dev: "開発環境",
   lib: "使用ライブラリ",
   ref: "参考サイト",
@@ -37,7 +38,7 @@ export const links: LinkItem[] = [
   {
     category: "game",
     label: "豆ジャンプ",
-    url: "/game/G0001_kaboom_jump.html",
+    url: "/games/G0001_kaboom_jump.html",
     target: "_self",
     tags: "game,ゲーム,kaboom,ジャンプアクション",
     description: "kaboom.jsを使用した2Dジャンプアクション",
@@ -45,7 +46,7 @@ export const links: LinkItem[] = [
   {
     category: "game",
     label: "ブロック崩し",
-    url: "/game/G0002_blockBreaking.html",
+    url: "/games/G0002_blockBreaking.html",
     target: "_self",
     tags: "game,ゲーム,ブロック崩し,p5.js",
     description: "p5.jsを使用したブロック崩し",
@@ -53,7 +54,7 @@ export const links: LinkItem[] = [
   {
     category: "game",
     label: "ランダムお絵かき",
-    url: "/game/G0003_randomDraw.html",
+    url: "/games/G0003_randomDraw.html",
     target: "_self",
     tags: "お絵かき,ドロー,ランダム,p5.js",
     description: "p5.jsを使用したランダム描画",
@@ -61,7 +62,7 @@ export const links: LinkItem[] = [
   {
     category: "game",
     label: "3Dボールテスト",
-    url: "/game/G0004_3DBallsGame",
+    url: "/games/G0004_3DBallsGame",
     target: "_self",
     tags: "3D,ボール,Babylon.js",
     description: "Babylon.jsを使用した3Dボールゲーム",
@@ -69,21 +70,21 @@ export const links: LinkItem[] = [
   {
     category: "tool",
     label: "メモ帳",
-    url: "/tool/T0001_memo.html",
+    url: "/tools/T0001_memo.html",
     target: "_self",
     description: "localStorageを使用したメモ帳",
   },
   {
     category: "tool",
     label: "文章読み上げ",
-    url: "/tool/T0002_Speech.html",
+    url: "/tools/T0002_Speech.html",
     target: "_self",
     description: "WebSpeechAPIを使用した文章読み上げ",
   },
   {
     category: "tool",
     label: "Mark Down Editor",
-    url: "/tool/T0003_MarkDownEditor.html",
+    url: "/tools/T0003_MarkDownEditor.html",
     target: "_self",
     tags: "マークダウン,md,MarkDown,エディタ",
     description: "marked.jsを使用したマークダウンエディタ",
@@ -91,7 +92,7 @@ export const links: LinkItem[] = [
   {
     category: "tool",
     label: "時計",
-    url: "/tool/T0004_Timer",
+    url: "/tools/T0004_Timer",
     target: "_self",
     tags: "時計,タイマー",
     description: "現在時刻の表示",
@@ -99,7 +100,7 @@ export const links: LinkItem[] = [
   {
     category: "tool",
     label: "カレンダー",
-    url: "/tool/T0005_CalendarPage",
+    url: "/tools/T0005_CalendarPage",
     target: "_self",
     tags: "カレンダー",
     description: "カレンダー（祝日表示あり）",
@@ -107,10 +108,18 @@ export const links: LinkItem[] = [
   {
     category: "tool",
     label: "QRコードツール",
-    url: "/tool/T0006_QrTool",
+    url: "/tools/T0006_QrTool",
     target: "_self",
     tags: "QRコード,ジェネレータ,リーダ",
     description: "カメラで読み取り、またはテキストをQRコードに変換するツール",
+  },
+  {
+    category: "antenna",
+    label: "アンテナページ【FF14】",
+    url: "/antenna/AntennaPageFF14",
+    target: "_self",
+    tags: "アンテナ,FF14,ニュース,攻略",
+    description: "FF14に関するページの更新情報まとめ",
   },
   {
     category: "dev",

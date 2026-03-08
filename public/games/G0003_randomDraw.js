@@ -14,15 +14,15 @@ const DEBUG = false;
 
 class Stat {
   constructor() {
-    this.num = R(500, 500);
-    this.size = R(1, 5);
-    this.speed = 5;
+    this.num = R(100, 500);
+    this.size = R(1, 30);
+    this.speed = R(3, 10);
     this.time = 0.5;
     this.wait = 0;
-    this.r = R(0, FF);
-    this.g = R(0, FF);
-    this.b = R(0, FF);
-    this.bw = 0;
+    this.r = R(0, 200);
+    this.g = R(0, 200);
+    this.b = R(0, 200);
+    this.bw = R(-0.5, 0);
     this.shape = R(1, 1);
     this.line = R(0, 0);
     this.col = 0;
@@ -30,7 +30,7 @@ class Stat {
     this.clear = false;
     this.stop = false;
     this.reset = false;
-    this.gravity = R(0, 10);
+    this.gravity = R(0, 5);
     this.RandomColSwitch = true;
     this.gravitySwitch = true;
     this.CircularSwitch = false;
@@ -249,6 +249,7 @@ function keyPressed() {
 function move(lsx, lsy) {
   let gx = 0;
   let gy = stat.gravity;
+  let angle = 0;
   if (dev.gamma != 0) {
     gx = -stat.gravity * clampAngle90(dev.gamma) / 90;
   }
@@ -261,8 +262,9 @@ function move(lsx, lsy) {
       lsx[i] += R(-stat.speed, stat.speed);
       lsy[i] += R(-stat.speed, stat.speed);
     } else {
-      lsx[i] += R(stat.speed / 2, stat.speed * 2) * Math.cos(stat.count / 10);
-      lsy[i] += R(stat.speed / 2, stat.speed * 2) * Math.sin(stat.count / 10);
+      angle = stat.count / R(10, 100);
+      lsx[i] += R(stat.speed / 2, stat.speed * 2) * Math.cos(angle);
+      lsy[i] += R(stat.speed / 2, stat.speed * 2) * Math.sin(angle);
     }
     if (stat.gravitySwitch == true) {
       lsx[i] += gx;
