@@ -21,7 +21,12 @@ async function build() {
       const items = feed.items.map((item) => ({
         title: item.title,
         link: item.link,
-        date: item.pubDate,
+        date:
+          item.pubDate ??
+          item.isoDate ??
+          item['dc:date'] ??
+          item.published ??
+          item.updated,
         site: source.name,
         category: source.category,
       }));

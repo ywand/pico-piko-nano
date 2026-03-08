@@ -1,134 +1,72 @@
 {
-  "FINAL FANTASY XIV, The Lodestone": [
-    {
-      "title": "更新のお知らせ(3/7)",
-      "link": "https://jp.finalfantasyxiv.com/lodestone/news/detail/7b8ab05a7d5fb8ce6467b6adfd123fc2bb3c8d4f",
-      "date": "2026-03-07T04:20:00.000Z",
-      "site": "FINAL FANTASY XIV, The Lodestone",
-      "category": "FF14"
-    },
-    {
-      "title": "ゲーム内でのRMTおよび不正行為への対応について(3/5)",
-      "link": "https://jp.finalfantasyxiv.com/lodestone/news/detail/e6bec7be19029fa54b6a54e8e36f6f6067049daa",
-      "date": "2026-03-05T08:00:00.000Z",
-      "site": "FINAL FANTASY XIV, The Lodestone",
-      "category": "FF14"
-    },
-    {
-      "title": "パッチ7.45公開以降に確認されている不具合について(3/4)",
-      "link": "https://jp.finalfantasyxiv.com/lodestone/news/detail/3fbb93b7606e9b8a22d202c64a7a467b1cdf12e9",
-      "date": "2026-03-04T12:05:00.000Z",
-      "site": "FINAL FANTASY XIV, The Lodestone",
-      "category": "FF14"
-    },
-    {
-      "title": "エターナルセレモニーの予約／実施ができない時間について",
-      "link": "https://jp.finalfantasyxiv.com/lodestone/news/detail/f5b6b0d6f2bd9efdeb4dbd6b2ba90383b136673f",
-      "date": "2026-03-03T11:20:00.000Z",
-      "site": "FINAL FANTASY XIV, The Lodestone",
-      "category": "FF14"
-    },
-    {
-      "title": "パッチ7.45公開以降に確認されている不具合について(3/3)",
-      "link": "https://jp.finalfantasyxiv.com/lodestone/news/detail/81ba49ee9182a3f644d0e425132f267c3f07ff2e",
-      "date": "2026-03-03T10:41:25.000Z",
-      "site": "FINAL FANTASY XIV, The Lodestone",
-      "category": "FF14"
-    },
-    {
-      "title": "Lodestone 更新のお知らせ(3/3)",
-      "link": "https://jp.finalfantasyxiv.com/lodestone/news/detail/40bad9402f6d1aae7a18c9ced0b037f7618ba4b5",
-      "date": "2026-03-03T10:05:00.000Z",
-      "site": "FINAL FANTASY XIV, The Lodestone",
-      "category": "FF14"
-    },
-    {
-      "title": "コンパニオンアプリ 更新のお知らせ(3/3)",
-      "link": "https://jp.finalfantasyxiv.com/lodestone/news/detail/4ca41451e6818f23414df9c1c178636a6d06d3dc",
-      "date": "2026-03-03T06:40:00.000Z",
-      "site": "FINAL FANTASY XIV, The Lodestone",
-      "category": "FF14"
-    },
-    {
-      "title": "ワールド間人口の平均化優遇施策の対象ワールド変更について(3/3)",
-      "link": "https://jp.finalfantasyxiv.com/lodestone/news/detail/fa66d9b818b2f992afd9df46347d7d2499a5603a",
-      "date": "2026-03-03T05:55:00.000Z",
-      "site": "FINAL FANTASY XIV, The Lodestone",
-      "category": "FF14"
-    },
-    {
-      "title": "更新のお知らせ(3/3)",
-      "link": "https://jp.finalfantasyxiv.com/lodestone/news/detail/c0d774deb21882f131e1ebb5755d8bad3660401e",
-      "date": "2026-03-03T05:35:00.000Z",
-      "site": "FINAL FANTASY XIV, The Lodestone",
-      "category": "FF14"
-    },
-    {
-      "title": "Lodestone メンテナンス作業のお知らせ(3/3)",
-      "link": "https://jp.finalfantasyxiv.com/lodestone/news/detail/7d09154db58852e501265f4f3eed093fdafb13d3",
-      "date": "2026-02-27T08:20:00.000Z",
-      "site": "FINAL FANTASY XIV, The Lodestone",
-      "category": "FF14"
-    }
-  ],
   "FF14ひかせん速報": [
     {
       "title": "【FF14】お前らってクレセントアイル内で使えるレアアクセ集めてるの？",
       "link": "https://ff14hikasensokuhou.com/blog-entry-27985.html",
+      "date": "2026-03-08T06:00:35.000Z",
       "site": "FF14ひかせん速報",
       "category": "FF14"
     },
     {
       "title": "【FF14】ランプの精の「サモンエアシップ（線路）」が良くわからないんだが【商客物語】",
       "link": "https://ff14hikasensokuhou.com/blog-entry-27984.html",
+      "date": "2026-03-08T04:00:21.000Z",
       "site": "FF14ひかせん速報",
       "category": "FF14"
     },
     {
       "title": "【FF14】商客物語はAVDに満足してアナザーダンジョン（AD）は後回しって人多いの？",
       "link": "https://ff14hikasensokuhou.com/blog-entry-27983.html",
+      "date": "2026-03-08T02:20:27.000Z",
       "site": "FF14ひかせん速報",
       "category": "FF14"
     },
     {
       "title": "【FF14】アドバンスドヴァリアントダンジョン（AVD）のRFで取り抜けを提案するやつｗｗｗｗｗ",
       "link": "https://ff14hikasensokuhou.com/blog-entry-27981.html",
+      "date": "2026-03-08T00:00:43.000Z",
       "site": "FF14ひかせん速報",
       "category": "FF14"
     },
     {
       "title": "【FF14】コンテンツ中にギミック解説したらBLされた話",
       "link": "https://ff14hikasensokuhou.com/blog-entry-27982.html",
+      "date": "2026-03-07T22:00:47.000Z",
       "site": "FF14ひかせん速報",
       "category": "FF14"
     },
     {
       "title": "【FF14】AVDの報酬は個人箱でもいい気がするんだが",
       "link": "https://ff14hikasensokuhou.com/blog-entry-27980.html",
+      "date": "2026-03-07T20:32:26.000Z",
       "site": "FF14ひかせん速報",
       "category": "FF14"
     },
     {
       "title": "【FF14】未だに力士実装に期待してるやつｗｗｗｗｗｗ",
       "link": "https://ff14hikasensokuhou.com/blog-entry-27979.html",
+      "date": "2026-03-07T12:00:06.000Z",
       "site": "FF14ひかせん速報",
       "category": "FF14"
     },
     {
       "title": "【FF14】ヘビー級零式2層の「水牢」ってヒーラーで完全に平定されたけど結果的にそれが正解だったよな",
       "link": "https://ff14hikasensokuhou.com/blog-entry-27978.html",
+      "date": "2026-03-07T09:30:36.000Z",
       "site": "FF14ひかせん速報",
       "category": "FF14"
     },
     {
       "title": "【FF14】「初見攻略が面白かった」「丁度よかった」アドバンスド・ヴァリアントダンジョン（AVD）商客物語の難易度に絶賛の声",
       "link": "https://ff14hikasensokuhou.com/blog-entry-27977.html",
+      "date": "2026-03-07T08:00:21.000Z",
       "site": "FF14ひかせん速報",
       "category": "FF14"
     },
     {
       "title": "【FF14】新ジョブ追加もいいけど既存ジョブのリワークを望む声",
       "link": "https://ff14hikasensokuhou.com/blog-entry-27976.html",
+      "date": "2026-03-07T06:00:47.000Z",
       "site": "FF14ひかせん速報",
       "category": "FF14"
     }
@@ -202,6 +140,150 @@
       "link": "https://yan-flash.com/articles/gaming-controller-obsession-stories-39",
       "date": "Sat, 07 Mar 2026 03:45:50 GMT",
       "site": "ヤーン速報",
+      "category": "FF14"
+    }
+  ],
+  "FINAL FANTASY XIV, The Lodestone": [
+    {
+      "title": "更新のお知らせ(3/7)",
+      "link": "https://jp.finalfantasyxiv.com/lodestone/news/detail/7b8ab05a7d5fb8ce6467b6adfd123fc2bb3c8d4f",
+      "date": "2026-03-07T04:20:00.000Z",
+      "site": "FINAL FANTASY XIV, The Lodestone",
+      "category": "FF14"
+    },
+    {
+      "title": "ゲーム内でのRMTおよび不正行為への対応について(3/5)",
+      "link": "https://jp.finalfantasyxiv.com/lodestone/news/detail/e6bec7be19029fa54b6a54e8e36f6f6067049daa",
+      "date": "2026-03-05T08:00:00.000Z",
+      "site": "FINAL FANTASY XIV, The Lodestone",
+      "category": "FF14"
+    },
+    {
+      "title": "パッチ7.45公開以降に確認されている不具合について(3/4)",
+      "link": "https://jp.finalfantasyxiv.com/lodestone/news/detail/3fbb93b7606e9b8a22d202c64a7a467b1cdf12e9",
+      "date": "2026-03-04T12:05:00.000Z",
+      "site": "FINAL FANTASY XIV, The Lodestone",
+      "category": "FF14"
+    },
+    {
+      "title": "エターナルセレモニーの予約／実施ができない時間について",
+      "link": "https://jp.finalfantasyxiv.com/lodestone/news/detail/f5b6b0d6f2bd9efdeb4dbd6b2ba90383b136673f",
+      "date": "2026-03-03T11:20:00.000Z",
+      "site": "FINAL FANTASY XIV, The Lodestone",
+      "category": "FF14"
+    },
+    {
+      "title": "パッチ7.45公開以降に確認されている不具合について(3/3)",
+      "link": "https://jp.finalfantasyxiv.com/lodestone/news/detail/81ba49ee9182a3f644d0e425132f267c3f07ff2e",
+      "date": "2026-03-03T10:41:25.000Z",
+      "site": "FINAL FANTASY XIV, The Lodestone",
+      "category": "FF14"
+    },
+    {
+      "title": "Lodestone 更新のお知らせ(3/3)",
+      "link": "https://jp.finalfantasyxiv.com/lodestone/news/detail/40bad9402f6d1aae7a18c9ced0b037f7618ba4b5",
+      "date": "2026-03-03T10:05:00.000Z",
+      "site": "FINAL FANTASY XIV, The Lodestone",
+      "category": "FF14"
+    },
+    {
+      "title": "コンパニオンアプリ 更新のお知らせ(3/3)",
+      "link": "https://jp.finalfantasyxiv.com/lodestone/news/detail/4ca41451e6818f23414df9c1c178636a6d06d3dc",
+      "date": "2026-03-03T06:40:00.000Z",
+      "site": "FINAL FANTASY XIV, The Lodestone",
+      "category": "FF14"
+    },
+    {
+      "title": "ワールド間人口の平均化優遇施策の対象ワールド変更について(3/3)",
+      "link": "https://jp.finalfantasyxiv.com/lodestone/news/detail/fa66d9b818b2f992afd9df46347d7d2499a5603a",
+      "date": "2026-03-03T05:55:00.000Z",
+      "site": "FINAL FANTASY XIV, The Lodestone",
+      "category": "FF14"
+    },
+    {
+      "title": "更新のお知らせ(3/3)",
+      "link": "https://jp.finalfantasyxiv.com/lodestone/news/detail/c0d774deb21882f131e1ebb5755d8bad3660401e",
+      "date": "2026-03-03T05:35:00.000Z",
+      "site": "FINAL FANTASY XIV, The Lodestone",
+      "category": "FF14"
+    },
+    {
+      "title": "Lodestone メンテナンス作業のお知らせ(3/3)",
+      "link": "https://jp.finalfantasyxiv.com/lodestone/news/detail/7d09154db58852e501265f4f3eed093fdafb13d3",
+      "date": "2026-02-27T08:20:00.000Z",
+      "site": "FINAL FANTASY XIV, The Lodestone",
+      "category": "FF14"
+    }
+  ],
+  "ファイナルファンタジーXIV: 公式ブログ": [
+    {
+      "title": "あなたの「推し」は誰？ プリンセスデーまもなく開催！",
+      "link": "https://jp.finalfantasyxiv.com/blog/003837.html",
+      "date": "2026-02-24T09:00:00.000Z",
+      "site": "ファイナルファンタジーXIV: 公式ブログ",
+      "category": "FF14"
+    },
+    {
+      "title": "「新春SP！ モルボル探検隊」 活動報告＆第50回告知 ",
+      "link": "https://jp.finalfantasyxiv.com/blog/003836.html",
+      "date": "2026-02-06T08:00:00.000Z",
+      "site": "ファイナルファンタジーXIV: 公式ブログ",
+      "category": "FF14"
+    },
+    {
+      "title": "大きなケーキはいかが？ ヴァレンティオンデーまもなく開催！",
+      "link": "https://jp.finalfantasyxiv.com/blog/003831.html",
+      "date": "2026-01-30T09:00:00.000Z",
+      "site": "ファイナルファンタジーXIV: 公式ブログ",
+      "category": "FF14"
+    },
+    {
+      "title": "「至天の座アルカディア」完結記念！シリーズで活躍する闘士たちのご紹介",
+      "link": "https://jp.finalfantasyxiv.com/blog/003830.html",
+      "date": "2026-01-16T05:00:00.000Z",
+      "site": "ファイナルファンタジーXIV: 公式ブログ",
+      "category": "FF14"
+    },
+    {
+      "title": "来週1月15日（木）は「新春SP！ モルボル探検隊」",
+      "link": "https://jp.finalfantasyxiv.com/blog/003829.html",
+      "date": "2026-01-08T09:00:00.000Z",
+      "site": "ファイナルファンタジーXIV: 公式ブログ",
+      "category": "FF14"
+    },
+    {
+      "title": "ファンフェスティバル 2026 オフィシャルグッズ 第1弾 予約受付中！",
+      "link": "https://jp.finalfantasyxiv.com/blog/003824.html",
+      "date": "2026-01-07T09:00:00.000Z",
+      "site": "ファイナルファンタジーXIV: 公式ブログ",
+      "category": "FF14"
+    },
+    {
+      "title": "角持つ白馬と一緒に祝おう、降神祭！",
+      "link": "https://jp.finalfantasyxiv.com/blog/003823.html",
+      "date": "2025-12-26T09:00:00.000Z",
+      "site": "ファイナルファンタジーXIV: 公式ブログ",
+      "category": "FF14"
+    },
+    {
+      "title": "FFXIV初の常設店！オフィシャルグッズショップに行ってみた！",
+      "link": "https://jp.finalfantasyxiv.com/blog/003818.html",
+      "date": "2025-12-19T09:00:00.000Z",
+      "site": "ファイナルファンタジーXIV: 公式ブログ",
+      "category": "FF14"
+    },
+    {
+      "title": "「Everything Burns」の英語歌詞とギターTAB譜を公開！",
+      "link": "https://jp.finalfantasyxiv.com/blog/003814.html",
+      "date": "2025-12-17T10:00:00.000Z",
+      "site": "ファイナルファンタジーXIV: 公式ブログ",
+      "category": "FF14"
+    },
+    {
+      "title": "おしゃれをも～っと楽しもう！パッチ7.4武具投影アップデートのご紹介",
+      "link": "https://jp.finalfantasyxiv.com/blog/003803.html",
+      "date": "2025-12-15T06:00:00.000Z",
+      "site": "ファイナルファンタジーXIV: 公式ブログ",
       "category": "FF14"
     }
   ]
