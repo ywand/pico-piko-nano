@@ -15,6 +15,11 @@ export const rssSources = [
     category: 'FF14',
   },
   {
+    name: 'シャキ待ち速報',
+    url: 'https://syakimachi.com/rss.xml',
+    category: 'FF14',
+  },
+  {
     name: 'FF14ひかせん速報',
     url: 'https://ff14hikasensokuhou.com/?xml',
     category: 'FF14',

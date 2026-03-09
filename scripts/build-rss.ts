@@ -56,7 +56,7 @@ async function build() {
   //サイトごとに最大20件
   for (const category of Object.keys(grouped)) {
     for (const site of Object.keys(grouped[category])) {
-      grouped[category][site] = grouped[category][site].slice(0, 20);
+      grouped[category][site] = grouped[category][site].slice(0, 10);
     }
   }
 
