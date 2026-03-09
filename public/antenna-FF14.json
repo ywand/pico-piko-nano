@@ -145,7 +145,14 @@
   ],
   "ヤーン速報": [
     {
-      "title": "【攻略】異聞商客物語の野良周回攻略法まとめ　イディル処理との違いを解説",
+      "title": "【話題】FF14の昔の仕様を懐かしむ光の戦士たち",
+      "link": "https://yan-flash.com/articles/ff14-old-specs-nostalgic-warriors-58",
+      "date": "Mon, 09 Mar 2026 01:53:07 GMT",
+      "site": "ヤーン速報",
+      "category": "FF14"
+    },
+    {
+      "title": "【攻略】異聞商客物語の処理法まとめ　イディル処理との違いを解説",
       "link": "https://yan-flash.com/articles/hmm-let-me-reconsider-with-english-translation-actually-translating-to-english-f-57",
       "date": "Sun, 08 Mar 2026 10:21:28 GMT",
       "site": "ヤーン速報",
@@ -204,13 +211,6 @@
       "title": "【議論】ゲーミングPCとPS5どっちがいいかで激論",
       "link": "https://yan-flash.com/articles/gaming-pc-vs-ps5-debate-44",
       "date": "Sat, 07 Mar 2026 09:56:50 GMT",
-      "site": "ヤーン速報",
-      "category": "FF14"
-    },
-    {
-      "title": "【攻略】AVD突入人数別攻略メモ！人数によるギミック・安置の違いまとめ",
-      "link": "https://yan-flash.com/articles/avd-strategy-by-player-count-43",
-      "date": "Sat, 07 Mar 2026 09:48:07 GMT",
       "site": "ヤーン速報",
       "category": "FF14"
     }
@@ -289,6 +289,13 @@
   ],
   "FF14ひかせん速報": [
     {
+      "title": "【FF14】もう受け入れるしかない？CFでやるコンテンツでもマナに行かされるのがダルいという声",
+      "link": "https://ff14hikasensokuhou.com/blog-entry-27992.html",
+      "date": "2026-03-09T03:00:53.000Z",
+      "site": "FF14ひかせん速報",
+      "category": "FF14"
+    },
+    {
       "title": "【FF14】フロントラインでの遠隔は前出るべき？「意味ない」「火力出せ」の激論まとめ",
       "link": "https://ff14hikasensokuhou.com/blog-entry-27991.html",
       "date": "2026-03-09T00:30:27.000Z",
@@ -348,13 +355,6 @@
       "title": "【FF14】商客物語はAVDに満足してアナザーダンジョン（AD）は後回しって人多いの？",
       "link": "https://ff14hikasensokuhou.com/blog-entry-27983.html",
       "date": "2026-03-08T02:20:27.000Z",
-      "site": "FF14ひかせん速報",
-      "category": "FF14"
-    },
-    {
-      "title": "【FF14】アドバンスドヴァリアントダンジョン（AVD）のRFで取り抜けを提案するやつｗｗｗｗｗ",
-      "link": "https://ff14hikasensokuhou.com/blog-entry-27981.html",
-      "date": "2026-03-08T00:00:43.000Z",
       "site": "FF14ひかせん速報",
       "category": "FF14"
     }

@@ -9,14 +9,16 @@ type Props = {
 export default function AntennaPageFF14({ isDark, onToggleTheme }: Props) {
   return (
     <MainLayout
-      title="アンテナページ【FF14】"
+      title="アンテナページ【GameNews】"
       isDark={isDark}
       onToggleTheme={onToggleTheme}
     >
-      FF14公式サイトやファンサイトの更新情報まとめ。
-      <br />
-      <br />
-      <AntennaList name="FF14" />
+      <div>
+        ゲーム公式サイトやゲームニュースサイトの更新情報まとめ。
+        <br />
+        <br />
+      </div>
+      <AntennaList name="GameNews" />
     </MainLayout>
   );
 }

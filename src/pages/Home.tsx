@@ -9,6 +9,9 @@ type Props = {
 function Home({ isDark, onToggleTheme }: Props) {
   return (
     <MainLayout title="Home" isDark={isDark} onToggleTheme={onToggleTheme}>
+      自作ゲームや自作ツールの公開や、よく使うサイトへのリンク集作成などをしています。
+      <br />
+      <br />
       <nav>
         <LinkList />
       </nav>
