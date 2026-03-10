@@ -1,12 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { routes } from '@/router/routes';
 
 function App() {
+  //保存テーマ取得
+  const [isDark, setIsDark] = useState(false);
+  useEffect(() => {
+    const saveTheme = localStorage.getItem('theme');
+    if (saveTheme === 'dark') {
+      setIsDark(true);
+    }
+  }, []);
+
   //テーマ切り替え
-  const [isDark, setIsDark] = useState(() => {
-    return localStorage.getItem('theme') === 'dark';
-  });
   const toggleTheme = () => {
     setIsDark((prev) => {
       const next = !prev;
