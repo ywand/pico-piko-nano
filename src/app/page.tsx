@@ -1,6 +1,7 @@
 import { LinkList } from "@/components/LinkList";
 import MainLayout from "@/layouts/MainLayout";
 
+export const dynamic = "force-static";
 export default function Home() {
   return (
     <MainLayout>
