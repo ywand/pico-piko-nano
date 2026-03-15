@@ -5,6 +5,7 @@
   "scripts": {
     "rss": "tsx scripts/build-rss.ts",
     "dev": "next dev",
+    "build0": "next build",
     "build": "npm run rss && next build",
     "start": "next start",
     "lint": "eslint"
