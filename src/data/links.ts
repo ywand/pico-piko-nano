@@ -126,7 +126,7 @@ export const links: LinkItem[] = [
   },
   {
     category: "antenna",
-    label: "アンテナページ【FF14】",
+    label: "アンテナFF14",
     url: "/antenna/AntennaFF14",
     target: "_self",
     tags: "アンテナ,FF14,ニュース,攻略",
@@ -134,7 +134,7 @@ export const links: LinkItem[] = [
   },
   {
     category: "antenna",
-    label: "アンテナページ【GameNews】",
+    label: "アンテナGameNews",
     url: "/antenna/AntennaGameNews",
     target: "_self",
     tags: "アンテナ,ゲーム,ニュース,攻略",
