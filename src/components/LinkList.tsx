@@ -1,7 +1,6 @@
 import { links, categorys } from "@/data/links";
 import type { LinkItem } from "@/data/links";
 
-
 export function LinkList() {
   // categoryごとにまとめる
   const grouped = links.reduce<Record<string, LinkItem[]>>((acc, link) => {
@@ -14,15 +13,21 @@ export function LinkList() {
     <div>
       {Object.entries(grouped).map(([category, items]) => (
         <section key={category}>
-          <h2>{categorys[category as keyof typeof categorys]}</h2>
-
+          <h2 className="text-lg">
+            {categorys[category as keyof typeof categorys]}
+          </h2>
           <ul>
             {items.map((item, index) => (
-              <li key={`${item.label}-${index}`}>
+              <li
+                key={`${item.label}-${index}`}
+                className="before:content-['▣']  before:text-xs before:mr-1 ml-4"
+              >
                 <a
                   href={item.url}
                   target={item.target ?? "_self"}
-                  rel={item.target === "_blank" ? "noopener noreferrer" : undefined}
+                  rel={
+                    item.target === "_blank" ? "noopener noreferrer" : undefined
+                  }
                   title={item.description}
                 >
                   {item.label}

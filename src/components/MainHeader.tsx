@@ -15,7 +15,7 @@ function MainHeader({ title }: HeaderProps) {
   }, [title]);
 
   return (
-    <header>
+    <header className="text-base border-b border-zinc-300 mt-0 pt-0">
       <div>
         <h1>
           {title && <>{title} | </>} <a href="/">{SITE_CONFIG.title}</a>
