@@ -1,5 +1,6 @@
 import { links, categorys } from "@/data/links";
 import type { LinkItem } from "@/data/links";
+import Link from "next/link";
 
 export function LinkList() {
   // categoryごとにまとめる
@@ -17,23 +18,39 @@ export function LinkList() {
             {categorys[category as keyof typeof categorys]}
           </h2>
           <ul>
-            {items.map((item, index) => (
-              <li
-                key={`${item.label}-${index}`}
-                className="before:content-['▣']  before:text-xs before:mr-1 ml-4"
-              >
-                <a
-                  href={item.url}
-                  target={item.target ?? "_self"}
-                  rel={
-                    item.target === "_blank" ? "noopener noreferrer" : undefined
-                  }
-                  title={item.description}
+            {items.map((item, index) => {
+              const isExternal = item.url.startsWith("http");
+
+              return (
+                <li
+                  key={`${item.label}-${index}`}
+                  className="before:content-['▣']  before:text-xs before:mr-1 ml-4"
                 >
-                  {item.label}
-                </a>
-              </li>
-            ))}
+                  {isExternal ? (
+                    <a
+                      href={item.url}
+                      target={item.target ?? "_self"}
+                      rel={
+                        item.target === "_blank"
+                          ? "noopener noreferrer"
+                          : undefined
+                      }
+                      title={item.description}
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    <Link
+                      href={item.url}
+                      prefetch={true}
+                      title={item.description}
+                    >
+                      {item.label}
+                    </Link>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </section>
       ))}
