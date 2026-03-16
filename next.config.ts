@@ -20,6 +20,13 @@ const withPWA = require("next-pwa")({
       },
     },
     {
+      urlPattern: /^\/_next\/static\//,
+      handler: "StaleWhileRevalidate",
+      options: {
+        cacheName: "next-static",
+      },
+    },
+    {
       urlPattern: ({ request }: { request: Request }) =>
         request.destination === "script" || request.destination === "style",
       handler: "StaleWhileRevalidate",

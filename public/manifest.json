@@ -2,10 +2,19 @@
   "name": "Pico-Piko-Nano",
   "short_name": "Pico-Piko-Nano",
   "start_url": "/",
+  "id": "/",
   "display": "standalone",
+  "display_override": ["window-controls-overlay"],
   "background_color": "#FAFAFA",
   "theme_color": "#FAFAFA",
   "icons": [
+    
+    {
+      "src": "/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
     {
       "src": "/favicon-512.png",
       "sizes": "512x512",
