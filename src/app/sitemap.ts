@@ -15,7 +15,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/tools/T0006_QrTool",
   ];
 
-  return routes.map((route) => ({
+  const staticFiles = [
+    "/games/G0001_kaboom_jump",
+    "/games/G0002_blockbreaking",
+    "/games/G0003_randomdraw",
+    "/tools/T0001_memo",
+    "/tools/T0002_Speech",
+    "/tools/T0003_MarkDownEditor",
+  ];
+
+  // すべて結合
+  const allRoutes = [...routes, ...staticFiles];
+
+  return allRoutes.map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: lastModified,
     changeFrequency: "weekly",
