@@ -20,9 +20,24 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Pico-Piko-Nano",
+    alternateName: "ピコピコナノ",
+    url: "https://pico-piko-nano.netlify.app/",
+  };
   return (
     <html lang="ja">
-      <body>{children}</body>
+      <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData),
+          }}
+        />
+        {children}
+      </body>
     </html>
   );
 }

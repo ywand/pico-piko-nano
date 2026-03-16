@@ -118,7 +118,7 @@ export function BabylonCanvas() {
       groundBody.shape = groundShape;
 
       // 壁のデータ定義（位置とサイズ）
-      const WALL_HEIGHT = 50;
+      const WALL_HEIGHT = 5;
       const WALL_THICKNESS = 1;
       const walls: { mesh: any; body: PhysicsBody }[] = [];
       const wallsData = [
