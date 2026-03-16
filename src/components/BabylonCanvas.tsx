@@ -75,6 +75,7 @@ export function BabylonCanvas() {
       ui.addControl(panel);
       ui.idealWidth = 1920;
       ui.renderScale = 1;
+      panel.isVisible = false;
 
       //地面用傾き
       const tiltLabel = new GUI.TextBlock();
@@ -226,7 +227,7 @@ export function BabylonCanvas() {
         );
         // ランダムな位置を設定
         const randomX = (Math.random() - 0.5) * 3; // -4 to 4
-        const randomY = 5 + Math.random() * 10; // 5 to 15
+        const randomY = 5 + Math.random() * 200; // 5 to 15
         const randomZ = (Math.random() - 0.5) * 3; // -4 to 4
         sphere.position.set(randomX, randomY, randomZ);
 
