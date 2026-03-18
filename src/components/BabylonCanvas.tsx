@@ -96,7 +96,6 @@ class Game {
     this.scene.enablePhysics(new Vector3(0, -9.8, 0), plugin);
     this.scene.getPhysicsEngine()?.setTimeStep(1 / 60);
     this.scene.getPhysicsEngine()?.setSubTimeStep(2);
-    this.scene.debugLayer.show();
   }
 
   setupGUI() {
@@ -236,9 +235,9 @@ class Game {
     });
   }
 
-  createBalls() {
+  createBalls(num: number) {
     //ボールの定義
-    const numSpheres = 100;
+    const numSpheres = num;
     const sphereDiameter = 0.5;
 
     // 1. ガラス用のマテリアルを作成
@@ -259,6 +258,8 @@ class Game {
     glassMaterial.transparencyMode = PBRMaterial.PBRMATERIAL_ALPHABLEND;
     glassMaterial.forceAlphaTest = true; // アルファテストを強制
     glassMaterial.alphaCutOff = 0.1; // 影の判定基準
+
+    this.obj.balls = [];
     for (let i = 0; i < numSpheres; i++) {
       // 球体
       const sphere = MeshBuilder.CreateSphere(
@@ -290,22 +291,62 @@ class Game {
       //摩擦設定
       sphereBody.shape = sphereShape;
       sphereBody.setMassProperties({ mass: 1 });
-      const FRICTION = 1.2; //摩擦係数
+      const FRICTION = 2.0; //摩擦係数
       const RESTITUTION = 0.5; //反発係数
 
       sphereShape.material = { friction: FRICTION, restitution: RESTITUTION };
 
       sphereBody.setLinearDamping(0.3);
       sphereBody.setAngularDamping(0.3);
+
+      this.obj.balls.push({
+        mesh: sphere,
+        body: sphereBody,
+      });
     }
+  }
+
+  checkBallReset() {
+    const RESET_HEIGHT = -50;
+    if (!this.obj.balls) return;
+
+    this.obj.balls.forEach((ballObj: any) => {
+      const { mesh, body } = ballObj;
+
+      if (mesh.position.y < RESET_HEIGHT) {
+        const randomX = (Math.random() - 0.5) * 2;
+        const randomY = 20 + Math.random() * 10;
+        const randomZ = (Math.random() - 0.5) * 2;
+        const pos = new Vector3(randomX, randomY, randomZ);
+
+        // 1. 速度を完全にゼロにする
+        body.setLinearVelocity(Vector3.Zero());
+        body.setAngularVelocity(Vector3.Zero());
+
+        // 2. 位置と回転をリセット
+        // body.transformNode 経由で位置を設定
+        mesh.position.copyFrom(pos);
+        if (mesh.rotationQuaternion) {
+          mesh.rotationQuaternion.copyFrom(Quaternion.Identity());
+        }
+
+        // 3. 物理エンジン側に現在のMeshの位置を強制同期させる
+        // Havokではこれを呼ぶことで内部の状態が更新されます
+        body.disablePreStep = false; // 確実に同期させるためのフラグ（必要に応じて）
+
+        // 4. スリープ解除（重要）
+        // 動かした後に物理計算の対象として再認識させる
+        // body.forceReinit(); // もし同期しない場合は再初期化も有効
+      }
+    });
   }
 
   async init() {
     await this.initPysics();
     this.setupGUI();
-    this.createGround({ size: { width: 20, depth: 20, height: 1 } });
+    this.createGround({ size: { width: 10, depth: 10, height: 1 } });
     //this.createWalls({ size: { width: 100, depth: 100, height: 5 } });
-    this.createBalls();
+    this.createBalls(100);
   }
 }
 
@@ -322,8 +363,9 @@ export function BabylonCanvas() {
     game.init();
 
     game.engine.runRenderLoop(() => {
+      // カメラが存在することを確認
       if (game.scene && game.scene.activeCamera) {
-        // カメラが存在することを確認
+        game.checkBallReset();
         game.scene.render();
       }
     });
