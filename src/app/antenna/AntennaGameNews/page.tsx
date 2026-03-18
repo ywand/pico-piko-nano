@@ -5,7 +5,7 @@ export default function AntennaGameNews() {
   return (
     <MainLayout title="アンテナGameNews">
       <p className="text-sm">ゲームサイトの更新情報まとめ。</p>
-      <div className="m-2">
+      <div className="m-1">
         <nav>
           <AntennaList name="GameNews" />
         </nav>

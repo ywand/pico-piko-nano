@@ -37,7 +37,7 @@ export default function AntennaList({ name }: Props) {
             {articles.map((item, index) => (
               <li
                 key={index}
-                className="before:content-['▣']  before:text-xs before:mr-1 ml-4"
+                className="before:content-['▣']  before:text-xs before:mr-1 ml-2"
               >
                 <a href={item.link} target="_blank" rel="noopener noreferrer">
                   {item.title}
