@@ -1,4 +1,4 @@
-import GameLayout from "@/layouts/MainLayout";
+import GameLayout from "@/layouts/GameLayout";
 import { BabylonCanvas } from "@/components/BabylonCanvas";
 
 export default function G0004_3DBallsGame() {

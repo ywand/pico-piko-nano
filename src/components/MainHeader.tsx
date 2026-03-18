@@ -15,8 +15,8 @@ function MainHeader({ title }: HeaderProps) {
   }, [title]);
 
   return (
-    <header className="text-base border-b border-zinc-300 mt-0 pt-0">
-      <div>
+    <header className="text-base border-b border-zinc-300 mt-0 pt-0 overflow-x-auto no-scrollbar">
+      <div className="min-w-max">
         <h1>
           {title && <>{title} | </>} <a href="/">{SITE_CONFIG.title}</a>
         </h1>

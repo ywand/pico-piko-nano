@@ -38,6 +38,13 @@ type ObjectOptions = {
   };
 };
 
+type MaterialOptions = {
+  color?: Color3;
+  alpha?: number;
+  metallic?: number;
+  roughness?: number;
+};
+
 class Game {
   engine: Engine;
   scene: Scene;
@@ -163,9 +170,15 @@ class Game {
     this.obj.groundShape = new PhysicsShapeBox(
       Vector3.Zero(), // center
       Quaternion.Identity(), // rotation
-      new Vector3(w, (h / 2) * 3, d),
+      new Vector3(w, h, d),
       this.scene,
     );
+
+    const groundMaterial = {
+      friction: 1.0, // 摩擦（0〜1程度が一般的）
+      restitution: 0.1, // 反発（跳ね返り）
+    };
+    this.obj.groundShape.material = groundMaterial;
     this.obj.groundBody.shape = this.obj.groundShape;
   }
 
@@ -178,23 +191,23 @@ class Game {
     const wallsData = [
       {
         name: "wall_N",
-        pos: new Vector3(0, w / 2, h / 2),
-        size: new Vector3(w, h, d),
+        pos: new Vector3(0, h / 2, -d / 2),
+        size: new Vector3(w, h, d / 10),
       },
       {
         name: "wall_S",
-        pos: new Vector3(0, h / 2, -h / 2),
-        size: new Vector3(w, h, d),
+        pos: new Vector3(0, h / 2, d / 2),
+        size: new Vector3(w, h, d / 10),
       },
       {
         name: "wall_E",
         pos: new Vector3(w / 2, h / 2, 0),
-        size: new Vector3(d, h, h),
+        size: new Vector3(w / 10, h, d),
       },
       {
         name: "wall_W",
         pos: new Vector3(-w / 2, h / 2, 0),
-        size: new Vector3(d, h, h),
+        size: new Vector3(w / 10, h, d),
       },
     ];
     wallsData.forEach((data) => {
@@ -213,6 +226,10 @@ class Game {
       wall.enableEdgesRendering();
       wall.edgesWidth = 2;
       wall.edgesColor = new Color4(0.5, 0.8, 1, 1);
+      wall.material = this.createMaterial(data.name, {
+        color: new Color3(1, 0, 0),
+        alpha: 0.1,
+      });
 
       // 壁の物理設定
       const wallBody = new PhysicsBody(
@@ -224,7 +241,7 @@ class Game {
       wallBody.shape = new PhysicsShapeBox(
         Vector3.Zero(),
         Quaternion.Identity(),
-        new Vector3(data.size.x / 2, data.size.y / 2, data.size.z / 2),
+        new Vector3(data.size.x, data.size.y, data.size.z),
         this.scene,
       );
       wallBody.shape.material = {
@@ -238,7 +255,7 @@ class Game {
   createBalls(num: number) {
     //ボールの定義
     const numSpheres = num;
-    const sphereDiameter = 0.5;
+    const sphereDiameter = 1;
 
     // 1. ガラス用のマテリアルを作成
     const glassMaterial = new PBRMaterial("glassMat", this.scene);
@@ -282,7 +299,7 @@ class Game {
       );
       const sphereShape = new PhysicsShapeSphere(
         Vector3.Zero(), // center
-        sphereDiameter / 2, // 直径1なら半径0.5
+        sphereDiameter * 0.5, // 直径1なら半径0.5
         this.scene,
       );
       // 作成したマテリアルを割り当て
@@ -291,13 +308,13 @@ class Game {
       //摩擦設定
       sphereBody.shape = sphereShape;
       sphereBody.setMassProperties({ mass: 1 });
-      const FRICTION = 2.0; //摩擦係数
-      const RESTITUTION = 0.5; //反発係数
+      const FRICTION = 0.5; //摩擦係数
+      const RESTITUTION = 0.3; //反発係数
 
       sphereShape.material = { friction: FRICTION, restitution: RESTITUTION };
 
-      sphereBody.setLinearDamping(0.3);
-      sphereBody.setAngularDamping(0.3);
+      sphereBody.setLinearDamping(0.1);
+      sphereBody.setAngularDamping(0.1);
 
       this.obj.balls.push({
         mesh: sphere,
@@ -341,11 +358,27 @@ class Game {
     });
   }
 
+  createMaterial(name: string, opt: MaterialOptions = {}) {
+    const mat = new PBRMaterial(name, this.scene);
+
+    mat.albedoColor = opt.color ?? new Color3(1, 1, 1);
+    mat.alpha = opt.alpha ?? 1.0;
+
+    mat.metallic = opt.metallic ?? 0.0;
+    mat.roughness = opt.roughness ?? 0.5;
+
+    if (mat.alpha < 1) {
+      mat.transparencyMode = PBRMaterial.PBRMATERIAL_ALPHABLEND;
+    }
+
+    return mat;
+  }
+
   async init() {
     await this.initPysics();
     this.setupGUI();
-    this.createGround({ size: { width: 10, depth: 10, height: 1 } });
-    //this.createWalls({ size: { width: 100, depth: 100, height: 5 } });
+    this.createGround({ size: { width: 5, depth: 5, height: 1 } });
+    this.createWalls({ size: { width: 5, depth: 5, height: 4.5 } });
     this.createBalls(100);
   }
 }
