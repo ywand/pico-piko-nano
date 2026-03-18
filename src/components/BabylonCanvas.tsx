@@ -17,6 +17,7 @@ import {
   PhysicsMotionType,
   HavokPlugin,
   PBRMaterial,
+  StandardMaterial,
   Color3,
   Color4,
   Matrix,
@@ -57,6 +58,7 @@ class Game {
 
   constructor(canvas: HTMLCanvasElement) {
     this.engine = new Engine(canvas, true);
+    this.engine.setHardwareScalingLevel(1);
     this.scene = new Scene(this.engine);
     this.scene.clearColor = new Color4(0.2, 0.2, 0.3, 1);
     this.camera = new ArcRotateCamera(
@@ -113,34 +115,25 @@ class Game {
     );
     this.gui.panel = new GUI.StackPanel();
     this.gui.panel.width = "250px";
+    this.gui.panel.adaptHeightToChildren = true;
     this.gui.panel.isVertical = true;
     this.gui.panel.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
     this.gui.panel.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
-    this.gui.panel.background = "rgba(128,128,128,0.5)";
+    this.gui.panel.background = "rgba(200,200,200,0.5)";
     this.gui.ui.addControl(this.gui.panel);
     this.gui.ui.idealWidth = 1920;
     this.gui.ui.renderScale = 1;
-    this.gui.panel.isVisible = false;
+    //this.gui.panel.isVisible = true;
 
-    //地面用傾き
-    this.gui.tiltLabel = new GUI.TextBlock();
-    this.gui.tiltLabel.text = "地面傾き：";
-    this.gui.tiltLabel.height = "50px";
-    this.gui.tiltLabel.color = "black";
-    this.gui.panel.addControl(this.gui.tiltLabel);
-    this.gui.tiltSlider = new GUI.Slider();
-    this.gui.tiltSlider.minimum = -90;
-    this.gui.tiltSlider.maximum = 90;
-    this.gui.tiltSlider.value = 0;
-    this.gui.tiltSlider.height = "40px";
-    this.gui.panel.addControl(this.gui.tiltSlider);
-
-    this.gui.tiltSlider.onPointerUpObservable.add(() => {
-      const intVal = Math.round(this.gui.tiltSlider.value);
-      this.gui.tiltSlider.value = intVal;
-      const rad = (intVal * Math.PI) / 180;
-      this.gui.tiltLabel.text = "傾き：" + intVal;
-      console.log(this.gui.tiltLabel.text, "rad:", rad);
+    //fps表示
+    this.gui.fpsText = new GUI.TextBlock();
+    this.gui.fpsText.text = "FPS：0";
+    this.gui.fpsText.height = "60px";
+    this.gui.fpsText.color = "black";
+    this.gui.fpsText.fontSize = "24px";
+    this.gui.panel.addControl(this.gui.fpsText);
+    this.scene.onBeforeRenderObservable.add(() => {
+      this.gui.fpsText.text = "FPS：" + this.engine.getFps().toFixed();
     });
   }
 
@@ -257,25 +250,6 @@ class Game {
     const numSpheres = num;
     const sphereDiameter = 1;
 
-    // 1. ガラス用のマテリアルを作成
-    const glassMaterial = new PBRMaterial("glassMat", this.scene);
-    glassMaterial.transparencyMode = PBRMaterial.PBRMATERIAL_ALPHABLEND;
-    // 青色を設定
-    glassMaterial.albedoColor = new Color3(0.1, 0.3, 1.0);
-    // ガラスの質感を設定
-    glassMaterial.metallic = 0.0; // 金属ではない
-    glassMaterial.roughness = 0.1; // 表面は非常に滑らか
-    // 透明度と屈折の設定
-    glassMaterial.alpha = 0.3; // 透明度（0が完全透明）
-    glassMaterial.indexOfRefraction = 1.5; // ガラスの屈折率（一般的に1.5前後）
-    glassMaterial.linkRefractionWithTransparency = true; // 透明度と屈折を連動させる
-    if (this.scene.environmentTexture) {
-      glassMaterial.refractionTexture = this.scene.environmentTexture;
-    }
-    glassMaterial.transparencyMode = PBRMaterial.PBRMATERIAL_ALPHABLEND;
-    glassMaterial.forceAlphaTest = true; // アルファテストを強制
-    glassMaterial.alphaCutOff = 0.1; // 影の判定基準
-
     this.obj.balls = [];
     for (let i = 0; i < numSpheres; i++) {
       // 球体
@@ -302,8 +276,6 @@ class Game {
         sphereDiameter * 0.5, // 直径1なら半径0.5
         this.scene,
       );
-      // 作成したマテリアルを割り当て
-      //sphere.material = glassMaterial;
 
       //摩擦設定
       sphereBody.shape = sphereShape;
@@ -359,17 +331,11 @@ class Game {
   }
 
   createMaterial(name: string, opt: MaterialOptions = {}) {
-    const mat = new PBRMaterial(name, this.scene);
+    const mat = new StandardMaterial(name, this.scene);
 
-    mat.albedoColor = opt.color ?? new Color3(1, 1, 1);
+    mat.diffuseColor = opt.color ?? new Color3(1, 1, 1);
     mat.alpha = opt.alpha ?? 1.0;
-
-    mat.metallic = opt.metallic ?? 0.0;
     mat.roughness = opt.roughness ?? 0.5;
-
-    if (mat.alpha < 1) {
-      mat.transparencyMode = PBRMaterial.PBRMATERIAL_ALPHABLEND;
-    }
 
     return mat;
   }
