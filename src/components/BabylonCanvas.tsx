@@ -49,18 +49,32 @@ type MaterialOptions = {
 class Game {
   engine: Engine;
   scene: Scene;
+  size: {
+    width: number;
+    height: number;
+  };
   camera: ArcRotateCamera;
   light: HemisphericLight;
   dlight: DirectionalLight;
   shadow: ShadowGenerator;
-  gui: Record<string, any> = {};
+  gui: {
+    ui: GUI.AdvancedDynamicTexture;
+    panel: GUI.StackPanel;
+    text: Record<string, GUI.TextBlock>;
+    other: Record<string, unknown>;
+  };
   obj: Record<string, any> = {};
+  mat: Record<string, any> = {};
 
   constructor(canvas: HTMLCanvasElement) {
     this.engine = new Engine(canvas, true);
     this.engine.setHardwareScalingLevel(1);
     this.scene = new Scene(this.engine);
     this.scene.clearColor = new Color4(0.2, 0.2, 0.3, 1);
+    this.size = {
+      width: this.scene.getEngine().getRenderWidth(),
+      height: this.scene.getEngine().getRenderHeight(),
+    };
     this.camera = new ArcRotateCamera(
       "camera",
       Math.PI / 2,
@@ -93,6 +107,18 @@ class Game {
     this.shadow.setDarkness(0.5);
     this.shadow.useBlurExponentialShadowMap = true;
     this.shadow.getShadowMap()!.refreshRate = 1;
+
+    this.gui = {
+      ui: GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI", true, this.scene),
+      panel: new GUI.StackPanel(),
+      text: {},
+      other: {},
+    };
+
+    this.mat.matAwake = new StandardMaterial("awake", this.scene);
+    this.mat.matAwake.diffuseColor = new Color3(0.2, 0.6, 1);
+    this.mat.matSleep = new StandardMaterial("sleep", this.scene);
+    this.mat.matSleep.diffuseColor = new Color3(0.1, 0.5, 0.7); // スリープ時
   }
 
   //物理設定
@@ -108,12 +134,6 @@ class Game {
   }
 
   setupGUI() {
-    this.gui.ui = GUI.AdvancedDynamicTexture.CreateFullscreenUI(
-      "UI",
-      true,
-      this.scene,
-    );
-    this.gui.panel = new GUI.StackPanel();
     this.gui.panel.width = "250px";
     this.gui.panel.adaptHeightToChildren = true;
     this.gui.panel.isVertical = true;
@@ -121,20 +141,27 @@ class Game {
     this.gui.panel.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
     this.gui.panel.background = "rgba(200,200,200,0.5)";
     this.gui.ui.addControl(this.gui.panel);
-    this.gui.ui.idealWidth = 1920;
+    //this.gui.ui.idealWidth = 1920;
+    //this.gui.ui.idealHeight = 1080;
     this.gui.ui.renderScale = 1;
     //this.gui.panel.isVisible = true;
 
     //fps表示
-    this.gui.fpsText = new GUI.TextBlock();
-    this.gui.fpsText.text = "FPS：0";
-    this.gui.fpsText.height = "60px";
-    this.gui.fpsText.color = "black";
-    this.gui.fpsText.fontSize = "24px";
-    this.gui.panel.addControl(this.gui.fpsText);
+    this.gui.text.fpsText = new GUI.TextBlock();
+    this.gui.text.fpsText.text = "FPS：0";
+    this.gui.text.fpsText.color = "black";
+    this.gui.text.fpsText.resizeToFit = true;
+    this.gui.text.fpsText.textHorizontalAlignment =
+      GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+    this.gui.text.fpsText.textVerticalAlignment =
+      GUI.Control.VERTICAL_ALIGNMENT_CENTER;
+    this.gui.text.fpsText.fontSize = this.size.height / 30 + "px";
+    this.gui.text.fpsText.paddingTop = 4;
+    this.gui.panel.addControl(this.gui.text.fpsText);
     this.scene.onBeforeRenderObservable.add(() => {
-      this.gui.fpsText.text = "FPS：" + this.engine.getFps().toFixed();
+      this.gui.text.fpsText.text = "FPS：" + this.engine.getFps().toFixed();
     });
+    this.gui.other = {};
   }
 
   createGround(option: ObjectOptions) {
@@ -248,21 +275,22 @@ class Game {
   createBalls(num: number) {
     //ボールの定義
     const numSpheres = num;
-    const sphereDiameter = 1;
 
     this.obj.balls = [];
+
     for (let i = 0; i < numSpheres; i++) {
+      const sphereDiameter = i / num + 0.8;
       // 球体
       const sphere = MeshBuilder.CreateSphere(
         `sphere_${i}`,
-        { diameter: 1 },
+        { diameter: sphereDiameter },
         this.scene,
       );
       this.shadow.addShadowCaster(sphere);
       // ランダムな位置を設定
-      const randomX = (Math.random() - 0.5) * 2; // -4 to 4
-      const randomY = 5 + Math.random() * 200; // 5 to 15
-      const randomZ = (Math.random() - 0.5) * 2; // -4 to 4
+      const randomX = (Math.random() - 0.5) * 3;
+      const randomY = 5 + Math.random() * 200 + 100;
+      const randomZ = (Math.random() - 0.5) * 3;
       sphere.position.set(randomX, randomY, randomZ);
 
       const sphereBody = new PhysicsBody(
@@ -271,12 +299,13 @@ class Game {
         false,
         this.scene,
       );
+      sphereBody.setLinearDamping(0.9);
+      sphereBody.setAngularDamping(0.9);
       const sphereShape = new PhysicsShapeSphere(
         Vector3.Zero(), // center
         sphereDiameter * 0.5, // 直径1なら半径0.5
         this.scene,
       );
-
       //摩擦設定
       sphereBody.shape = sphereShape;
       sphereBody.setMassProperties({ mass: 1 });
@@ -327,6 +356,21 @@ class Game {
         // 動かした後に物理計算の対象として再認識させる
         // body.forceReinit(); // もし同期しない場合は再初期化も有効
       }
+
+      const v = body.getLinearVelocity();
+
+      if (!v) return;
+      const speed = v.length();
+
+      if (speed < 0.1) {
+        // sleep扱い
+        mesh.material = this.mat.matSleep;
+        body.setLinearVelocity(Vector3.Zero());
+        body.setAngularVelocity(Vector3.Zero());
+      } else {
+        // awake扱い
+        mesh.material = this.mat.matAwake;
+      }
     });
   }
 
@@ -343,9 +387,14 @@ class Game {
   async init() {
     await this.initPysics();
     this.setupGUI();
-    this.createGround({ size: { width: 5, depth: 5, height: 1 } });
-    this.createWalls({ size: { width: 5, depth: 5, height: 4.5 } });
-    this.createBalls(100);
+
+    const rw = Math.round(Math.random() * 20) + 2;
+    const rh = Math.round(Math.random() * 10) + 1;
+    const rd = Math.round(Math.random() * 20) + 2;
+    this.createGround({ size: { width: rw, depth: rd, height: 1 } });
+    this.createWalls({ size: { width: rw, depth: rd, height: rh } });
+    const num = Math.min(Math.max(rw * rd * rh, 50), 100);
+    this.createBalls(num);
   }
 }
 
