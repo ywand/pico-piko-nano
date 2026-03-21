@@ -1,5 +1,10 @@
 import type { NextConfig } from "next";
 import withPWAInit from "@ducanh2912/next-pwa";
+import withMDXInit from "@next/mdx";
+
+const withMDX = withMDXInit({
+  extension: /\.mdx?$/,
+});
 
 const withPWA = withPWAInit({
   dest: "public",
@@ -56,6 +61,7 @@ const withPWA = withPWAInit({
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  pageExtensions: ["ts", "tsx", "md", "mdx"],
 };
 
-export default withPWA(nextConfig);
+export default withPWA(withMDX(nextConfig));

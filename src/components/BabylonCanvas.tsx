@@ -308,7 +308,12 @@ class Game {
         false,
         this.scene,
       );
+
       sphereBody.shape = sphereShape;
+      sphereBody.shape.material = {
+        friction: 0.5, // 摩擦
+        restitution: 0.5, // 反発 0=なし, 1=完全弾性
+      };
 
       this.obj.balls.push({
         mesh: sphere,
@@ -327,9 +332,9 @@ class Game {
   }
 
   randomPos(): Vector3 {
-    const wRange = 2;
-    const hRange = 2;
-    const dRange = 2;
+    const wRange = 10;
+    const hRange = 50;
+    const dRange = 10;
     const hDef = 20;
     return new Vector3(
       (Math.random() - 0.5) * wRange,
@@ -426,12 +431,12 @@ class Game {
     await this.initPysics();
     this.setupGUI();
 
-    const rw = Math.round(Math.random() * 20) + 2;
-    const rd = Math.round(Math.random() * 20) + 2;
-    const rh = Math.max(30 - rw - rd, 1);
+    const rw = Math.round(Math.random() * 10) + 1;
+    const rd = Math.round(Math.random() * 10) + 1;
+    const rh = Math.max(20 - rw - rd, 1);
     this.createGround({ size: { width: rw, depth: rd, height: 1 } });
     this.createWalls({ size: { width: rw, depth: rd, height: rh } });
-    this.createBalls(100, 0.5);
+    this.createBalls(100, 1);
   }
 }
 
