@@ -24,7 +24,7 @@ export function LinkList() {
               return (
                 <li
                   key={`${item.label}-${index}`}
-                  className="before:content-['▣']  before:text-xs before:mr-1 ml-4"
+                  className="before:content-['・']  before:text-md before:mr-1 ml-4"
                 >
                   {isExternal ? (
                     <a

@@ -19,7 +19,7 @@ export default function Home() {
     <>
       <MainLayout>
         <div>
-          <p className="text-sm">{pageDescription}</p>
+          <p>{pageDescription}</p>
         </div>
         <div className="m-4">
           <nav>

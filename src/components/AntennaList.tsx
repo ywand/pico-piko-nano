@@ -32,12 +32,12 @@ export default function AntennaList({ name }: Props) {
     <div>
       {Object.entries(items).map(([site, articles]) => (
         <div key={site}>
-          <h3 className="text-lg">{site}</h3>
-          <ul className="mb-4">
+          <h3 className="text-lg mt-2 mb-2">{site}</h3>
+          <ul className="mb-4 pb-4 border-b">
             {articles.map((item, index) => (
               <li
                 key={index}
-                className="before:content-['▣']  before:text-xs before:mr-1 ml-2"
+                className="before:content-['・']  before:text-md before:mr-1 ml-2 mt-2 mb-2"
               >
                 <a href={item.link} target="_blank" rel="noopener noreferrer">
                   {item.title}

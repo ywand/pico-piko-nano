@@ -397,7 +397,7 @@ class Game {
 
   checkBallStopTime(mesh: Mesh, body: PhysicsBody, state: SleepState): boolean {
     const THRESHOLD_SPEED = 0.1;
-    const STATIC_DELAY = 3.0; // 秒
+    const STATIC_DELAY = 10.0; // 秒
 
     const now = performance.now();
     const deltaSec = (now - state.lastTime) / 1000;
