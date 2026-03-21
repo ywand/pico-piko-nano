@@ -1,15 +1,31 @@
 import AntennaList from "@/components/AntennaList";
 import MainLayout from "@/layouts/MainLayout";
+import { createSEO } from "@/data/seo";
+import { JsonLd } from "@/components/JsonLd";
+
+const pageTitle = "FF14アンテナ";
+const pageDescription =
+  "ファイナルファンタジーXIV（FF14）公式サイトやファンサイトの更新情報まとめ。";
+const seoData = createSEO({
+  title: pageTitle,
+  path: "/guide/FF14Guide",
+  description: pageDescription,
+  type: "webpage",
+});
+export const metadata = seoData.metadata;
 
 export default function AntennaFF14() {
   return (
-    <MainLayout title="アンテナFF14">
-      <p className="text-sm">FF14公式サイトやファンサイトの更新情報まとめ。</p>
-      <div className="m-1">
-        <nav>
-          <AntennaList name="FF14" />
-        </nav>
-      </div>
-    </MainLayout>
+    <>
+      <MainLayout title={pageTitle}>
+        <p>{pageDescription}</p>
+        <div className="m-1">
+          <nav>
+            <AntennaList name="FF14" />
+          </nav>
+        </div>
+      </MainLayout>
+      <JsonLd data={seoData.structuredData} />
+    </>
   );
 }

@@ -1,44 +1,25 @@
-import type { Metadata } from "next";
 import "./globals.css";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import { JsonLd } from "@/components/JsonLd";
+import { createSEO } from "@/data/seo";
 
-export const metadata: Metadata = {
+const seoData = createSEO({
   title: "Pico-Piko-Nano",
-  description: "自作ゲームや自作ツールの公開。よく使うページへのリンク集など。",
-  openGraph: {
-    title: "Pico-Piko-Nano",
-    description:
-      "自作ゲームや自作ツールの公開。よく使うページへのリンク集など。",
-    url: "https://pico-piko-nano.netlify.app/",
-    locale: "ja_JP",
-    type: "website",
-  },
-  manifest: "/manifest.json",
-};
+  type: "website",
+});
+export const metadata = seoData.metadata;
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: "Pico-Piko-Nano",
-    alternateName: "ピコピコナノ",
-    url: "https://pico-piko-nano.netlify.app/",
-  };
   return (
     <html lang="ja">
       <body>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredData),
-          }}
-        />
         {children}
         <GoogleAnalytics />
+        <JsonLd data={seoData.structuredData} />
       </body>
     </html>
   );

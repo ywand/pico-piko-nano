@@ -17,7 +17,7 @@ export function LinkList() {
           <h2 className="text-lg">
             {categorys[category as keyof typeof categorys]}
           </h2>
-          <ul>
+          <ul className="mb-2">
             {items.map((item, index) => {
               const isExternal = item.url.startsWith("http");
 

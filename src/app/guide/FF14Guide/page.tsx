@@ -1,28 +1,25 @@
 import MainLayout from "@/layouts/MainLayout";
-import { QrToolClient } from "./QrToolClient";
 import { createSEO } from "@/data/seo";
 import { JsonLd } from "@/components/JsonLd";
 
-const pageTitle = "QRコードツール";
-const pageDescription = "文字列のQRコード変換ツール。";
+const pageTitle = "FF14攻略情報";
+const pageDescription =
+  "ファイナルファンタジーXIV（FF14）に関する攻略情報まとめ。";
 const seoData = createSEO({
   title: pageTitle,
-  path: "/tools/T0005_Calendar",
+  path: "/guide/FF14Guide",
   description: pageDescription,
   type: "webpage",
 });
 export const metadata = seoData.metadata;
 
-function T0006_QrTool() {
+export default function FF14Guide() {
   return (
     <>
       <MainLayout title={pageTitle}>
         <div>{pageDescription}</div>
-        <QrToolClient />
       </MainLayout>
       <JsonLd data={seoData.structuredData} />
     </>
   );
 }
-
-export default T0006_QrTool;

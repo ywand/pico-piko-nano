@@ -3,6 +3,7 @@ export type LinkItem = {
     | "main"
     | "doc"
     | "game"
+    | "guide"
     | "tool"
     | "antenna"
     | "dev"
@@ -22,6 +23,7 @@ export const categorys = {
   doc: "読み物",
   game: "Games(自作ゲーム集)",
   tool: "Tools(自作ツール集)",
+  guide: "ゲーム攻略情報",
   antenna: "アンテナ",
   dev: "開発環境",
   lib: "ゲームライブラリ",
@@ -125,8 +127,16 @@ export const links: LinkItem[] = [
     description: "カメラで読み取り、またはテキストをQRコードに変換するツール",
   },
   {
+    category: "guide",
+    label: "FF14攻略",
+    url: "/guide/FF14Guide",
+    target: "_self",
+    tags: "ゲーム攻略,情報,リンク,FF14",
+    description: "FF14に関する攻略情報など",
+  },
+  {
     category: "antenna",
-    label: "アンテナFF14",
+    label: "FF14アンテナ",
     url: "/antenna/AntennaFF14",
     target: "_self",
     tags: "アンテナ,FF14,ニュース,攻略",
@@ -134,7 +144,7 @@ export const links: LinkItem[] = [
   },
   {
     category: "antenna",
-    label: "アンテナGameNews",
+    label: "ゲームニュースアンテナ",
     url: "/antenna/AntennaGameNews",
     target: "_self",
     tags: "アンテナ,ゲーム,ニュース,攻略",

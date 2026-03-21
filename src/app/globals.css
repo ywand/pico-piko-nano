@@ -1,8 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fafafa; /* zinc-50 */
+  --foreground: #18181b; /* zinc-900 */
+  --link-color: #1d4ed8; /* blue-700 */
+  --font-size: 16; /* 太め */
+  --font-weight: 400; /* 太め */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #18181b; /* zinc-900 */
+    --foreground: #fafafa; /* zinc-50 */
+    --link-color: #3b82f6; /* blue-500 */
+  }
 }
 
 @theme inline {
@@ -12,45 +23,35 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   margin: 0;
   background: var(--background);
   color: var(--foreground);
   font-family:
-    "Hiragino Sans",
-    "Yu Gothic",
-    "Meiryo",
-    -apple-system,
-    BlinkMacSystemFont,
-    sans-serif;
-  font-size: 16px;
+    "Yu Gothic UI", "Hiragino Maru Gothic Pro", "Hiragino Maru Gothic ProN",
+    "sans-serif";
+  font-weight: var(--font-weight);
+  font-size: var(--font-size);
   line-height: 1.7;
 }
 
 a {
-  color: #3b82f6;
+  color: var(--link-color);
   text-decoration: none;
 }
 
 a:visited {
-  color: #3b82f6;
+  color: var(--link-color);
   text-decoration: none;
 }
 
 a:hover {
-  color: #2563eb;
+  color: var(--link-color);
   text-decoration: underline;
 }
 
 a:focus-visible {
-  color: #2563eb;
+  color: var(--link-color);
   text-decoration: underline;
 }
 

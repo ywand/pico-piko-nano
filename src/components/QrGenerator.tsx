@@ -12,7 +12,9 @@ export default function QrGenerator({ text }: Props) {
 
   useEffect(() => {
     if (!canvasRef.current) return;
-    QRCode.toCanvas(canvasRef.current, text, {
+    const qrText = text || " ";
+
+    QRCode.toCanvas(canvasRef.current, qrText, {
       width: 256,
       margin: 2,
     });
