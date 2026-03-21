@@ -21,6 +21,7 @@ import {
   Color3,
   Color4,
   Matrix,
+  Mesh,
 } from "@babylonjs/core";
 import HavokPhysics from "@babylonjs/havok";
 import * as GUI from "@babylonjs/gui";
@@ -45,6 +46,13 @@ type MaterialOptions = {
   metallic?: number;
   roughness?: number;
 };
+
+type SleepState = {
+  idleTime: number;
+  isStatic: boolean;
+  lastTime: number;
+};
+const stateMap = new Map<PhysicsBody, SleepState>();
 
 class Game {
   engine: Engine;
@@ -118,7 +126,7 @@ class Game {
     this.mat.matAwake = new StandardMaterial("awake", this.scene);
     this.mat.matAwake.diffuseColor = new Color3(0.2, 0.6, 1);
     this.mat.matSleep = new StandardMaterial("sleep", this.scene);
-    this.mat.matSleep.diffuseColor = new Color3(0.1, 0.5, 0.7); // スリープ時
+    this.mat.matSleep.diffuseColor = new Color3(0.1, 0.3, 0.5); // スリープ時
   }
 
   //物理設定
@@ -272,26 +280,27 @@ class Game {
     });
   }
 
-  createBalls(num: number) {
+  createBalls(num: number, size: number) {
     //ボールの定義
-    const numSpheres = num;
-
     this.obj.balls = [];
+    const masterSphere = MeshBuilder.CreateSphere(
+      "sphere",
+      { diameter: size, segments: 12 },
+      this.scene,
+    );
+    masterSphere.setEnabled(false);
+    const sphereShape = new PhysicsShapeSphere(
+      Vector3.Zero(), // center
+      size / 2, // 直径1なら半径0.5
+      this.scene,
+    );
 
-    for (let i = 0; i < numSpheres; i++) {
-      const sphereDiameter = i / num + 0.8;
-      // 球体
-      const sphere = MeshBuilder.CreateSphere(
-        `sphere_${i}`,
-        { diameter: sphereDiameter },
-        this.scene,
-      );
+    for (let i = 0; i < num; i++) {
+      const sphere = masterSphere.clone(`b{i}`);
+      sphere.setEnabled(true);
+      sphere.material = this.mat.matAwake;
       this.shadow.addShadowCaster(sphere);
-      // ランダムな位置を設定
-      const randomX = (Math.random() - 0.5) * 3;
-      const randomY = 5 + Math.random() * 200 + 100;
-      const randomZ = (Math.random() - 0.5) * 3;
-      sphere.position.set(randomX, randomY, randomZ);
+      sphere.position.copyFrom(this.randomPos());
 
       const sphereBody = new PhysicsBody(
         sphere,
@@ -299,23 +308,7 @@ class Game {
         false,
         this.scene,
       );
-      sphereBody.setLinearDamping(0.9);
-      sphereBody.setAngularDamping(0.9);
-      const sphereShape = new PhysicsShapeSphere(
-        Vector3.Zero(), // center
-        sphereDiameter * 0.5, // 直径1なら半径0.5
-        this.scene,
-      );
-      //摩擦設定
       sphereBody.shape = sphereShape;
-      sphereBody.setMassProperties({ mass: 1 });
-      const FRICTION = 0.5; //摩擦係数
-      const RESTITUTION = 0.3; //反発係数
-
-      sphereShape.material = { friction: FRICTION, restitution: RESTITUTION };
-
-      sphereBody.setLinearDamping(0.1);
-      sphereBody.setAngularDamping(0.1);
 
       this.obj.balls.push({
         mesh: sphere,
@@ -324,54 +317,99 @@ class Game {
     }
   }
 
-  checkBallReset() {
-    const RESET_HEIGHT = -50;
+  stopObj(mesh: Mesh, body: PhysicsBody, state: SleepState) {
+    body.setLinearVelocity(Vector3.Zero());
+    body.setAngularVelocity(Vector3.Zero());
+    body.setMotionType(PhysicsMotionType.STATIC);
+    mesh.material = this.mat.matSleep;
+    state.isStatic = true;
+    state.idleTime = 0;
+  }
+
+  randomPos(): Vector3 {
+    const wRange = 2;
+    const hRange = 2;
+    const dRange = 2;
+    const hDef = 20;
+    return new Vector3(
+      (Math.random() - 0.5) * wRange,
+      hDef + Math.random() * hRange,
+      (Math.random() - 0.5) * dRange,
+    );
+  }
+
+  resetObjPosition(mesh: Mesh, body: PhysicsBody, state: SleepState) {
+    const pos = this.randomPos();
+
+    //物理状態リセット
+    body.setMotionType(PhysicsMotionType.DYNAMIC);
+    body.setLinearVelocity(Vector3.Zero());
+    body.setAngularVelocity(Vector3.Zero());
+
+    // 位置と回転の同期
+    mesh.position.copyFrom(pos);
+    if (mesh.rotationQuaternion) {
+      mesh.rotationQuaternion.copyFrom(Quaternion.Identity());
+    }
+    body.disablePreStep = false;
+
+    state.isStatic = false;
+    state.idleTime = 0;
+  }
+
+  checkBalls() {
     if (!this.obj.balls) return;
 
     this.obj.balls.forEach((ballObj: any) => {
       const { mesh, body } = ballObj;
-
-      if (mesh.position.y < RESET_HEIGHT) {
-        const randomX = (Math.random() - 0.5) * 2;
-        const randomY = 20 + Math.random() * 10;
-        const randomZ = (Math.random() - 0.5) * 2;
-        const pos = new Vector3(randomX, randomY, randomZ);
-
-        // 1. 速度を完全にゼロにする
-        body.setLinearVelocity(Vector3.Zero());
-        body.setAngularVelocity(Vector3.Zero());
-
-        // 2. 位置と回転をリセット
-        // body.transformNode 経由で位置を設定
-        mesh.position.copyFrom(pos);
-        if (mesh.rotationQuaternion) {
-          mesh.rotationQuaternion.copyFrom(Quaternion.Identity());
-        }
-
-        // 3. 物理エンジン側に現在のMeshの位置を強制同期させる
-        // Havokではこれを呼ぶことで内部の状態が更新されます
-        body.disablePreStep = false; // 確実に同期させるためのフラグ（必要に応じて）
-
-        // 4. スリープ解除（重要）
-        // 動かした後に物理計算の対象として再認識させる
-        // body.forceReinit(); // もし同期しない場合は再初期化も有効
+      let state = stateMap.get(body);
+      if (!state) {
+        state = {
+          idleTime: 0,
+          isStatic: false,
+          lastTime: performance.now(),
+        };
+        stateMap.set(body, state);
       }
 
-      const v = body.getLinearVelocity();
-
-      if (!v) return;
-      const speed = v.length();
-
-      if (speed < 0.1) {
-        // sleep扱い
-        mesh.material = this.mat.matSleep;
-        body.setLinearVelocity(Vector3.Zero());
-        body.setAngularVelocity(Vector3.Zero());
-      } else {
-        // awake扱い
-        mesh.material = this.mat.matAwake;
+      if (this.checkBallPos(mesh)) {
+        this.resetObjPosition(mesh, body, state);
+        return;
+      }
+      if (this.checkBallStopTime(mesh, body, state)) {
+        this.stopObj(mesh, body, state);
       }
     });
+  }
+
+  checkBallPos(mesh: Mesh): boolean {
+    const RESET_HEIGHT = -50;
+    if (mesh.position.y < RESET_HEIGHT) {
+      return true;
+    }
+    return false;
+  }
+
+  checkBallStopTime(mesh: Mesh, body: PhysicsBody, state: SleepState): boolean {
+    const THRESHOLD_SPEED = 0.1;
+    const STATIC_DELAY = 3.0; // 秒
+
+    const now = performance.now();
+    const deltaSec = (now - state.lastTime) / 1000;
+    state.lastTime = now;
+
+    const v = body.getLinearVelocity();
+    const speed = v ? v.length() : 0;
+    if (speed < THRESHOLD_SPEED) {
+      state.idleTime += deltaSec;
+    } else {
+      state.idleTime = 0;
+      mesh.material = this.mat.matAwake;
+    }
+    if (state.idleTime > STATIC_DELAY) {
+      return true;
+    }
+    return false;
   }
 
   createMaterial(name: string, opt: MaterialOptions = {}) {
@@ -389,12 +427,11 @@ class Game {
     this.setupGUI();
 
     const rw = Math.round(Math.random() * 20) + 2;
-    const rh = Math.round(Math.random() * 10) + 1;
     const rd = Math.round(Math.random() * 20) + 2;
+    const rh = Math.max(30 - rw - rd, 1);
     this.createGround({ size: { width: rw, depth: rd, height: 1 } });
     this.createWalls({ size: { width: rw, depth: rd, height: rh } });
-    const num = Math.min(Math.max(rw * rd * rh, 50), 100);
-    this.createBalls(num);
+    this.createBalls(100, 0.5);
   }
 }
 
@@ -410,10 +447,14 @@ export function BabylonCanvas() {
     const game = new Game(canvasRef.current);
     game.init();
 
+    let frameCount = 0;
     game.engine.runRenderLoop(() => {
       // カメラが存在することを確認
       if (game.scene && game.scene.activeCamera) {
-        game.checkBallReset();
+        frameCount++;
+        if (frameCount % 5 === 0) {
+          game.checkBalls();
+        }
         game.scene.render();
       }
     });
