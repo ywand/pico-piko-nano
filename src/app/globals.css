@@ -5,7 +5,7 @@
   --background: #fafafa; /* zinc-50 */
   --foreground: #18181b; /* zinc-900 */
   --link-color: #1d4ed8; /* blue-700 */
-  --font-size: 16; /* 太め */
+  --font-size: 16px; /* 太め */
   --font-weight: 400; /* 太め */
 }
 
@@ -78,6 +78,38 @@ a:hover {
 a:focus-visible {
   color: var(--link-color);
   text-decoration: underline;
+}
+
+/* 外部リンクのスタイル */
+a[target="_blank"] {
+  /* position: relative; は削除 */
+  display: inline; /* 位置を安定させるため */
+  align-items: center;
+  padding-right: 16px;
+  text-decoration: none;
+  color: var(--link-color); /* 文字はリンクカラー */
+}
+/* 擬似要素でアイコンを作成 */
+a[target="_blank"]::after {
+  content: "";
+  display: inline-block;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%); /* 垂直中央に配置 */
+  width: 0.5em; /* 文字サイズに比例させる */
+  height: 0.5em;
+
+  /* SVGをマスクとして使用（これによって色が自由に変えられます） */
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'%3E%3C/path%3E%3Cpolyline points='15 3 21 3 21 9'%3E%3C/polyline%3E%3Cline x1='10' y1='14' x2='21' y2='3'%3E%3C/line%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'%3E%3C/path%3E%3Cpolyline points='15 3 21 3 21 9'%3E%3C/polyline%3E%3Cline x1='10' y1='14' x2='21' y2='3'%3E%3C/line%3E%3C/svg%3E");
+
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  /* ★ ここでご希望の --foreground を適用します */
+  background-color: var(--foreground);
 }
 
 .no-scrollbar::-webkit-scrollbar {

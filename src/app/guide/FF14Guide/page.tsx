@@ -4,7 +4,7 @@ import { JsonLd } from "@/components/JsonLd";
 import Text from "./text";
 
 const pageTitle = "FF14攻略情報";
-const pageDescription = "ファイナルファンタジーXIV（FF14）に関する情報まとめ。";
+const pageDescription = "ファイナルファンタジーXIV(FF14)に関する情報まとめ。";
 const seoData = createSEO({
   title: pageTitle,
   path: "/guide/FF14Guide",
