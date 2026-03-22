@@ -4,7 +4,8 @@ import { createSEO } from "@/data/seo";
 import { JsonLd } from "@/components/JsonLd";
 
 const pageTitle = "ゲームニュースアンテナ";
-const pageDescription = "ゲームサイトの更新情報まとめ。";
+const pageDescription =
+  "ゲーム公式サイトやゲームニュースサイトの更新情報まとめ。各サイトのRSSから自動取得を行っています。";
 const seoData = createSEO({
   title: pageTitle,
   path: "/guide/AntenaGameNews",

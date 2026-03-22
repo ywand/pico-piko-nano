@@ -5,7 +5,7 @@ import { JsonLd } from "@/components/JsonLd";
 
 const pageTitle = "FF14アンテナ";
 const pageDescription =
-  "ファイナルファンタジーXIV（FF14）公式サイトやファンサイトの更新情報まとめ。";
+  "ファイナルファンタジーXIV（FF14）公式サイトやファンサイトの更新情報まとめ。各サイトのRSSから自動取得を行っています。";
 const seoData = createSEO({
   title: pageTitle,
   path: "/guide/FF14Guide",
