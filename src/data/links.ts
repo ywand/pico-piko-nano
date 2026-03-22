@@ -128,11 +128,11 @@ export const links: LinkItem[] = [
   },
   {
     category: "guide",
-    label: "FF14攻略",
+    label: "FF14攻略情報",
     url: "/guide/FF14Guide",
     target: "_self",
     tags: "ゲーム攻略,情報,リンク,FF14",
-    description: "FF14に関する攻略情報など",
+    description: "ファイナルファンタジーXIV（FF14）に関する情報まとめ",
   },
   {
     category: "antenna",

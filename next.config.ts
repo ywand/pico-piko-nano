@@ -1,9 +1,13 @@
 import type { NextConfig } from "next";
 import withPWAInit from "@ducanh2912/next-pwa";
 import withMDXInit from "@next/mdx";
+import remarkGfm from "remark-gfm";
 
 const withMDX = withMDXInit({
   extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [remarkGfm],
+  },
 });
 
 const withPWA = withPWAInit({

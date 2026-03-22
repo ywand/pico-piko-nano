@@ -1,6 +1,6 @@
 "use client";
 
-import MdText from "./MdText.mdx";
+import MdText from "./mdtext.mdx";
 
 export default function Text() {
   return (
