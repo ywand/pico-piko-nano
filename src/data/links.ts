@@ -135,6 +135,14 @@ export const links: LinkItem[] = [
     description: "ファイナルファンタジーXIV（FF14）に関する情報まとめ",
   },
   {
+    category: "guide",
+    label: "Gジェネエターナル攻略情報",
+    url: "/guide/GGeneEternalGuide",
+    target: "_self",
+    tags: "ゲーム攻略,情報,リンク,Gジェネ,Gジェネエターナル",
+    description: "ファイナルファンタジーXIV（FF14）に関する情報まとめ",
+  },
+  {
     category: "antenna",
     label: "FF14アンテナ",
     url: "/antenna/AntennaFF14",

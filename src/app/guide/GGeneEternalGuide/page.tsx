@@ -1,27 +1,27 @@
 import MainLayout from "@/layouts/MainLayout";
 import { createSEO } from "@/data/seo";
 import { JsonLd } from "@/components/JsonLd";
-import Text from "./text";
+import Text from "./text.mdx";
 
-const pageTitle = "FF14攻略情報";
+const pageTitle = "Gジェネエターナル攻略情報";
 const pageDescription =
-  "ファイナルファンタジーXIV(FF14)に関するゲーム攻略情報まとめ。";
+  "SDガンダム ジージェネレーション エターナル(Gジェネエターナル)に関するゲーム攻略情報まとめ。";
 const seoData = createSEO({
   title: pageTitle,
-  path: "/guide/FF14Guide",
+  path: "/guide/GGeneEternalGuide",
   description: pageDescription,
   type: "webpage",
 });
 export const metadata = seoData.metadata;
 
-export default function FF14Guide() {
+export default function GGeneEternalGuide() {
   return (
     <>
       <MainLayout title={pageTitle}>
         <div>
           <p>{pageDescription}</p>
         </div>
-        <div>
+        <div className="prose mx-auto p-2">
           <Text />
         </div>
       </MainLayout>

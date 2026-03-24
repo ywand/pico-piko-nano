@@ -20,19 +20,20 @@ export default function T0005_CalendarPage() {
     <>
       <MainLayout title={pageTitle}>
         <div>
-          <h2>
+          <h2 className="font-bold">
             現在日付：
             <Today />
           </h2>
         </div>
-        <hr />
         <div className="m-2">
           <Calendar />
         </div>
         <hr />
         <div>
-          <h2>祝日一覧</h2>
-          <HolidayList />
+          <h2 className="font-bold">祝日一覧</h2>
+          <div className="ml-2">
+            <HolidayList />
+          </div>
         </div>
       </MainLayout>
       <JsonLd data={seoData.structuredData} />
