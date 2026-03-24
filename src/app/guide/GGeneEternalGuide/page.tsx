@@ -21,7 +21,7 @@ export default function GGeneEternalGuide() {
         <div>
           <p>{pageDescription}</p>
         </div>
-        <div className="prose mx-auto p-2">
+        <div className="prose mx-auto mt-4 mb-4 p-2">
           <Text />
         </div>
       </MainLayout>
