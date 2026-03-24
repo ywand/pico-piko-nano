@@ -25,6 +25,16 @@ export const rssSources = [
     category: "FF14",
   },
   {
+    name: "全てのヒカセンたちへ",
+    url: "https://ff14isgot.livedoor.blog/index.rdf",
+    category: "FF14",
+  },
+  {
+    name: "ドリッピー速報",
+    url: "https://drippy-sokuhou.com/feed.xml",
+    category: "FF14",
+  },
+  {
     name: "任天堂ホームページ",
     url: "https://www.nintendo.co.jp/news/whatsnew.xml?_gl=1*13w0cgw*_gcl_au*MTQ1MTQ0NzE3Ny4xNzczMDI3Nzky*_ga*MTAwNzMxMTY2MS4xNzczMDI3Nzky*_ga_128BBZFV9V*czE3NzMwMjc3OTEkbzEkZzEkdDE3NzMwMjc4MzgkajEzJGwwJGgw",
     category: "GameNews",
