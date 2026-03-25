@@ -19,7 +19,7 @@ export default function AntennaFF14() {
     <>
       <MainLayout title={pageTitle}>
         <p>{pageDescription}</p>
-        <div className="m-1">
+        <div className="mt-4 mb-4 p-2">
           <nav>
             <AntennaList name="FF14" />
           </nav>

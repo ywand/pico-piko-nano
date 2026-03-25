@@ -21,7 +21,7 @@ export default function AntennaGameNews() {
         <div>
           <p>{pageDescription}</p>
         </div>
-        <div className="mt-2 mb-2">
+        <div className="mt-4 mb-4 p-2">
           <nav>
             <AntennaList name="GameNews" />
           </nav>
