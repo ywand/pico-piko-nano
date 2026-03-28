@@ -1,7 +1,7 @@
 import MainLayout from "@/layouts/MainLayout";
 import { createSEO } from "@/data/seo";
 import { JsonLd } from "@/components/JsonLd";
-import Text from "./text";
+import Text from "./text.mdx";
 
 const pageTitle = "FF14攻略情報";
 const pageDescription =
@@ -21,7 +21,7 @@ export default function FF14Guide() {
         <div>
           <p>{pageDescription}</p>
         </div>
-        <div>
+        <div className="prose mx-auto mt-4 mb-4 p-2">
           <Text />
         </div>
       </MainLayout>
