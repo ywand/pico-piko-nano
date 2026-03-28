@@ -10,6 +10,13 @@ const seoData = createSEO({
   title: pageTitle,
   path: "/guide/FF14Guide",
   description: pageDescription,
+  keywords: [
+    "ゲーム",
+    "ゲーム攻略情報",
+    "リンク集",
+    "FF14",
+    "ファイナルファンタジーXIV",
+  ],
   type: "webpage",
 });
 export const metadata = seoData.metadata;

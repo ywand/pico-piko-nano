@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 type Args = {
   title?: string;
   description?: string;
+  keywords?: string[];
   path?: string;
   type?: "website" | "webpage";
 };
@@ -11,6 +12,7 @@ type Args = {
 export function createSEO({
   title = "",
   description = SITE_CONFIG.description,
+  keywords = [""],
   path = "",
   type = "webpage",
 }: Args): {
@@ -26,6 +28,8 @@ export function createSEO({
   const metadata: Metadata = {
     title: PageTitle,
     description,
+    keywords: keywords,
+    robots: "index, follow",
     alternates: {
       canonical: url,
     },

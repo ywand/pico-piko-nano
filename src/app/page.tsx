@@ -9,6 +9,15 @@ const seoData = createSEO({
   title: "Pico-Piko-Nano",
   path: "/",
   description: pageDescription,
+  keywords: [
+    "ゲーム",
+    "ミニゲーム",
+    "ゲーム制作",
+    "ゲーム攻略情報",
+    "WEBアプリ",
+    "アンテナサイト",
+    "リンク集",
+  ],
   type: "webpage",
 });
 export const metadata = seoData.metadata;

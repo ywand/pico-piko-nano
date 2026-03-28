@@ -10,6 +10,15 @@ const seoData = createSEO({
   title: pageTitle,
   path: "/guide/GGeneEternalGuide",
   description: pageDescription,
+  keywords: [
+    "ゲーム",
+    "ゲーム攻略情報",
+    "リンク集",
+    "SDガンダム",
+    "ジージェネレーション",
+    "ジージェネエターナル",
+    "Gジェネエターナル",
+  ],
   type: "webpage",
 });
 export const metadata = seoData.metadata;

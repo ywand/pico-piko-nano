@@ -10,6 +10,7 @@ const seoData = createSEO({
   title: pageTitle,
   path: "/guide/AntenaGameNews",
   description: pageDescription,
+  keywords: ["ゲーム", "ゲーム公式サイト", "アンテナサイト", "リンク集"],
   type: "webpage",
 });
 export const metadata = seoData.metadata;
