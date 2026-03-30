@@ -32,7 +32,7 @@ export default function AntennaList({ name }: Props) {
     <div>
       {Object.entries(items).map(([site, articles]) => (
         <div key={site}>
-          <h3 className="text-lg mt-2 mb-2">{site}</h3>
+          <h2 className="text-lg mt-2 mb-2">{site}</h2>
           <ul className="mb-4 pb-4">
             {articles.map((item, index) => (
               <li

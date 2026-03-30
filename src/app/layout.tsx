@@ -1,4 +1,5 @@
 import "./globals.css";
+import { FloatingScrollButton } from "@/components/FloatingScrollButton";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import { JsonLd } from "@/components/JsonLd";
 import { createSEO } from "@/data/seo";
@@ -18,6 +19,7 @@ export default function RootLayout({
     <html lang="ja">
       <body>
         {children}
+        <FloatingScrollButton />
         <GoogleAnalytics />
         <JsonLd data={seoData.structuredData} />
       </body>
