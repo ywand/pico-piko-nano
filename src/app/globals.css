@@ -31,6 +31,7 @@
   --tw-prose-links: var(--foreground);
   --tw-prose-bold: var(--foreground);
   --tw-prose-bullets: var(--foreground);
+  --tw-prose-counters: var(--foreground);
   --tw-prose-hr: var(--foreground);
   --tw-prose-quotes: var(--foreground);
   --tw-prose-code: var(--foreground);
@@ -40,6 +41,8 @@
 
 .prose table {
   border-collapse: collapse;
+  margin: 4px 0;
+  padding: 0;
 }
 .prose th,
 .prose td {
