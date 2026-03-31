@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://pico-piko-nano.netlify.app/sitemap.xml",
+    sitemap: "https://pico-piko-nano.com/sitemap.xml",
   };
 }

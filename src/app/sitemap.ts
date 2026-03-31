@@ -1,7 +1,8 @@
+import { SITE_CONFIG } from "@/data/siteConfig";
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://pico-piko-nano.netlify.app"; // 自身のドメインに変更してください
+  const baseUrl = SITE_CONFIG.url;
   const lastModified = new Date();
 
   // 1. 静的なルートのリスト
@@ -13,6 +14,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/tools/T0004_Timer",
     "/tools/T0005_CalendarPage",
     "/tools/T0006_QrTool",
+    "/guide/FF14Guide",
+    "/guide/GGeneEternalGuide",
   ];
 
   const staticFiles = [

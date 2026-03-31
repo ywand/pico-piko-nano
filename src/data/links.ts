@@ -44,7 +44,7 @@ export const links: LinkItem[] = [
   {
     category: "main",
     label: "検索",
-    url: "https://www.google.com/search?q=site:pico-piko-nano.netlify.app",
+    url: "https://www.google.com/search?q=site:pico-piko-nano.com",
     target: "_blank",
     description: "Googleでのサイト内検索",
   },
