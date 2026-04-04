@@ -2,11 +2,28 @@ import type { NextConfig } from "next";
 import withPWAInit from "@ducanh2912/next-pwa";
 import withMDXInit from "@next/mdx";
 import remarkGfm from "remark-gfm";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 const withMDX = withMDXInit({
   extension: /\.mdx?$/,
   options: {
     remarkPlugins: [remarkGfm],
+    rehypePlugins: [
+      rehypeSlug, // 1. 見出しにIDを付与
+      [
+        rehypeAutolinkHeadings,
+        {
+          behavior: "prepend", // 見出しの前にリンクを配置
+          properties: { className: ["anchor-link"] }, // CSSで装飾するためのクラス名
+          content: {
+            type: "element",
+            tagName: "span",
+            children: [{ type: "text", value: "# " }], // 表示される記号
+          },
+        },
+      ],
+    ],
   },
 });
 
