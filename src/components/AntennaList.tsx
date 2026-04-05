@@ -1,6 +1,5 @@
-"use client";
-
-import { useEffect, useState } from "react";
+import fs from "fs/promises";
+import path from "path";
 
 type FeedItem = {
   title: string;
@@ -18,15 +17,17 @@ type Props = {
   name: string;
 };
 
-export default function AntennaList({ name }: Props) {
-  const [items, setItems] = useState<SiteGroup>({});
-  useEffect(() => {
-    fetch(`/antenna-${name}.json`)
-      .then((res) => res.json())
-      .then((data: SiteGroup) => {
-        setItems(data);
-      });
-  }, [name]);
+export default async function AntennaList({ name }: Props) {
+  let items: SiteGroup = {};
+  try {
+    // public フォルダ内のパスを解決
+    const filePath = path.join(process.cwd(), "public", `antenna-${name}.json`);
+    const fileContents = await fs.readFile(filePath, "utf8");
+    items = JSON.parse(fileContents);
+  } catch (error) {
+    console.error("データ読み込み失敗:", error);
+    return <div>データ読み込み失敗</div>;
+  }
 
   return (
     <div>

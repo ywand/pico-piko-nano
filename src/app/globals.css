@@ -86,6 +86,11 @@ a:focus-visible {
   text-decoration: underline;
 }
 
+a.anchor-link {
+  color: var(--foreground);
+  text-decoration: none;
+}
+
 /* 外部リンクのスタイル */
 a[target="_blank"] {
   /* position: relative; は削除 */
