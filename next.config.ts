@@ -83,6 +83,20 @@ const withPWA = withPWAInit({
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   pageExtensions: ["ts", "tsx", "md", "mdx"],
+  async redirects() {
+    return [
+      {
+        source: "/guide/FF14Guide", // 旧URL（ワイルドカード指定可）
+        destination: "/guide/FF14", // 新URL
+        permanent: true, // trueにすると301リダイレクト（恒久的な移動）になる
+      },
+      {
+        source: "/guide/GGeneEternalGuide", // 旧URL（ワイルドカード指定可）
+        destination: "/guide/GGeneEternal", // 新URL
+        permanent: true, // trueにすると301リダイレクト（恒久的な移動）になる
+      },
+    ];
+  },
 };
 
 export default withPWA(withMDX(nextConfig));

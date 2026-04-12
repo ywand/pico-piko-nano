@@ -8,7 +8,7 @@ const pageDescription =
   "ファイナルファンタジーXIV（FF14）公式サイトやファンサイトの更新情報まとめ。各サイトのRSSから自動取得を行っています。";
 const seoData = createSEO({
   title: pageTitle,
-  path: "/guide/FF14Guide",
+  path: "/guide/FF14",
   description: pageDescription,
   keywords: [
     "ゲーム",

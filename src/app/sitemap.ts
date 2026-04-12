@@ -14,8 +14,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/tools/T0004_Timer",
     "/tools/T0005_CalendarPage",
     "/tools/T0006_QrTool",
-    "/guide/FF14Guide",
-    "/guide/GGeneEternalGuide",
+    "/guide/FF14",
+    "/guide/GGeneEternal",
+    "/guide/PokemonChampions",
   ];
 
   const staticFiles = [

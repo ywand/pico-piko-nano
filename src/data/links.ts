@@ -129,7 +129,7 @@ export const links: LinkItem[] = [
   {
     category: "guide",
     label: "FF14攻略情報",
-    url: "/guide/FF14Guide",
+    url: "/guide/FF14",
     target: "_self",
     tags: "ゲーム攻略,情報,リンク,FF14",
     description: "ファイナルファンタジーXIV（FF14）に関する情報まとめ",
@@ -137,10 +137,18 @@ export const links: LinkItem[] = [
   {
     category: "guide",
     label: "Gジェネエターナル攻略情報",
-    url: "/guide/GGeneEternalGuide",
+    url: "/guide/GGeneEternal",
     target: "_self",
     tags: "ゲーム攻略,情報,リンク,Gジェネ,Gジェネエターナル",
     description: "ファイナルファンタジーXIV（FF14）に関する情報まとめ",
+  },
+  {
+    category: "guide",
+    label: "ポケモンチャンピオンズ攻略情報",
+    url: "/guide/PokemonChampions",
+    target: "_self",
+    tags: "ゲーム攻略,情報,リンク,ポケモン,チャンピオンズ",
+    description: "ポケモンチャンピオンズに関する情報まとめ",
   },
   {
     category: "antenna",

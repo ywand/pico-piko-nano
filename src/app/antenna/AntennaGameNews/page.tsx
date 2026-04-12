@@ -8,7 +8,7 @@ const pageDescription =
   "ゲーム公式サイトやゲームニュースサイトの更新情報まとめ。各サイトのRSSから自動取得を行っています。";
 const seoData = createSEO({
   title: pageTitle,
-  path: "/guide/AntenaGameNews",
+  path: "/antenna/AntennaGameNews",
   description: pageDescription,
   keywords: ["ゲーム", "ゲーム公式サイト", "アンテナサイト", "リンク集"],
   type: "webpage",

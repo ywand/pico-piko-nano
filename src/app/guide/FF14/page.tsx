@@ -3,27 +3,25 @@ import { createSEO } from "@/data/seo";
 import { JsonLd } from "@/components/JsonLd";
 import Text from "./text.mdx";
 
-const pageTitle = "Gジェネエターナル攻略情報";
+const pageTitle = "FF14攻略情報";
 const pageDescription =
-  "SDガンダム ジージェネレーション エターナル(Gジェネエターナル)に関するゲーム攻略情報まとめ。";
+  "ファイナルファンタジーXIV(FF14)に関するゲーム攻略情報まとめ。";
 const seoData = createSEO({
   title: pageTitle,
-  path: "/guide/GGeneEternalGuide",
+  path: "/guide/FF14",
   description: pageDescription,
   keywords: [
     "ゲーム",
     "ゲーム攻略情報",
     "リンク集",
-    "SDガンダム",
-    "ジージェネレーション",
-    "ジージェネエターナル",
-    "Gジェネエターナル",
+    "FF14",
+    "ファイナルファンタジーXIV",
   ],
   type: "webpage",
 });
 export const metadata = seoData.metadata;
 
-export default function GGeneEternalGuide() {
+export default function FF14Guide() {
   return (
     <>
       <MainLayout title={pageTitle}>
