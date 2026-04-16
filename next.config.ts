@@ -40,10 +40,9 @@ const withPWA = withPWAInit({
       {
         urlPattern: ({ request }: { request: Request }) =>
           request.destination === "document",
-        handler: "NetworkFirst",
+        handler: "StaleWhileRevalidate",
         options: {
           cacheName: "pages",
-          networkTimeoutSeconds: 3,
           expiration: {
             maxEntries: 50,
           },
