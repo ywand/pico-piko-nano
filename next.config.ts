@@ -41,6 +41,7 @@ const withPWA = withPWAInit({
         asset.name === "_redirects" || asset.name.endsWith("/_redirects"),
       /\/_redirects$/,
       "_redirects",
+      /build-manifest\.json$/,
     ],
     runtimeCaching: [
       {
