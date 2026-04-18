@@ -37,8 +37,10 @@ const withPWA = withPWAInit({
     disableDevLogs: true,
     maximumFileSizeToCacheInBytes: 7 * 1024 * 1024,
     exclude: [
+      ({ asset }) =>
+        asset.name === "_redirects" || asset.name.endsWith("/_redirects"),
       /\/_redirects$/,
-      // もし他にも404になる設定ファイルがあればここに追加
+      "_redirects",
     ],
     runtimeCaching: [
       {

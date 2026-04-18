@@ -1,20 +1,42 @@
 import { links, categorys } from "@/data/links";
 import type { LinkItem } from "@/data/links";
 import Link from "next/link";
+import Script from "next/script";
 
 export function LinkList() {
-  // categoryごとにまとめる
   const grouped = links.reduce<Record<string, LinkItem[]>>((acc, link) => {
     if (!acc[link.category]) acc[link.category] = [];
     acc[link.category].push(link);
     return acc;
   }, {});
 
+  const speculationRules = {
+    prerender: [
+      {
+        source: "document",
+        where: {
+          and: [
+            { href_matches: "/*" }, // 同一ドメイン内の全パスを対象
+            { not: { selector_matches: ".no-prerender" } }, // 特定のリンクを除外したい場合用
+          ],
+        },
+        eagerness: "moderate", // ホバー時などに投機的実行を開始
+      },
+    ],
+  };
+
   return (
     <div>
+      {/* Speculation Rules API の注入 */}
+      <Script
+        id="speculation-rules"
+        type="speculationrules"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(speculationRules) }}
+      />
+
       {Object.entries(grouped).map(([category, items]) => (
         <section key={category}>
-          <h2 className="text-lg">
+          <h2 className="text-lg font-bold mt-4 mb-2">
             {categorys[category as keyof typeof categorys]}
           </h2>
           <ul className="mb-2">
@@ -24,7 +46,7 @@ export function LinkList() {
               return (
                 <li
                   key={`${item.label}-${index}`}
-                  className="before:content-['・']  before:text-md before:mr-1 ml-4"
+                  className="before:content-['・'] before:text-md before:mr-1 ml-4"
                 >
                   {isExternal ? (
                     <a
