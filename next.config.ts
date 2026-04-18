@@ -36,6 +36,10 @@ const withPWA = withPWAInit({
   workboxOptions: {
     disableDevLogs: true,
     maximumFileSizeToCacheInBytes: 7 * 1024 * 1024,
+    exclude: [
+      /\/_redirects$/,
+      // もし他にも404になる設定ファイルがあればここに追加
+    ],
     runtimeCaching: [
       {
         urlPattern: ({ request }: { request: Request }) =>
