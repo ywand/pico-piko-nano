@@ -10,6 +10,11 @@ export const rssSources = [
     category: "FF14",
   },
   {
+    name: "馬鳥速報",
+    url: "http://blog.livedoor.jp/umadori0726/index.rdf",
+    category: "FF14",
+  },
+  {
     name: "ヤーン速報",
     url: "https://yan-flash.com/feed.xml",
     category: "FF14",
