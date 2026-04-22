@@ -2,6 +2,7 @@ import MainLayout from "@/layouts/MainLayout";
 import { createSEO } from "@/data/seo";
 import { JsonLd } from "@/components/JsonLd";
 import Text from "./text.mdx";
+import FixedTable from "@/components/FixedTable"; // 分離したコンポーネント
 
 const pageTitle = "ポケモンチャンピオンズ攻略情報";
 const pageDescription = "ポケモンチャンピオンズに関するゲーム攻略情報まとめ。";
