@@ -44,10 +44,12 @@ const withPWA = withPWAInit({
   aggressiveFrontEndNavCaching: false,
   reloadOnOnline: true,
   disable: process.env.NODE_ENV === "development",
+  publicExcludes: ["!_redirects", "!_headers", "!robots.txt"],
   workboxOptions: {
     disableDevLogs: true,
     maximumFileSizeToCacheInBytes: 7 * 1024 * 1024,
     exclude: [
+      /\/_next\/static\/.*(?:\.map)$/i, // source map除外
       /middleware-manifest\.json$/,
       // マニフェスト系をより広範に除外
       /build-manifest\.json$/,
@@ -115,6 +117,9 @@ const withPWA = withPWAInit({
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   pageExtensions: ["ts", "tsx", "md", "mdx"],
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production",
+  },
   async redirects() {
     return [
       {
