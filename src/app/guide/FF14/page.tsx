@@ -15,6 +15,7 @@ const seoData = createSEO({
     "ゲーム攻略情報",
     "リンク集",
     "FF14",
+    "FINAL FANTASY XIV",
     "ファイナルファンタジーXIV",
   ],
   type: "webpage",
