@@ -131,3 +131,27 @@ a[target="_blank"]::after {
   -ms-overflow-style: none; /* IE, Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+/* 1. 目次リスト本体 */
+.mdx-body.prose h2#目次 + ul {
+  @apply my-8 p-6 rounded-2xl border;
+  list-style-type: none !important; /* !important は @apply の外に出す */
+  background-color: var(--toc-bg);
+  border-color: var(--toc-border);
+  max-width: fit-content;
+  min-width: 280px;
+}
+
+/* 2. 「目次」見出し */
+.mdx-body.prose h2#目次 {
+  @apply mb-[-20px] ml-2 text-[10px] font-bold uppercase tracking-[0.2em];
+  color: #a1a1aa;
+  border: none !important;
+}
+
+/* 3. リスト項目 */
+.mdx-body.prose h2#目次 + ul li {
+  @apply m-0 p-0 text-[13px];
+  list-style-type: none !important;
+  border-bottom: 1px solid rgba(161, 161, 170, 0.2);
+}

@@ -2,24 +2,32 @@ import type { NextConfig } from "next";
 import withPWAInit from "@ducanh2912/next-pwa";
 import withMDXInit from "@next/mdx";
 import remarkGfm from "remark-gfm";
+import remarkToc from "remark-toc"; // インポート済み
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
+/**
+ * MDX設定: 見出しの自動リンク付与やGFMをサポート
+ */
 const withMDX = withMDXInit({
   extension: /\.mdx?$/,
   options: {
-    remarkPlugins: [remarkGfm],
+    remarkPlugins: [
+      remarkGfm,
+      // headingオプションで指定した名前の見出しを目次として扱う
+      [remarkToc, { heading: "目次", tight: true, maxDepth: 3 }],
+    ],
     rehypePlugins: [
-      rehypeSlug, // 1. 見出しにIDを付与
+      rehypeSlug,
       [
         rehypeAutolinkHeadings,
         {
-          behavior: "prepend", // 見出しの前にリンクを配置
-          properties: { className: ["anchor-link"] }, // CSSで装飾するためのクラス名
+          behavior: "prepend",
+          properties: { className: ["anchor-link"] },
           content: {
             type: "element",
             tagName: "span",
-            children: [{ type: "text", value: "# " }], // 表示される記号
+            children: [{ type: "text", value: "# " }],
           },
         },
       ],
@@ -27,23 +35,43 @@ const withMDX = withMDXInit({
   },
 });
 
+/**
+ * PWA設定: Workboxを利用した高度なキャッシュ管理
+ */
 const withPWA = withPWAInit({
   dest: "public",
   cacheOnFrontEndNav: true,
-  aggressiveFrontEndNavCaching: true,
+  aggressiveFrontEndNavCaching: false,
   reloadOnOnline: true,
   disable: process.env.NODE_ENV === "development",
   workboxOptions: {
     disableDevLogs: true,
     maximumFileSizeToCacheInBytes: 7 * 1024 * 1024,
     exclude: [
-      ({ asset }) =>
-        asset.name === "_redirects" || asset.name.endsWith("/_redirects"),
-      /\/_redirects$/,
-      "_redirects",
+      /middleware-manifest\.json$/,
+      // マニフェスト系をより広範に除外
       /build-manifest\.json$/,
+      /_ssg-manifest\.json$/,
+      /_buildManifest\.js$/,
+      /_ssgManifest\.js$/,
+      /precache-manifest\..*\.js$/,
+      /server\/.*$/, // サーバーサイドのファイルを除外
+      /_redirects$/,
     ],
+    skipWaiting: true,
+    clientsClaim: true,
     runtimeCaching: [
+      {
+        urlPattern: /\/_next\/data\/.+\/.+\.json$/i,
+        handler: "NetworkFirst",
+        options: {
+          cacheName: "next-data",
+          expiration: {
+            maxEntries: 32,
+            maxAgeSeconds: 24 * 60 * 60,
+          },
+        },
+      },
       {
         urlPattern: ({ request }: { request: Request }) =>
           request.destination === "document",
@@ -53,21 +81,6 @@ const withPWA = withPWAInit({
           expiration: {
             maxEntries: 50,
           },
-        },
-      },
-      {
-        urlPattern: /^\/_next\/static\//,
-        handler: "StaleWhileRevalidate",
-        options: {
-          cacheName: "next-static",
-        },
-      },
-      {
-        urlPattern: ({ request }: { request: Request }) =>
-          request.destination === "script" || request.destination === "style",
-        handler: "StaleWhileRevalidate",
-        options: {
-          cacheName: "static-resources",
         },
       },
       {
@@ -82,24 +95,37 @@ const withPWA = withPWAInit({
           },
         },
       },
+      {
+        urlPattern: ({ request }: { request: Request }) =>
+          request.destination === "script" ||
+          request.destination === "style" ||
+          request.destination === "font",
+        handler: "StaleWhileRevalidate",
+        options: {
+          cacheName: "static-resources",
+        },
+      },
     ],
   },
 });
 
+/**
+ * Next.js 基本設定
+ */
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   pageExtensions: ["ts", "tsx", "md", "mdx"],
   async redirects() {
     return [
       {
-        source: "/guide/FF14Guide", // 旧URL（ワイルドカード指定可）
-        destination: "/guide/FF14", // 新URL
-        permanent: true, // trueにすると301リダイレクト（恒久的な移動）になる
+        source: "/guide/FF14Guide",
+        destination: "/guide/FF14",
+        permanent: true,
       },
       {
-        source: "/guide/GGeneEternalGuide", // 旧URL（ワイルドカード指定可）
-        destination: "/guide/GGeneEternal", // 新URL
-        permanent: true, // trueにすると301リダイレクト（恒久的な移動）になる
+        source: "/guide/GGeneEternalGuide",
+        destination: "/guide/GGeneEternal",
+        permanent: true,
       },
     ];
   },
