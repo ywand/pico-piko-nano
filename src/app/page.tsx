@@ -30,7 +30,7 @@ export default function Home() {
         <div>
           <p>{pageDescription}</p>
         </div>
-        <div className="m-4">
+        <div className="m-2">
           <nav>
             <LinkList />
           </nav>

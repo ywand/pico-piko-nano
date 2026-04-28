@@ -35,11 +35,11 @@ export function LinkList() {
       />
 
       {Object.entries(grouped).map(([category, items]) => (
-        <section key={category}>
-          <h2 className="text-lg font-bold mt-4 mb-2">
+        <section key={category} className="mb-8">
+          <h2 className="text-lg font-bold mt-4 mb-2 border-b pb-1">
             {categorys[category as keyof typeof categorys]}
           </h2>
-          <ul className="mb-2">
+          <ul className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-x-1 gap-y-2 ">
             {items.map((item, index) => {
               const isExternal = item.url.startsWith("http");
 
